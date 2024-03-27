@@ -1,0 +1,9 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.blog-list-container {
+  flex: 1;
+  min-height: calc(100vh - header-height);
+}
