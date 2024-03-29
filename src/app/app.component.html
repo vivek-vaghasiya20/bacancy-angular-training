@@ -55,8 +55,8 @@
         [ngClass]="{
           'light-yellow': first,
           'light-orange': last,
-          'light-blue': odd,
-          'light-pink': even
+          'light-blue': odd && !first && !last,
+          'light-pink': even && !first && !last
         }"
       >
         <td>
