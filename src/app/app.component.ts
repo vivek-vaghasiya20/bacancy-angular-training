@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'bacancy-angular-training';
-  user = {};
+  user = { name: 'vivek' };
   employees: any;
 
   addEmp(): void {
