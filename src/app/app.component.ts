@@ -8,14 +8,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'bacancy-angular-training';
   user = { name: 'vivek' };
-  employees: any;
+  employees: any = [];
 
   addEmp(): void {
     this.employees.push('employee');
   }
 
   onRemoveEmp(id: number) {
-    const position = id + 1;
+    const position = id;
     this.employees.splice(position, 1);
   }
 }
