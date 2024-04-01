@@ -1,5 +1,7 @@
 import { isPlatformWorkerUi } from '@angular/common';
 import { Component } from '@angular/core';
+import { product } from './interface/interface';
+import { Location } from './const/const';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +9,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'bacancy-angular-training';
+  public title = 'bacancy-angular-training';
 
-  location: any;
+  public location: Location = Location.Home;
+  public selectOptions: string[] = Object.values(Location);
 
-  arrayItems = ['chair', 'watch', 'charging', 'mouse', 'laptop', 'pone'];
+  public TableIndexHeader: string = 'Product Index';
+  public TableProductHeader: string = 'Product Name';
+  public productItems: product[] = [
+    { name: 'chair' },
+    { name: 'watch' },
+    { name: 'charging' },
+    { name: 'mouse' },
+    { name: 'laptop' },
+    { name: 'pone' },
+  ];
 
-  isBool = true;
-  toggleStyles() {
-    this.isBool = !this.isBool;
+  public isTrue: boolean = true;
+  public changeStyles(): void {
+    this.isTrue = !this.isTrue;
   }
 }

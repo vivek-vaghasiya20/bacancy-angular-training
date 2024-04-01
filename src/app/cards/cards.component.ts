@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { card } from '../interface/interface';
+import { HIDE, SHOW } from '../const/const';
 
 @Component({
   selector: 'app-cards',
@@ -6,7 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./cards.component.scss'],
 })
 export class CardsComponent {
-  cards: any[] = [
+  public const: { hide: string; show: string } = { hide: HIDE, show: SHOW };
+  public cards: card[] = [
     {
       title: 'Card Title 1',
       description: 'Description of Card 1',
@@ -33,7 +36,7 @@ export class CardsComponent {
     },
   ];
 
-  updateInfo(card: any) {
+  public updateInfo(card: card): void {
     card.visible = !card.visible;
   }
 }
