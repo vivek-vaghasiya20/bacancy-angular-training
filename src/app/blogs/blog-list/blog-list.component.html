@@ -8,6 +8,7 @@
           class="form-control"
           placeholder="Search blogs..."
           [(ngModel)]="searchQuery"
+          (input)="search()"
         />
         <div class="input-group-append">
           <button class="btn btn-primary" type="button" (click)="search()">
@@ -20,15 +21,22 @@
 
   <!-- Blog card -->
   <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let blog of filteredBlogs">
-      <div class="card">
-        <img [src]="blog.imageUrl" class="card-img-top" alt="Blog Image" />
-        <div class="card-body">
-          <h5 class="card-title">{{ blog.title }}</h5>
-          <p class="card-text">{{ blog.description }}</p>
-          <a href="#" class="btn btn-primary">Read More</a>
+    <ng-container *ngIf="filteredBlogs.length > 0; else noBlogsFound">
+      <div class="col-md-4 mb-4" *ngFor="let blog of filteredBlogs">
+        <div class="card">
+          <img [src]="blog.imageUrl" class="card-img-top" alt="Blog Image" />
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }}</h5>
+            <p class="card-text">{{ blog.description }}</p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noBlogsFound>
+      <div class="col-md-12 mt-4 text-center">
+        <h4>No blogs found</h4>
+      </div>
+    </ng-template>
   </div>
 </div>
