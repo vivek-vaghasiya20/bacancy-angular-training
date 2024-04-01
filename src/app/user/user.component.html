@@ -1,0 +1,36 @@
+<input type="text" [value]="userOne" />
+
+<br />
+<br />
+
+<div [hidden]="checkInfo">
+  <p>Id: {{ userObject.id }}</p>
+  <p>FirstName: {{ userObject.firstName }}</p>
+  <p>LastName: {{ userObject.lastName }}</p>
+  <p>MaidenName: {{ userObject.maidenName }}</p>
+  <p>Age: {{ userObject.age }}</p>
+  <p>gender: {{ userObject.gender }}</p>
+</div>
+
+<br />
+<br />
+
+<div>
+  <button (click)="updateInfo()">{{ buttonInfo }}</button>
+</div>
+
+<br />
+<br />
+
+<div>
+  <label for="id">id:</label>
+  <input type="text" name="id" [(ngModel)]="userObject.id" />
+  <br />
+  <label for="name">Name:</label>
+  <input type="text" name="name" [(ngModel)]="userObject.firstName" />
+</div>
+
+<div>
+  <h4>User's JSON Data:</h4>
+  <pre>{{ userObject | json }}</pre>
+</div>
