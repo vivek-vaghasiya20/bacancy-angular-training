@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-xs-12">
+    <p>Add Book</p>
+    <div class="form-container">
+      <label>Book Name</label>
+      <input type="text" class="form-control" #bookNameRef />
+      <label>Book Author Name</label>
+      <input type="text" class="form-control" #bookAuthorNameRef />
+      <label>Book Price</label>
+      <input type="text" class="form-control" #bookPriceRef />
+      <label>Book Description</label>
+      <textarea
+        name="textareaName"
+        id="textareaId"
+        rows="4"
+        cols="50"
+        class="form-control"
+        #bookDescriptionRef
+      ></textarea>
+      <br />
+      <button
+        class="btn btn-primary"
+        (click)="onAddBookEvent(bookPriceRef, bookDescriptionRef)"
+      >
+        Add Book
+      </button>
+    </div>
+  </div>
+</div>
