@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header">
+    Task4: Change the color by writing color name in the textbox:
+  </div>
+
+  <div class="card-body">
+    <input type="text" [(ngModel)]="colorName" />
+
+    <div [ngSwitch]="colorName">
+      <div *ngSwitchCase="'green'" class="green">Green is Selected</div>
+      <div *ngSwitchCase="'yellow'" class="yellow">Yellow is Selected</div>
+      <div *ngSwitchCase="'red'" class="red">Red is Selected</div>
+      <div *ngSwitchCase="'orange'" class="orange">Orange is Selected</div>
+      <div *ngSwitchDefault class="default">This is Default color</div>
+    </div>
+  </div>
+</div>
