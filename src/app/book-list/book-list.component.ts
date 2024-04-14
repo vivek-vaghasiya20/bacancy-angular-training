@@ -10,7 +10,7 @@ export class BookListComponent {
   public bookList: book[] = [
     {
       bookId: 1,
-      imgURL: 'assets/book-image.jpeg',
+      imgUrl: 'assets/book-image.jpeg',
       title: 'Book1',
       description: 'self help book',
       price: 125,
@@ -20,7 +20,7 @@ export class BookListComponent {
     },
     {
       bookId: 2,
-      imgURL: 'assets/book-image.jpeg',
+      imgUrl: 'assets/book-image.jpeg',
       title: 'Book2',
       description: 'Historical fiction book',
       price: 130,
@@ -30,7 +30,7 @@ export class BookListComponent {
     },
     {
       bookId: 3,
-      imgURL: 'assets/book-image.jpeg',
+      imgUrl: 'assets/book-image.jpeg',
       title: 'Book3',
       description: 'Graphic novel book',
       price: 1250,
@@ -40,7 +40,7 @@ export class BookListComponent {
     },
     {
       bookId: 4,
-      imgURL: 'assets/book-image.jpeg',
+      imgUrl: 'assets/book-image.jpeg',
       title: 'Book4',
       description: 'self help book',
       price: 75,
@@ -50,7 +50,7 @@ export class BookListComponent {
     },
     {
       bookId: 5,
-      imgURL: 'assets/book-image.jpeg',
+      imgUrl: 'assets/book-image.jpeg',
       title: 'Book5',
       description: 'self help book',
       price: 75,
@@ -60,7 +60,10 @@ export class BookListComponent {
     },
   ];
 
-  public addBook(book: book): void {}
+  public addBook(book: book): void {
+    book.bookId = this.bookList.length + 1;
+    this.bookList.push(book);
+  }
 
   public removeBook(bookid: number): void {}
 }
