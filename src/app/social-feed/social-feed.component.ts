@@ -1,32 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { post } from '../interface/interface';
+import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
+import { Observable, Subscription } from 'rxjs';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-social-feed',
   templateUrl: './social-feed.component.html',
   styleUrls: ['./social-feed.component.scss'],
 })
-export class SocialFeedComponent {
-  public postList: post[] = [
-    {
-      postId: 1,
-      title: 'Post Title 1',
-      description: 'Post Description 1',
-      likeCount: 0,
-    },
-    {
-      postId: 2,
-      title: 'Post Title 2',
-      description: 'Post Description 2',
-      likeCount: 0,
-    },
-  ];
+export class SocialFeedComponent implements OnInit, OnDestroy {
+  postList: post[] = [];
+  postSubscription!: Subscription;
 
-  public likePost(postId: number) {
-    const postToUpdate = this.postList.find((post) => post.postId === postId);
-    if (postToUpdate) {
-      postToUpdate.likeCount++;
+  constructor(private dataService: DataService) {}
+
+  ngOnInit(): void {
+    this.postSubscription = this.dataService
+      .getPostUpdates()
+      .subscribe((posts) => {
+        this.postList = posts;
+      });
+  }
+
+  likePost(postId: number): void {
+    this.dataService.likePost(postId);
+  }
+
+  ngOnDestroy(): void {
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
+    }
+  }
+
+  stopAddingPosts(): void {
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
     }
   }
 }

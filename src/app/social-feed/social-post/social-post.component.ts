@@ -12,6 +12,6 @@ export class SocialPostComponent {
   @Output() likeEvent: EventEmitter<number> = new EventEmitter<number>();
 
   public likePost(): void {
-    this.likeEvent.emit();
+    this.likeEvent.emit(this.post.postId);
   }
 }
