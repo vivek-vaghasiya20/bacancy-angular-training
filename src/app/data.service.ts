@@ -31,7 +31,7 @@ export class DataService {
 
   getPostUpdates(): Observable<post[]> {
     return interval(5000).pipe(
-      startWith(this.postList.slice()),
+      startWith(this.postList),
       map(() => {
         const newPostId = this.postList.length + 1;
         const newPost: post = {
@@ -41,7 +41,7 @@ export class DataService {
           likeCount: 0,
         };
         this.postList.push(newPost);
-        return this.postList.slice();
+        return this.postList;
       })
     );
   }
