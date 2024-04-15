@@ -65,15 +65,15 @@
 
 <!-- Display Existing Bookstores -->
 <div class="row">
-  <div class="col-md-6" *ngFor="let bookstore of bookstores">
-    <div class="card">
+  <div class="col-md-4" *ngFor="let bookstore of bookstores">
+    <div class="card bookstore-card">
       <div class="card-body">
         <h5 class="card-title">{{ bookstore.storeName }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">
           Owner: {{ bookstore.storeOwner }}
         </h6>
       </div>
-      <app-booklist></app-booklist>
+      <app-book-list class="booklist-card"></app-book-list>
     </div>
   </div>
 </div>

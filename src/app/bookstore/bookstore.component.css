@@ -1,0 +1,11 @@
+.bookstore-card {
+  background-color: #ffcccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.booklist-card {
+  background-color: #ccffcc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

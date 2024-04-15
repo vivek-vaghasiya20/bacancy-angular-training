@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../service/store.service';
-import { bookStore } from '../interface/bookStore-interface';
+import { BookStore } from '../interface/bookStore-interface';
 
 @Component({
   selector: 'app-bookstore',
@@ -10,9 +10,9 @@ import { bookStore } from '../interface/bookStore-interface';
 export class BookstoreComponent implements OnInit {
   constructor(private bookstoreService: StoreService) {}
 
-  public bookstores: bookStore[] = [];
+  public bookstores: BookStore[] = [];
 
-  public newBookstore: bookStore = {
+  public newBookstore: BookStore = {
     storeId: 0,
     storeName: '',
     storeOwner: '',

@@ -1,34 +1,35 @@
 import { Injectable } from '@angular/core';
-import { bookStore } from '../interface/bookStore-interface';
-import { BookService } from 'src/app/service/book.service';
-import { book } from '../interface/book-interface';
+import { BookStore } from '../interface/bookStore-interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  constructor(private bookListService: BookService) {
-    console.log('store service created');
-  }
+  constructor() {}
 
-  private storeList: bookStore[] = [
+  private storeList: BookStore[] = [
     {
       storeId: 1,
-      storeName: 'yes bookstore',
-      storeOwner: 'vivek',
+      storeName: 'Book Store 1',
+      storeOwner: 'Vivek',
     },
     {
       storeId: 2,
-      storeName: 'dsb bookstore',
-      storeOwner: 'divyesh',
+      storeName: 'Book Store 2',
+      storeOwner: 'Utsav',
+    },
+    {
+      storeId: 3,
+      storeName: 'Book Store 3',
+      storeOwner: 'Bhautik',
     },
   ];
 
-  public getBookStore(): bookStore[] {
+  public getBookStore(): BookStore[] {
     return this.storeList;
   }
 
-  public addBookStore(newBook: bookStore): void {
+  public addBookStore(newBook: BookStore): void {
     newBook.storeId = this.generateUniqueId();
     this.storeList.push(newBook);
   }
@@ -37,12 +38,4 @@ export class StoreService {
     const lastBook = this.storeList[this.storeList.length - 1];
     return lastBook ? lastBook.storeId + 1 : 1;
   }
-
-  // public getBookList(): book[] {
-  //   return this.bookListService.getBook();
-  // }
-
-  // public addBook(newBook: book): void {
-  //   this.bookListService.addBook(newBook);
-  // }
 }

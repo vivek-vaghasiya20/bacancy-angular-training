@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { book } from '../interface/book-interface';
+import { Book } from '../interface/book-interface';
 
 @Injectable()
 export class BookService {
@@ -7,28 +7,28 @@ export class BookService {
     console.log('book service created');
   }
 
-  private bookList: book[] = [
+  private bookList: Book[] = [
     {
       bookId: 1,
-      bookTitle: 'ds',
-      bookAuthor: 'vivek',
-      bookDescription: 'data structure',
-      bookPrice: 123,
+      bookTitle: 'Psychology of Money',
+      bookAuthor: 'Morgan House',
+      bookDescription: 'Description 1',
+      bookPrice: 185,
     },
     {
       bookId: 2,
-      bookTitle: 'cn',
-      bookAuthor: 'vivek2',
-      bookDescription: 'computer networks',
-      bookPrice: 23,
+      bookTitle: 'The Monk Who Sold his Ferrari',
+      bookAuthor: 'Robin Sharma',
+      bookDescription: 'Description 2',
+      bookPrice: 223,
     },
   ];
 
-  public getBook(): book[] {
+  public getBook(): Book[] {
     return this.bookList;
   }
 
-  public addBook(newBook: book): void {
+  public addBook(newBook: Book): void {
     newBook.bookId = this.generateUniqueId();
     this.bookList.push(newBook);
   }

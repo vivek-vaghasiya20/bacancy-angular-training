@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BookstoreComponent } from './bookstore/bookstore.component';
-import { BooklistComponent } from './bookstore/booklist/booklist.component';
+import { BooklistComponent } from './bookstore/booklist/book-list.component';
 import { FormsModule } from '@angular/forms';
 import { BookService } from './service/book.service';
 
