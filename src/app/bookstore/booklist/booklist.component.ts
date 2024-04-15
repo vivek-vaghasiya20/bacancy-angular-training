@@ -6,6 +6,7 @@ import { BookService } from 'src/app/service/book.service';
   selector: 'app-booklist',
   templateUrl: './booklist.component.html',
   styleUrls: ['./booklist.component.scss'],
+  providers: [BookService],
 })
 export class BooklistComponent implements OnInit {
   constructor(private bookService: BookService) {}

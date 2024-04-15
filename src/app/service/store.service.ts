@@ -7,7 +7,9 @@ import { book } from '../interface/book-interface';
   providedIn: 'root',
 })
 export class StoreService {
-  constructor(private bookListService: BookService) {}
+  constructor(private bookListService: BookService) {
+    console.log('store service created');
+  }
 
   private storeList: bookStore[] = [
     {
@@ -36,11 +38,11 @@ export class StoreService {
     return lastBook ? lastBook.storeId + 1 : 1;
   }
 
-  public getBookList(): book[] {
-    return this.bookListService.getBook();
-  }
+  // public getBookList(): book[] {
+  //   return this.bookListService.getBook();
+  // }
 
-  public addBook(newBook: book): void {
-    this.bookListService.addBook(newBook);
-  }
+  // public addBook(newBook: book): void {
+  //   this.bookListService.addBook(newBook);
+  // }
 }

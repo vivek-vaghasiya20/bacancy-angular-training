@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { book } from '../interface/book-interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class BookService {
-  constructor() {}
+  constructor() {
+    console.log('book service created');
+  }
 
   private bookList: book[] = [
     {
