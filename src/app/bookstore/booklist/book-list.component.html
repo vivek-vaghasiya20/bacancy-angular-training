@@ -3,14 +3,14 @@
   type="button"
   class="btn btn-primary"
   data-bs-toggle="modal"
-  data-bs-target="#bookmodal"
+  [attr.data-bs-target]="'#bookAddModal-' + index"
 >
   Add Book
 </button>
 <!-- Modal -->
 <div
   class="modal fade"
-  id="bookmodal"
+  [id]="'bookAddModal-' + index"
   tabindex="1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"

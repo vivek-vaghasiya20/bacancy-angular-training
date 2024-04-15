@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Book } from 'src/app/interface/book-interface';
 import { BookService } from 'src/app/service/book.service';
 
@@ -10,7 +10,7 @@ import { BookService } from 'src/app/service/book.service';
 })
 export class BooklistComponent implements OnInit {
   constructor(private bookService: BookService) {}
-
+  @Input() index!: number;
   public bookList: Book[] = [];
   public newBook: Book = {
     bookId: 0,

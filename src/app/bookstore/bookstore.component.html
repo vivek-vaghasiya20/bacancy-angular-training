@@ -65,7 +65,7 @@
 
 <!-- Display Existing Bookstores -->
 <div class="row">
-  <div class="col-md-4" *ngFor="let bookstore of bookstores">
+  <div class="col-md-4" *ngFor="let bookstore of bookstores; let i = index">
     <div class="card bookstore-card">
       <div class="card-body">
         <h5 class="card-title">{{ bookstore.storeName }}</h5>
@@ -73,7 +73,7 @@
           Owner: {{ bookstore.storeOwner }}
         </h6>
       </div>
-      <app-book-list class="booklist-card"></app-book-list>
+      <app-book-list [index]="i" class="booklist-card"></app-book-list>
     </div>
   </div>
 </div>
