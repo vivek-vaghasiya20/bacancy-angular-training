@@ -29,10 +29,11 @@ export class DataService {
     ];
   }
 
-  getPostUpdates(): Observable<post[]> {
-    return interval(5000).pipe(
-      startWith(this.postList),
-      map(() => {
+  public getPostUpdates(): Observable<post[]> {
+    return new Observable((observer) => {
+      observer.next(this.postList);
+
+      const intervalId = setInterval(() => {
         const newPostId = this.postList.length + 1;
         const newPost: post = {
           postId: newPostId,
@@ -41,12 +42,14 @@ export class DataService {
           likeCount: 0,
         };
         this.postList.push(newPost);
-        return this.postList;
-      })
-    );
+        observer.next(this.postList);
+      }, 5000);
+
+      return () => clearInterval(intervalId);
+    });
   }
 
-  likePost(postId: number): void {
+  public likePost(postId: number): void {
     const postToUpdate = this.postList.find((post) => post.postId === postId);
     if (postToUpdate) {
       postToUpdate.likeCount++;

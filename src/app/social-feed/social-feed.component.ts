@@ -11,8 +11,8 @@ import { DataService } from '../data.service';
   styleUrls: ['./social-feed.component.scss'],
 })
 export class SocialFeedComponent implements OnInit, OnDestroy {
-  postList: post[] = [];
-  postSubscription!: Subscription;
+  public postList: post[] = [];
+  private postSubscription!: Subscription;
 
   constructor(private dataService: DataService) {}
 
@@ -24,7 +24,7 @@ export class SocialFeedComponent implements OnInit, OnDestroy {
       });
   }
 
-  likePost(postId: number): void {
+  public likePost(postId: number): void {
     this.dataService.likePost(postId);
   }
 
@@ -34,7 +34,7 @@ export class SocialFeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  stopAddingPosts(): void {
+  public stopAddingPosts(): void {
     if (this.postSubscription) {
       this.postSubscription.unsubscribe();
     }
