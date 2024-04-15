@@ -1,1 +1,79 @@
-<p>bookstore works!</p>
+<!-- Button to open the Add Bookstore modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#bookstoremodal"
+>
+  Add Bookstore
+</button>
+
+<!-- Add Bookstore Modal -->
+<div
+  class="modal fade"
+  id="bookstoremodal"
+  tabindex="1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Bookstore</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="storeName">Store Name:</label>
+          <input
+            type="text"
+            id="storeName"
+            class="form-control"
+            [(ngModel)]="newBookstore.storeName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="storeOwner">Store Owner:</label>
+          <input
+            type="text"
+            id="storeOwner"
+            class="form-control"
+            [(ngModel)]="newBookstore.storeOwner"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onAddBookstore()"
+        >
+          Add Bookstore
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Display Existing Bookstores -->
+<div class="row">
+  <div class="col-md-6" *ngFor="let bookstore of bookstores">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ bookstore.storeName }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          Owner: {{ bookstore.storeOwner }}
+        </h6>
+      </div>
+      <app-booklist></app-booklist>
+    </div>
+  </div>
+</div>
