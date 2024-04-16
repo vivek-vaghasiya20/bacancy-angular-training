@@ -10,7 +10,6 @@ import { BookService } from './service/book.service';
 @NgModule({
   declarations: [AppComponent, BookstoreComponent, BooklistComponent],
   imports: [BrowserModule, FormsModule],
-  providers: [BookService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
