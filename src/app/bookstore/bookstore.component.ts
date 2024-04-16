@@ -24,7 +24,7 @@ export class BookstoreComponent implements OnInit {
 
   public onAddBookstore(): void {
     if (this.newBookstore.storeName && this.newBookstore.storeOwner) {
-      this.bookstores.push({ ...this.newBookstore });
+      this.bookstoreService.addBookStore(this.newBookstore);
       this.newBookstore = {
         storeId: 0,
         storeName: '',

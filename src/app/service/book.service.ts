@@ -3,9 +3,7 @@ import { Book } from '../interface/book-interface';
 
 @Injectable()
 export class BookService {
-  constructor() {
-    console.log('book service created');
-  }
+  constructor() {}
 
   private bookList: Book[] = [
     {
