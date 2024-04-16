@@ -5,6 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
+import { ProductDetailComponent } from '../product-list/product-detail/product-detail.component';
 
 const appRoute: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,11 @@ const appRoute: Routes = [
   { path: 'productsList', component: ProductListComponent, pathMatch: 'full' },
   { path: 'contact', component: ContactUsComponent, pathMatch: 'full' },
   { path: 'about', component: AboutUsComponent, pathMatch: 'full' },
+  {
+    path: 'product/:productId',
+    component: ProductDetailComponent,
+    pathMatch: 'full',
+  },
   { path: '**', redirectTo: 'home' },
 ];
 

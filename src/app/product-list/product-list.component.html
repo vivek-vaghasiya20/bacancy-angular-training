@@ -1,1 +1,15 @@
-<p>product-list works!</p>
+<div *ngFor="let product of productList">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ product.productName }}</h5>
+      <p class="card-text">{{ product.productDescription }}</p>
+      <p class="card-text">Price: ${{ product.productPrice }}</p>
+      <button
+        class="btn btn-primary"
+        (click)="goOnProductDetail(product.productId)"
+      >
+        View Product
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<button class="btn btn-primary" (click)="goBack()">&larr; All Products</button>
+
+<div class="container" *ngIf="product">
+  <h3 class="text-center mb-4">Product Details</h3>
+  <div class="row">
+    <div class="col-md-3 mt-5 mb-5">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.productName }}</h5>
+          <p class="card-text">{{ product.productDescription }}</p>
+          <p class="card-text">Price: ${{ product.productPrice }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
