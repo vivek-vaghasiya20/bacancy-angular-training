@@ -21,7 +21,12 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.productId = +this.activatedRoute.snapshot.params['productId'];
-    this.product = this.productService.getProductById(this.productId);
+    const product = this.productService.getProductById(this.productId);
+    if (product) {
+      this.product = product;
+    } else {
+      this.router.navigate(['404']);
+    }
   }
 
   public goBack(): void {

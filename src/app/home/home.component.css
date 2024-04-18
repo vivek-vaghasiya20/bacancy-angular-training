@@ -9,6 +9,7 @@ p {
   font-family: "Helvetica", sans-serif;
   font-size: 16px;
 }
+
 body {
   background-color: #f8f8f8;
   color: #333;
@@ -35,6 +36,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -63,4 +65,4 @@ a:hover {
 .btn:hover {
   background-color: #0056b3;
   transform: scale(1.1);
-}
+}/*# sourceMappingURL=home.component.css.map */
