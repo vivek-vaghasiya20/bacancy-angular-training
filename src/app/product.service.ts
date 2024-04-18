@@ -10,14 +10,22 @@ export class ProductService {
   private productList: Product[] = [
     {
       productId: 1,
+      productColor: 'green',
+      productSecondColor: 'red',
+      productSize: '14',
+      productSecondSize: '15',
       productName: 'Laptop',
       productDescription: 'With 1 TB SSD',
       productPrice: 49999,
     },
     {
       productId: 2,
+      productColor: 'yellow',
+      productSecondColor: 'green',
+      productSize: 'A4',
+      productSecondSize: 'A3',
       productName: 'Book',
-      productDescription: 'A4 Size Book',
+      productDescription: '100 page Book',
       productPrice: 49,
     },
   ];

@@ -4,9 +4,17 @@
       <h5 class="card-title">{{ product.productName }}</h5>
       <p class="card-text">{{ product.productDescription }}</p>
       <p class="card-text">Price: ${{ product.productPrice }}</p>
+      <p class="card-text">Color: {{ product.productColor }}</p>
+      <p class="card-text">Size: {{ product.productSize }}</p>
       <button
         class="btn btn-primary"
-        (click)="goOnProductDetail(product.productId)"
+        (click)="
+          goOnProductDetail(
+            product.productId,
+            product.productColor,
+            product.productSize
+          )
+        "
       >
         View Product
       </button>

@@ -9,6 +9,14 @@
           <h5 class="card-title">{{ product.productName }}</h5>
           <p class="card-text">{{ product.productDescription }}</p>
           <p class="card-text">Price: ${{ product.productPrice }}</p>
+          <p class="card-text">Color: {{ productColor }}</p>
+          <button class="btn btn-danger" (click)="changeColor()">
+            Change Color
+          </button>
+          <p class="card-text">Size: {{ productSize }}</p>
+          <button class="btn btn-info" (click)="changeSize()">
+            Change Size
+          </button>
         </div>
       </div>
     </div>

@@ -6,9 +6,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-import { ProductListComponent } from './product-list/product-list.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
+import { InvalidUrlComponent } from './invalid-url/invalid-url.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { ProductDetailComponent } from './product-list/product-detail/product-de
     HomeComponent,
     AboutUsComponent,
     ContactUsComponent,
-    ProductListComponent,
-    ProductDetailComponent,
+    InvalidUrlComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
