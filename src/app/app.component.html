@@ -1,49 +1,84 @@
 <section class="container">
   <header>Registration Form</header>
 
-  <form class="form">
-    <div class="column">
-      <div class="input-box">
-        <input type="text" placeholder="First Name" />
-      </div>
-
-      <div class="input-box">
-        <input type="text" placeholder="Last Name" />
-      </div>
+  <form class="form" (ngSubmit)="onFormSubmit()" #formObject="ngForm">
+    <div class="input-box">
+      <input
+        type="text"
+        placeholder="First Name"
+        name="fistName"
+        ngModel
+        required
+      />
     </div>
 
     <div class="input-box">
-      <input type="text" placeholder="Email" />
+      <input
+        type="text"
+        placeholder="Last Name"
+        name="lastName"
+        ngModel
+        required
+      />
     </div>
 
     <div class="input-box">
-      <input type="number" placeholder="Phone Number" />
+      <input
+        type="text"
+        placeholder="Email"
+        name="email"
+        ngModel
+        required
+        email
+      />
     </div>
 
     <div class="input-box">
-      <input type="text" placeholder="password" />
+      <input
+        type="number"
+        placeholder="Phone Number"
+        name="phoneNumber"
+        ngModel
+      />
+    </div>
+
+    <div class="input-box">
+      <input type="text" placeholder="password" name="password" ngModel />
     </div>
 
     <div class="gender-box">
       <h3>Gender</h3>
       <div class="gender-option">
         <div class="gender">
-          <input type="radio" id="check-male" name="gender" checked />
+          <input
+            type="radio"
+            id="check-male"
+            name="gender"
+            checked
+            value="male"
+            ngModel
+          />
           <label for="check-male">male</label>
         </div>
         <div class="gender">
-          <input type="radio" id="check-female" name="gender" />
+          <input
+            type="radio"
+            id="check-female"
+            name="gender"
+            value="Female"
+            ngModel
+          />
           <label for="check-female">Female</label>
         </div>
       </div>
     </div>
 
     <div class="select-box">
-      <select name="City">
-        <option hidden>City</option>
-        <option>Ahmedabad</option>
-        <option>Surat</option>
-        <option>Rajkot</option>
+      <select name="City" ngModel>
+        <option hidden value="">City</option>
+        <option value="ahmedabad">Ahmedabad</option>
+        <option value="surat">Surat</option>
+        <option value="rajkot">Rajkot</option>
       </select>
     </div>
     <div class="input-checkbox">
@@ -52,12 +87,15 @@
         class="form-check-input"
         id="remember_me"
         name="remember_me"
+        ngModel
       />
       <label class="form-check-label" for="remember_me">Remember me</label>
     </div>
     <div class="column">
-      <button type="submit" class="submit-btn">Save</button>
-      <button type="submit" class="submit-btn">Reset</button>
+      <button type="submit" [disabled]="!formObject.valid" class="submit-btn">
+        Save
+      </button>
+      <button type="reset">Reset</button>
     </div>
   </form>
 </section>
