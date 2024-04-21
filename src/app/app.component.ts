@@ -1,6 +1,6 @@
 import { NgFor } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { EmailValidator, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +12,15 @@ export class AppComponent {
 
   public showSubmittedData: boolean = false;
   public defaultGender: string = 'male';
+  public user = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    gender: '',
+    city: '',
+  };
   @ViewChild('formObject') formData!: NgForm;
 
   public fillForm(): void {
@@ -22,7 +31,7 @@ export class AppComponent {
       phoneNumber: 7485969685,
       password: 'Vivek21',
       gender: 'male',
-      City: 'surat',
+      city: 'surat',
       remember_me: true,
     });
   }
@@ -36,7 +45,14 @@ export class AppComponent {
   }
 
   public onFormSubmit(): void {
+    this.user.firstName = this.formData.value.firstName;
+    this.user.lastName = this.formData.value.lastName;
+    this.user.email = this.formData.value.email;
+    this.user.phoneNumber = this.formData.value.phoneNumber;
+    this.user.gender = this.formData.value.gender;
+    this.user.city = this.formData.value.city;
     this.showSubmittedData = true;
+    this.formData.reset();
   }
 
   public onFormReset(): void {

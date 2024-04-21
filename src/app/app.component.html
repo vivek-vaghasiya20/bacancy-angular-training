@@ -148,7 +148,7 @@
     </div>
 
     <div class="select-box">
-      <select name="City" ngModel required>
+      <select name="city" ngModel required>
         <option hidden value="">City</option>
         <option value="ahmedabad">Ahmedabad</option>
         <option value="surat">Surat</option>
@@ -179,12 +179,12 @@
   </form>
   <div *ngIf="showSubmittedData">
     <h3>Submitted Data:</h3>
-    <p>First Name: {{ formObject.value.firstName }}</p>
-    <p>Last Name: {{ formObject.value.lastName }}</p>
-    <p>Email: {{ formObject.value.email }}</p>
-    <p>Phone Number: {{ formObject.value.phoneNumber }}</p>
-    <p>PassWord: {{ formObject.value.password }}</p>
-    <p>Gender: {{ formObject.value.gender }}</p>
-    <p>City: {{ formObject.value.City }}</p>
+    <p>First Name: {{ user.firstName }}</p>
+    <p>Last Name: {{ user.lastName }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Phone Number: {{ user.phoneNumber }}</p>
+    <p>PassWord: {{ user.password }}</p>
+    <p>Gender: {{ user.gender }}</p>
+    <p>City: {{ user.city }}</p>
   </div>
 </section>
