@@ -28,12 +28,7 @@ header {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
   outline: none;
-}
-.input-box input:focus {
-  border-color: #85b7d9;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .gender-box {
@@ -115,4 +110,8 @@ header {
 }
 .column button[type=reset]:hover {
   background-color: #5a6268;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
 }/*# sourceMappingURL=app.component.css.map */

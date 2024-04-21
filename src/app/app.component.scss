@@ -28,13 +28,7 @@ header {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
     outline: none;
-
-    &:focus {
-      border-color: #85b7d9;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
   }
 }
 
@@ -117,17 +111,30 @@ header {
     }
   }
 
-  button[type="reset"] {
+  button[type="button"] {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #6c757d;
+    background-color: #28a745; /* Green color for the Set Value and Patch Value buttons */
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-bottom: 5px;
 
     &:hover {
-      background-color: #5a6268;
+      background-color: #218838;
     }
   }
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+
+.help-text {
+  color: red;
 }

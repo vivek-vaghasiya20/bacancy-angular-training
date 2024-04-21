@@ -6,10 +6,20 @@
       <input
         type="text"
         placeholder="First Name"
-        name="fistName"
+        name="firstName"
         ngModel
         required
       />
+      <span
+        class="help-text"
+        *ngIf="
+          formObject.controls['firstName']?.invalid &&
+          (formObject.controls['firstName']?.dirty ||
+            formObject.controls['firstName']?.touched)
+        "
+      >
+        First Name is required.
+      </span>
     </div>
 
     <div class="input-box">
@@ -20,6 +30,16 @@
         ngModel
         required
       />
+      <span
+        class="help-text"
+        *ngIf="
+          formObject.controls['lastName']?.invalid &&
+          (formObject.controls['lastName']?.dirty ||
+            formObject.controls['lastName']?.touched)
+        "
+      >
+        Last Name is required.
+      </span>
     </div>
 
     <div class="input-box">
@@ -30,20 +50,73 @@
         ngModel
         required
         email
+        #emailField="ngModel"
       />
+      <span
+        class="help-text"
+        *ngIf="emailField.touched && emailField.invalid && emailField.errors?.['required']"
+      >
+        Email is required.
+      </span>
+      <span
+        class="help-text"
+        *ngIf="emailField.touched && emailField.invalid && emailField.errors?.['email']"
+      >
+        Please Enter a Valid Email.
+      </span>
     </div>
 
     <div class="input-box">
       <input
-        type="number"
+        type="text"
         placeholder="Phone Number"
         name="phoneNumber"
         ngModel
+        required
+        pattern="[0-9]{10}"
+        #phoneField="ngModel"
       />
+      <span
+        class="help-text"
+        *ngIf="phoneField.touched && phoneField.errors?.['required']"
+      >
+        Phone Number is required.
+      </span>
+      <span
+        class="help-text"
+        *ngIf="phoneField.touched && phoneField.errors?.['pattern']"
+      >
+        Phone Number should be 10 digits.
+      </span>
     </div>
 
     <div class="input-box">
-      <input type="text" placeholder="password" name="password" ngModel />
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        ngModel
+        required
+        minlength="5"
+        pattern="(?=.*\d)(?=.*[a-zA-Z]).{5,}"
+        #passwordField="ngModel"
+      />
+      <span
+        class="help-text"
+        *ngIf="passwordField.touched && passwordField.errors?.['required']"
+      >
+        Password is required.
+      </span>
+      <span
+        class="help-text"
+        *ngIf="
+          passwordField.touched &&
+          (passwordField.errors?.['minlength'] || passwordField.errors?.['pattern'])
+        "
+      >
+        Password should be at least 5 characters long and contain a mixture of
+        letters and numbers.
+      </span>
     </div>
 
     <div class="gender-box">
@@ -54,9 +127,9 @@
             type="radio"
             id="check-male"
             name="gender"
-            checked
             value="male"
             ngModel
+            [ngModel]="defaultGender"
           />
           <label for="check-male">male</label>
         </div>
@@ -67,6 +140,7 @@
             name="gender"
             value="Female"
             ngModel
+            [ngModel]="defaultGender"
           />
           <label for="check-female">Female</label>
         </div>
@@ -74,7 +148,7 @@
     </div>
 
     <div class="select-box">
-      <select name="City" ngModel>
+      <select name="City" ngModel required>
         <option hidden value="">City</option>
         <option value="ahmedabad">Ahmedabad</option>
         <option value="surat">Surat</option>
@@ -91,11 +165,26 @@
       />
       <label class="form-check-label" for="remember_me">Remember me</label>
     </div>
+
+    <div class="column">
+      <button type="button" (click)="fillForm()">Set Value</button>
+      <button type="button" (click)="patchForm()">Patch Value</button>
+    </div>
     <div class="column">
       <button type="submit" [disabled]="!formObject.valid" class="submit-btn">
         Save
       </button>
-      <button type="reset">Reset</button>
+      <button type="button" (click)="onFormReset()">Reset</button>
     </div>
   </form>
+  <div *ngIf="showSubmittedData">
+    <h3>Submitted Data:</h3>
+    <p>First Name: {{ formObject.value.firstName }}</p>
+    <p>Last Name: {{ formObject.value.lastName }}</p>
+    <p>Email: {{ formObject.value.email }}</p>
+    <p>Phone Number: {{ formObject.value.phoneNumber }}</p>
+    <p>PassWord: {{ formObject.value.password }}</p>
+    <p>Gender: {{ formObject.value.gender }}</p>
+    <p>City: {{ formObject.value.City }}</p>
+  </div>
 </section>
