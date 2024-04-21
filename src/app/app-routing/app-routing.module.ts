@@ -6,7 +6,7 @@ import { ProductListComponent } from '../product-list/product-list.component';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { ProductDetailComponent } from '../product-list/product-detail/product-detail.component';
-import { InvalidUrlComponent } from '../invalid-url/invalid-url.component';
+import { ProductNotFoundComponent } from '../product-not-found/product-not-found.component';
 
 const appRoute: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,7 +19,7 @@ const appRoute: Routes = [
     component: ProductDetailComponent,
     pathMatch: 'full',
   },
-  { path: '404', component: InvalidUrlComponent },
+  { path: 'notfound', component: ProductNotFoundComponent },
   { path: '**', redirectTo: 'home' },
 ];
 

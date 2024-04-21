@@ -25,7 +25,7 @@ export class ProductDetailComponent implements OnInit {
     if (product) {
       this.product = product;
     } else {
-      this.router.navigate(['404']);
+      this.router.navigate(['notfound']);
     }
   }
 
