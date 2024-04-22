@@ -3,9 +3,9 @@ import { StoreService } from '../service/store.service';
 import { BookStore } from '../interface/bookStore-interface';
 
 @Component({
-  selector: 'app-bookstore',
-  templateUrl: './bookstore.component.html',
-  styleUrls: ['./bookstore.component.scss'],
+  selector: 'app-book-store',
+  templateUrl: './book-store.component.html',
+  styleUrls: ['./book-store.component.scss'],
 })
 export class BookstoreComponent implements OnInit {
   constructor(private bookstoreService: StoreService) {}

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Book } from 'src/app/interface/book-interface';
-import { BookService } from 'src/app/service/book.service';
+import { Component, Input } from '@angular/core';
+import { BookService } from '../service/book.service';
+import { Book } from '../interface/book-interface';
 
 @Component({
   selector: 'app-book-list',
@@ -8,7 +8,7 @@ import { BookService } from 'src/app/service/book.service';
   styleUrls: ['./book-list.component.scss'],
   providers: [BookService],
 })
-export class BooklistComponent implements OnInit {
+export class BooklistComponent {
   constructor(private bookService: BookService) {}
   @Input() index!: number;
   public bookList: Book[] = [];
