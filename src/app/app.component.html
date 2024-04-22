@@ -108,9 +108,7 @@
             </span>
             <span
               class="help-text"
-              *ngIf="
-                project.get('projectName')?.hasError('projectNameValidator')
-              "
+              *ngIf="project.get('projectName')?.hasError('projectNameExists')"
             >
               Project Name already exists.
             </span>
