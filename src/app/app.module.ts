@@ -8,7 +8,12 @@ import { CaptilizeOnHoverDirective } from './directives/captilize-on-hover.direc
 import { ClickCounterDirective } from './directives/click-counter.directive';
 
 @NgModule({
-  declarations: [AppComponent, TaskFourComponent, CaptilizeOnHoverDirective, ClickCounterDirective],
+  declarations: [
+    AppComponent,
+    TaskFourComponent,
+    CaptilizeOnHoverDirective,
+    ClickCounterDirective,
+  ],
   imports: [BrowserModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
