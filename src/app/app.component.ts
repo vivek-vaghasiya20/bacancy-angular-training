@@ -17,7 +17,8 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'bacancy-angular-training';
   public companyForm!: FormGroup;
-  
+  public formValue!: any;
+  public isShowData: boolean = false;
   constructor() {}
 
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
         'bacancytechnology.com',
         Validators.required
       ),
-      companyPhoneNumber: new FormControl('+13474414161', [
+      companyPhoneNumber: new FormControl('+917896857485', [
         Validators.required,
         this.indianPhoneNumberValidator,
       ]),
@@ -65,11 +66,9 @@ export class AppComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log(
-      '%csrcappapp.component.ts:30 this.companyForm',
-      'color: #007acc;',
-      this.companyForm
-    );
+    this.formValue = this.companyForm.value;
+    this.isShowData = true;
+    this.companyForm.reset();
   }
 
   private indianPhoneNumberValidator(
@@ -86,9 +85,7 @@ export class AppComponent implements OnInit {
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
     const projectName = control.value;
-
     const projects = this.companyForm.get('projects')?.value;
-
     const projectExists = projects.some(
       (project: any) => project.projectName === projectName
     );

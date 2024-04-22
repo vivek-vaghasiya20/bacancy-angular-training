@@ -168,7 +168,34 @@
     </div>
 
     <div class="column">
-      <button type="submit" class="submit-btn">submit</button>
+      <button type="submit" [disabled]="!companyForm.valid" class="submit-btn">
+        submit
+      </button>
     </div>
   </form>
 </section>
+
+<div class="container-fluid mt-3 company-details" *ngIf="isShowData">
+  <div class="row">
+    <div class="offset-md-3 col-md-6 border p-3">
+      <h4 class="text-center">Company Details</h4>
+      <p>Name: {{ formValue.companyName }}</p>
+      <p>Email: {{ formValue.companyEmail }}</p>
+      <p>Phone: {{ formValue.companyPhoneNumber }}</p>
+      <p>Website: {{ formValue.companyWebsite }}</p>
+      <p>Projects:</p>
+      <ul>
+        <li
+          class="mt-2"
+          *ngFor="let project of formValue.projects; let i = index"
+        >
+          <h4>Project {{ i + 1 }}</h4>
+          <p>ProjectName: {{ project.projectName }}</p>
+          <p>description:{{ project.description }}</p>
+          <p>Start: {{ project.startDate }}</p>
+          <p>End: {{ project.endDate }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
