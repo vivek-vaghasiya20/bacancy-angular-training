@@ -1,8 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  AsyncValidator,
-  AsyncValidatorFn,
   FormArray,
   FormControl,
   FormGroup,
@@ -19,6 +17,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'bacancy-angular-training';
   public companyForm!: FormGroup;
+  
   constructor() {}
 
   ngOnInit(): void {
@@ -55,11 +54,6 @@ export class AppComponent implements OnInit {
       endDate: new FormControl('', Validators.required),
     });
     (this.companyForm.get('projects') as FormArray).push(projectFormGroup);
-    console.log(
-      '%csrcappapp.component.ts:58 this.companyForm',
-      'color: #007acc;',
-      this.companyForm
-    );
   }
 
   public getProjectControl() {
@@ -68,11 +62,6 @@ export class AppComponent implements OnInit {
 
   public removeProject(index: number): void {
     (this.companyForm.get('projects') as FormArray).removeAt(index);
-    console.log(
-      '%csrcappapp.component.ts:71 this.companyForm',
-      'color: #007acc;',
-      this.companyForm
-    );
   }
 
   public onSubmit(): void {
@@ -93,50 +82,24 @@ export class AppComponent implements OnInit {
     return null;
   }
 
-  // public projectNameValidator(
-  //   control: AbstractControl
-  // ): Promise<{ [key: string]: any } | null> {
-  //   const projectName = control.value;
-  //   const projects = this.companyForm.get('projects')?.value;
-  //   const isDuplicate = projects.some(
-  //     (project: any) => project.projectName === projectName
-  //   );
-
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       if (isDuplicate) {
-  //         resolve({ duplicateProjectName: true });
-  //       } else {
-  //         resolve(null);
-  //       }
-  //     }, 1000);
-  //   });
-  // }
-
   private projectNameValidator(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
     const projectName = control.value;
 
-    const projectsArray = this.companyForm.get('projects') as FormArray;
+    const projects = this.companyForm.get('projects')?.value;
 
-    debugger;
-
-    const projectExists = projectsArray.controls
-      .map((projectControl) => projectControl.get('projectName')?.value)
-      .includes(projectName);
-      
-    debugger;
+    const projectExists = projects.some(
+      (project: any) => project.projectName === projectName
+    );
 
     return new Observable<ValidationErrors | null>((observer) => {
-      setTimeout(() => {
-        if (projectExists) {
-          observer.next({ projectNameExists: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-      }, 1000);
+      if (projectExists) {
+        observer.next({ projectNameExists: true });
+      } else {
+        observer.next(null);
+      }
+      observer.complete();
     });
   }
 }
