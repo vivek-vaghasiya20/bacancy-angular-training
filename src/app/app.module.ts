@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProjectService } from './project.service';
 
 @NgModule({
   declarations: [AppComponent],

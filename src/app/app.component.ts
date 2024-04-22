@@ -8,8 +8,6 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { OnSameUrlNavigation } from '@angular/router';
-import { ProjectService } from './project.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,16 +18,10 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'bacancy-angular-training';
   public companyForm!: FormGroup;
-  private projectService = inject(ProjectService);
   constructor() {}
 
   ngOnInit(): void {
     this.initializeForm();
-    console.log(
-      '%csrcappapp.component.ts:28 this.projectService',
-      'color: #007acc;',
-      this.projectService
-    );
   }
 
   private initializeForm(): void {
@@ -56,13 +48,17 @@ export class AppComponent implements OnInit {
       projectName: new FormControl('', {
         validators: [Validators.required],
         asyncValidators: [this.projectNameValidator as AsyncValidatorFn],
-        updateOn: 'blur',
       }),
       description: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
       endDate: new FormControl('', Validators.required),
     });
     (this.companyForm.get('projects') as FormArray).push(projectFormGroup);
+    console.log(
+      '%csrcappapp.component.ts:58 this.companyForm',
+      'color: #007acc;',
+      this.companyForm
+    );
   }
 
   public getProjectControl() {
@@ -71,6 +67,11 @@ export class AppComponent implements OnInit {
 
   public removeProject(index: number): void {
     (this.companyForm.get('projects') as FormArray).removeAt(index);
+    console.log(
+      '%csrcappapp.component.ts:71 this.companyForm',
+      'color: #007acc;',
+      this.companyForm
+    );
   }
 
   public onSubmit(): void {
@@ -96,13 +97,38 @@ export class AppComponent implements OnInit {
   ): Observable<ValidationErrors | null> {
     return new Observable<ValidationErrors | null>((observer) => {
       const projectName = control.value;
+
       console.log(
-        '%csrcappapp.component.ts:101 this.projectService',
+        '%csrcappapp.component.ts:102 projectName',
         'color: #007acc;',
-        this.projectService
+        projectName
       );
-      debugger;
-      if (this.projectService.checkProjectNameExists(projectName)) {
+
+      const projectsArray = this.companyForm.get('projects') as FormArray;
+
+      console.log(
+        '%csrcappapp.component.ts:108 projectsArray',
+        'color: #007acc;',
+        projectsArray
+      );
+
+      if (!projectsArray) {
+        observer.next(null);
+        observer.complete();
+        return;
+      }
+
+      const projectExists = projectsArray.controls
+        .map((projectControl) => projectControl.get('projectName')?.value)
+        .includes(projectName);
+
+      console.log(
+        '%csrcappapp.component.ts:124 projectExists',
+        'color: #007acc;',
+        projectExists
+      );
+
+      if (projectExists) {
         observer.next({ projectNameExists: true });
       } else {
         observer.next(null);
