@@ -49,7 +49,10 @@ export class AppComponent {
         asyncValidators: [this.projectNameValidator.bind(this)],
       }),
       description: new FormControl('', Validators.required),
-      startDate: new FormControl('', Validators.required),
+      startDate: new FormControl('', [
+        Validators.required,
+        this.startDateValidator,
+      ]),
       endDate: new FormControl('', [
         Validators.required,
         this.endDateValidator,
@@ -128,6 +131,17 @@ export class AppComponent {
     const endDate = new Date(control.value);
     if (startDate > endDate) {
       return { isEndDateValid: true };
+    }
+    return null;
+  }
+
+  private startDateValidator(
+    control: FormControl
+  ): { [key: string]: boolean } | null {
+    const endDate = new Date(control.parent?.get('endDate')?.value);
+    const startDate = new Date(control.value);
+    if (startDate > endDate) {
+      return { isStartDateValid: true };
     }
     return null;
   }

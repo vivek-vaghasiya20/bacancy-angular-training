@@ -131,7 +131,7 @@
                 project.get('projectName')?.dirty
               "
             >
-              Project Name should not Start with Space.
+              Project Name should not Start or End with Space.
             </span>
             <span
               class="help-text"
@@ -170,6 +170,15 @@
               "
             >
               Project Start Date is required.
+            </span>
+            <span
+              class="help-text"
+              *ngIf="
+                project.get('startDate')?.hasError('isStartDateValid') &&
+                project.get('startDate')?.touched
+              "
+            >
+              Project End Date must greater then the Start Date.
             </span>
           </div>
 
