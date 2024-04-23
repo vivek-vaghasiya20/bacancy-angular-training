@@ -15,6 +15,7 @@ export class CreatePostComponent {
     description: '',
   };
   private isSaveValue: boolean = false;
+  
   constructor(private postService: PostService, private router: Router) {}
 
   public createPost(): void {
