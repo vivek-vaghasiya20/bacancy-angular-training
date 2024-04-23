@@ -9,15 +9,16 @@ import { DeActiveGuardService } from './service/de-active-guard.service';
 import { AuthGuardService } from './service/auth-guard.service';
 
 const routes: Routes = [
-  //{ path: '', redirectTo: 'home' },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, pathMatch: 'full' },
+  { path: 'about', component: AboutComponent, pathMatch: 'full' },
   {
     path: 'posts',
     loadChildren: () =>
       import('../app/post/post.module').then((mod) => mod.PostModule),
   },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({
