@@ -7,31 +7,40 @@
       <input
         type="text"
         placeholder="Company Name"
-        name="companyName"
-        formControlName="companyName"
+        name="name"
+        formControlName="name"
       />
       <span
         class="help-text"
         *ngIf="
-          companyForm.get('companyName')?.invalid &&
-          companyForm.get('companyName')?.touched
+          companyForm.get('name')?.hasError('required') &&
+          companyForm.get('name')?.dirty
         "
       >
         Company Name is required.
+      </span>
+      <span
+        class="help-text"
+        *ngIf="
+          companyForm.get('name')?.hasError('isWhiteSpace') &&
+          companyForm.get('name')?.dirty
+        "
+      >
+        Company Name should not start with Space.
       </span>
     </div>
     <div class="input-box">
       <input
         type="text"
         placeholder="Company Email"
-        name="companyEmail"
-        formControlName="companyEmail"
+        name="email"
+        formControlName="email"
       />
       <span
         class="help-text"
         *ngIf="
-          companyForm.get('companyEmail')?.hasError('required') &&
-          companyForm.get('companyEmail')?.touched
+          companyForm.get('email')?.hasError('required') &&
+          companyForm.get('email')?.dirty
         "
       >
         Email is required.
@@ -39,8 +48,8 @@
       <span
         class="help-text"
         *ngIf="
-          companyForm.get('companyEmail')?.hasError('email') &&
-          companyForm.get('companyEmail')?.touched
+          companyForm.get('email')?.hasError('invalidEmail') &&
+          companyForm.get('email')?.dirty
         "
       >
         Please Enter a Valid Email.
@@ -50,17 +59,26 @@
       <input
         type="text"
         placeholder="Company Website"
-        name="companyWebsite"
-        formControlName="companyWebsite"
+        name="website"
+        formControlName="website"
       />
       <span
         class="help-text"
         *ngIf="
-          companyForm.get('companyWebsite')?.hasError('required') &&
-          companyForm.get('companyEmail')?.touched
+          companyForm.get('website')?.hasError('required') &&
+          companyForm.get('website')?.dirty
         "
       >
         Website is required.
+      </span>
+      <span
+        class="help-text"
+        *ngIf="
+          companyForm.get('website')?.hasError('isWhiteSpace') &&
+          companyForm.get('website')?.dirty
+        "
+      >
+        Website should not Start With Space.
       </span>
     </div>
     <div class="input-box">
@@ -76,7 +94,7 @@
           companyForm
             .get('companyPhoneNumber')
             ?.hasError('indianPhoneNumber') &&
-          companyForm.get('companyPhoneNumber')?.touched
+          companyForm.get('companyPhoneNumber')?.dirty
         "
       >
         Please enter a valid Indian phone number.
@@ -90,7 +108,7 @@
     <div *ngIf="companyForm.get('projects')">
       <div formArrayName="projects">
         <div
-          *ngFor="let project of getProjectControl(); let i = index"
+          *ngFor="let project of getProjectsControl(); let i = index"
           [formGroupName]="i"
         >
           <h3>Project {{ i + 1 }}</h3>
@@ -101,10 +119,19 @@
               class="help-text"
               *ngIf="
                 project.get('projectName')?.hasError('required') &&
-                project.get('projectName')?.touched
+                project.get('projectName')?.dirty
               "
             >
               Project Name is required.
+            </span>
+            <span
+              class="help-text"
+              *ngIf="
+                project.get('projectName')?.hasError('isWhiteSpace') &&
+                project.get('projectName')?.dirty
+              "
+            >
+              Project Name should not Start with Space.
             </span>
             <span
               class="help-text"
@@ -125,7 +152,7 @@
               class="help-text"
               *ngIf="
                 project.get('description')?.hasError('required') &&
-                project.get('description')?.touched
+                project.get('description')?.dirty
               "
             >
               Project Description is required.
@@ -139,7 +166,7 @@
               class="help-text"
               *ngIf="
                 project.get('startDate')?.hasError('required') &&
-                project.get('startDate')?.touched
+                project.get('startDate')?.dirty
               "
             >
               Project Start Date is required.
@@ -153,10 +180,19 @@
               class="help-text"
               *ngIf="
                 project.get('endDate')?.hasError('required') &&
-                project.get('endDate')?.touched
+                project.get('endDate')?.dirty
               "
             >
               Project End Date is required.
+            </span>
+            <span
+              class="help-text"
+              *ngIf="
+                project.get('endDate')?.hasError('isEndDateValid') &&
+                project.get('endDate')?.touched
+              "
+            >
+              Project End Date must greater then the Start Date.
             </span>
           </div>
 
@@ -175,19 +211,19 @@
   </form>
 </section>
 
-<div class="container-fluid mt-3 company-details" *ngIf="isShowData">
+<div class="container-fluid mt-3 company-details" *ngIf="isDisplayCompanyData">
   <div class="row">
     <div class="offset-md-3 col-md-6 border p-3">
       <h4 class="text-center">Company Details</h4>
-      <p>Name: {{ formValue.companyName }}</p>
-      <p>Email: {{ formValue.companyEmail }}</p>
-      <p>Phone: {{ formValue.companyPhoneNumber }}</p>
-      <p>Website: {{ formValue.companyWebsite }}</p>
+      <p>Name: {{ companyFormData.name }}</p>
+      <p>Email: {{ companyFormData.email }}</p>
+      <p>Phone: {{ companyFormData.companyPhoneNumber }}</p>
+      <p>Website: {{ companyFormData.website }}</p>
       <p>Projects:</p>
       <ul>
         <li
           class="mt-2"
-          *ngFor="let project of formValue.projects; let i = index"
+          *ngFor="let project of companyFormData.projects; let i = index"
         >
           <h4>Project {{ i + 1 }}</h4>
           <p>ProjectName: {{ project.projectName }}</p>

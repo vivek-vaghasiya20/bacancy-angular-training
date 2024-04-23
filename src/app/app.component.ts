@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -14,28 +14,26 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  title = 'bacancy-angular-training';
+export class AppComponent {
   public companyForm!: FormGroup;
-  public formValue!: any;
-  public isShowData: boolean = false;
-  constructor() {}
+  public companyFormData!: any;
+  public isDisplayCompanyData: boolean = false;
 
-  ngOnInit(): void {
+  constructor() {
     this.initializeForm();
   }
 
   private initializeForm(): void {
     this.companyForm = new FormGroup({
-      companyName: new FormControl('Bacancy Technology', Validators.required),
-      companyEmail: new FormControl('solution@bacancy.com', [
+      name: new FormControl('Bacancy Technology', [
         Validators.required,
-        Validators.email,
+        this.whiteSpaceValidator,
       ]),
-      companyWebsite: new FormControl(
-        'bacancytechnology.com',
-        Validators.required
-      ),
+      email: new FormControl('solution@bacancy.com', [
+        Validators.required,
+        this.emailValidator,
+      ]),
+      website: new FormControl('bacancytechnology.com', Validators.required),
       companyPhoneNumber: new FormControl('+917896857485', [
         Validators.required,
         this.indianPhoneNumberValidator,
@@ -47,17 +45,20 @@ export class AppComponent implements OnInit {
   public addProject(): void {
     const projectFormGroup = new FormGroup({
       projectName: new FormControl('', {
-        validators: [Validators.required],
+        validators: [Validators.required, this.whiteSpaceValidator],
         asyncValidators: [this.projectNameValidator.bind(this)],
       }),
       description: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
-      endDate: new FormControl('', Validators.required),
+      endDate: new FormControl('', [
+        Validators.required,
+        this.endDateValidator,
+      ]),
     });
     (this.companyForm.get('projects') as FormArray).push(projectFormGroup);
   }
 
-  public getProjectControl() {
+  public getProjectsControl(): AbstractControl[] {
     return (<FormArray>this.companyForm.get('projects')).controls;
   }
 
@@ -66,9 +67,29 @@ export class AppComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.formValue = this.companyForm.value;
-    this.isShowData = true;
-    this.companyForm.reset();
+    this.companyFormData = this.companyForm.value;
+    this.isDisplayCompanyData = true;
+    (this.companyForm.get('projects') as FormArray).clear();
+  }
+
+  private whiteSpaceValidator(
+    control: FormControl
+  ): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (value && value.trim() !== value) {
+      return { isWhiteSpace: true };
+    }
+    return null;
+  }
+
+  private emailValidator(
+    control: FormControl
+  ): { [key: string]: boolean } | null {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(control.value)) {
+      return { invalidEmail: true };
+    }
+    return null;
   }
 
   private indianPhoneNumberValidator(
@@ -84,7 +105,7 @@ export class AppComponent implements OnInit {
   private projectNameValidator(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    const projectName = control.value;
+    const projectName = control.value.trim();
     const projects = this.companyForm.get('projects')?.value;
     const projectExists = projects.some(
       (project: any) => project.projectName === projectName
@@ -98,5 +119,16 @@ export class AppComponent implements OnInit {
       }
       observer.complete();
     });
+  }
+
+  private endDateValidator(
+    control: FormControl
+  ): { [key: string]: boolean } | null {
+    const startDate = new Date(control.parent?.get('startDate')?.value);
+    const endDate = new Date(control.value);
+    if (startDate > endDate) {
+      return { isEndDateValid: true };
+    }
+    return null;
   }
 }
