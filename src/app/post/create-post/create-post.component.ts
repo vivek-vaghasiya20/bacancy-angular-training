@@ -10,12 +10,13 @@ import { PostService } from 'src/app/service/post.service';
 })
 export class CreatePostComponent {
   public post: Post = {
-    postId: 0,
+    id: '',
     title: '',
     description: '',
+    likeCount: 0,
   };
   private isSaveValue: boolean = false;
-  
+
   constructor(private postService: PostService, private router: Router) {}
 
   public createPost(): void {
@@ -24,9 +25,10 @@ export class CreatePostComponent {
       this.isSaveValue = true;
       alert('New Post Created');
       this.post = {
-        postId: 0,
+        id: '',
         title: '',
         description: '',
+        likeCount: 0,
       };
       this.router.navigate(['posts']);
     } else {

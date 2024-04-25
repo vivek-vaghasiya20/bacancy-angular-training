@@ -1,38 +1,59 @@
 import { Injectable } from '@angular/core';
 import { Post } from '../interface/post-interface';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
-  private postList: Post[] = [];
+  private connectionURL: string =
+    'https://httpdemo-44694-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json';
 
-  constructor() {
-    this.initializePosts();
-  }
+  private postsSubject: Subject<Post[]> = new Subject<Post[]>();
+  posts$: Observable<Post[]> = this.postsSubject.asObservable();
 
-  private initializePosts(): void {
-    this.postList = [
-      {
-        postId: 1,
-        title: 'Post title 1',
-        description: 'Post Description 1',
-      },
-      {
-        postId: 2,
-        title: 'Post title 2',
-        description: 'Post Description 2',
-      },
-    ];
-  }
+  constructor(private httpClient: HttpClient) {}
 
-  public getAllPost(): Post[] {
-    return this.postList;
+  public getAllPosts(): Observable<Post[]> {
+    return this.httpClient
+      .get<{ [key: string]: Post }>(this.connectionURL)
+      .pipe(
+        map((response) => {
+          let postList: Post[] = [];
+          for (let key in response) {
+            if (response.hasOwnProperty(key)) {
+              postList.push({ ...response[key], id: key });
+            }
+          }
+          this.postsSubject.next(postList);
+          return postList;
+        })
+      );
   }
 
   public createPost(post: Post): void {
-    post.postId = this.postList.length;
-    this.postList.push(post);
+    this.httpClient.post(this.connectionURL, post).subscribe((Response) => {
+      this.getAllPosts().subscribe();
+    });
+  }
+
+  public likePost(postId: string, likeCount: number) {
+    this.httpClient
+      .patch(
+        `https://httpdemo-44694-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${postId}.json`,
+        { likeCount: likeCount + 1 }
+      )
+      .subscribe(() => this.getAllPosts().subscribe());
+  }
+
+  public deletePost(postId: string) {
+    this.httpClient
+      .delete(
+        `https://httpdemo-44694-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${postId}.json`
+      )
+      .subscribe(() => {
+        this.getAllPosts().subscribe();
+      });
   }
 }

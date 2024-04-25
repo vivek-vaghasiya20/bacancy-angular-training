@@ -5,6 +5,11 @@
       <p class="card-text">
         {{ post.description }}
       </p>
-    </div>
+      <button class="btn btn-danger" (click)="likePost(post.id,post.likeCount)">
+        Like {{ post.likeCount }}
+      </button>
+      <button class="btn btn-warning" (click)="deletePost(post.id)">
+        Delete
+      </button>
   </div>
 </div>
