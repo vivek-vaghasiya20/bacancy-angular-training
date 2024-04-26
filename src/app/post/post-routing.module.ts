@@ -14,7 +14,6 @@ const productsRoutes: Routes = [
   {
     path: 'createPost',
     component: CreatePostComponent,
-    //canActivate: [AuthGuardService],
     canDeactivate: [DeActiveGuardService],
   },
 ];
