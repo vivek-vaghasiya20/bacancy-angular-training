@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CreatePostComponent } from '../post/create-post/create-post.component';
 
 @Injectable({

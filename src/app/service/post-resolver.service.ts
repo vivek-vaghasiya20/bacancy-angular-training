@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { PostService } from './post.service';
-import { Observable } from 'rxjs';
 import { Post } from '../interface/post-interface';
+import { PostService } from './post.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PostResolverService implements Resolve<any> {
+export class PostResolverService implements Resolve<Post[]> {
   constructor(private postService: PostService) {}
 
   public resolve(): Post[] {
