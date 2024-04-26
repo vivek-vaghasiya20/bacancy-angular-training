@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseComponent } from './course/course.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { CanLoadGuardService } from './service/can-load-guard.service';
 import { ChildGuardService } from './service/child-guard.service';
 
 const routes: Routes = [
@@ -20,7 +19,6 @@ const routes: Routes = [
     path: 'posts',
     loadChildren: () =>
       import('../app/post/post.module').then((mod) => mod.PostModule),
-    canLoad: [CanLoadGuardService],
   },
   { path: '**', redirectTo: 'login' },
 ];
