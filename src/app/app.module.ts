@@ -6,10 +6,11 @@ import { BookModule } from './book/book.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, HomeComponent],
-  imports: [BrowserModule, BookModule, AppRoutingModule],
+  imports: [BrowserModule, BookModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
