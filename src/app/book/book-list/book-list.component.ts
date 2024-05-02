@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, forkJoin, switchMap } from 'rxjs';
+import {
+  Subscription,
+  debounceTime,
+  distinctUntilChanged,
+  forkJoin,
+  switchMap,
+} from 'rxjs';
 import { Book } from 'src/app/interface/book-interface';
 import { BookService } from 'src/app/service/book.service';
 
@@ -9,33 +15,36 @@ import { BookService } from 'src/app/service/book.service';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.scss'],
 })
-export class BookListComponent {
+export class BookListComponent implements OnInit, OnDestroy {
   public bookList: Book[] = [];
   public book: Book | undefined;
   public showAllBooks: boolean = true;
   public bookForm!: FormGroup;
-
+  public subscription: Subscription[] = [];
   constructor(private bookService: BookService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-
     this.bookForm = this.fb.group({
       bookId: [''],
     });
 
     //Task-1
-    this.bookService.getBook().subscribe((res) => {
+    const getBookSubscription = this.bookService.getBook().subscribe((res) => {
       this.bookList = res;
     });
+    this.subscription.push(getBookSubscription);
 
     //Task-2
     const bookIds = [1, 2, 3, 4, 5];
-    this.bookService.getBooksByIds(bookIds).subscribe((books) => {
-      this.bookList = books;
-    });
+    const getBookByIdsSubscription = this.bookService
+      .getBooksByIds(bookIds)
+      .subscribe((books) => {
+        this.bookList = books;
+      });
+    this.subscription.push(getBookByIdsSubscription);
 
     //Task-3
-    this.bookForm.controls['bookId'].valueChanges
+    const bookSearchSubscription = this.bookForm.controls['bookId'].valueChanges
       .pipe(
         debounceTime(1000),
         distinctUntilChanged(),
@@ -61,8 +70,9 @@ export class BookListComponent {
           this.book = undefined;
         }
       });
+    this.subscription.push(bookSearchSubscription);
 
-      //this.getBooksUsingForkJoin();
+    this.getBooksUsingForkJoin();
   }
 
   //Task-4
@@ -75,5 +85,9 @@ export class BookListComponent {
       (res) => console.log(res),
       (err) => console.log(err)
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => sub.unsubscribe());
   }
 }
