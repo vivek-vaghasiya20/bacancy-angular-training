@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
+  public userEmail: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,28 +33,19 @@ export class LoginComponent implements OnInit {
           ),
         ],
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$'
-          ),
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
   }
 
   public onSubmit(): void {
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (response) => {
-        // Handle successful login
-        //this.toastr.success('Login successful', 'Success', {});
-        console.log('Login successful:', response);
-        //this.route.navigate(['/dashboard']);
+        alert('You logged successFully');
+        this.userEmail = this.loginForm.get('email')?.value;
+        localStorage.setItem('userEmail', this.userEmail);
+        this.route.navigate(['/dashboard']);
       },
       error: (err) => {
-        // Handle error here
         console.error('Login error:', err);
         // Optionally, show a user-friendly error message
       },

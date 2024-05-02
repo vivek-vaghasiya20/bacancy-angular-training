@@ -2,45 +2,52 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, from, tap, throwError } from 'rxjs';
+import { Response } from '../interface/response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private isAuthenticate: boolean = false;
+  //private isAuthenticate: boolean = false;
   private authToken: string = '';
+  public userEmail: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  public loginUser(loginData: FormData): Observable<{ token: string }> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+  public loginUser(loginData: FormData): Observable<Response> {
     return this.httpClient
-      .post<{ token: string }>(
+      .post<Response>(
         'https://localhost:7204/api/User/Login',
-        loginData,
-        httpOptions
+        loginData
       )
       .pipe(
         tap((response) => {
-          this.authToken = response.token;
+          this.authToken = JSON.stringify(response.data);
+          this.authToken = this.authToken.slice(1, -1);
           localStorage.setItem('authToken', this.authToken);
           //this.isAuthenticate = true;
-        }),
-        catchError((error) => {
-          // Transform error or perform error-specific logic
-          if (error.status === 401) {
-            // Unauthorized error handling
-            // Example: Redirect to login page
-            this.router.navigate(['/login']);
-          }
-          // Return a new observable or throw a new error
-          //return;
-          return from(throwError(() => new error('Login failed')));
         })
       );
+  }
+
+  public logout(): void {
+    //this.isAuthenticate = false;
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userEmail');
+    this.authToken = '';
+    this.router.navigate(['/login']);
+  }
+
+  public registerUser(userData: FormData): Observable<Response> {
+    return this.httpClient.post<Response>(
+      'https://localhost:7204/api/User/RegisterUser',
+      userData
+    );
+  }
+
+  public getDetails(): Observable<Response> {
+    return this.httpClient.get<Response>(
+      'https://localhost:7204/api/User/GetDetails'
+    );
   }
 }
