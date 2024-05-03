@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscriber, Subscription, take } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -38,26 +39,29 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.authService.loginUser(this.loginForm.value).subscribe({
-      next: (response) => {
-        if (response.status === 200) {
-          alert('You logged successFully');
-          this.userEmail = this.loginForm.get('email')?.value;
-          localStorage.setItem('userEmail', this.userEmail);
-          this.route.navigate(['/dashboard']);
-        } else if (response.status === 404) {
-          alert(response.message);
-        } else if (response.status === 401) {
-          alert(response.message);
-        } else {
-          alert(response.message);
-        }
-      },
-      error: (err) => {
-        if (err.status === 0) {
-          alert('Network error');
-        }
-      },
-    });
+    this.authService
+      .loginUser(this.loginForm.value)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          if (response.status === 200) {
+            alert('You logged successFully');
+            this.userEmail = this.loginForm.get('email')?.value;
+            localStorage.setItem('userEmail', this.userEmail);
+            this.route.navigate(['/dashboard']);
+          } else if (response.status === 404) {
+            alert(response.message);
+          } else if (response.status === 401) {
+            alert(response.message);
+          } else {
+            alert(response.message);
+          }
+        },
+        error: (err) => {
+          if (err.status === 0) {
+            alert('Network error');
+          }
+        },
+      });
   }
 }

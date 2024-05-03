@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -55,22 +56,25 @@ export class RegisterComponent {
   }
 
   public onSubmit(): void {
-    this.authService.registerUser(this.registrationForm.value).subscribe({
-      next: (response) => {
-        if (response.status === 200) {
-          alert(response.message);
-          this.route.navigate(['/login']);
-        } else if (response.status === 409) {
-          alert(response.message);
-        } else {
-          alert(response.message);
-        }
-      },
-      error: (err) => {
-        if (err.status === 0) {
-          alert('Network error');
-        }
-      },
-    });
+    this.authService
+      .registerUser(this.registrationForm.value)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          if (response.status === 200) {
+            alert(response.message);
+            this.route.navigate(['/login']);
+          } else if (response.status === 409) {
+            alert(response.message);
+          } else {
+            alert(response.message);
+          }
+        },
+        error: (err) => {
+          if (err.status === 0) {
+            alert('Network error');
+          }
+        },
+      });
   }
 }
