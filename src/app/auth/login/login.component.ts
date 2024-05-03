@@ -40,14 +40,23 @@ export class LoginComponent implements OnInit {
   public onSubmit(): void {
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (response) => {
-        alert('You logged successFully');
-        this.userEmail = this.loginForm.get('email')?.value;
-        localStorage.setItem('userEmail', this.userEmail);
-        this.route.navigate(['/dashboard']);
+        if (response.status === 200) {
+          alert('You logged successFully');
+          this.userEmail = this.loginForm.get('email')?.value;
+          localStorage.setItem('userEmail', this.userEmail);
+          this.route.navigate(['/dashboard']);
+        } else if (response.status === 404) {
+          alert(response.message);
+        } else if (response.status === 401) {
+          alert(response.message);
+        } else {
+          alert(response.message);
+        }
       },
       error: (err) => {
-        console.error('Login error:', err);
-        // Optionally, show a user-friendly error message
+        if (err.status === 0) {
+          alert('Network error');
+        }
       },
     });
   }

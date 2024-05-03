@@ -26,11 +26,6 @@ export class RequestInterceptor implements HttpInterceptor {
           email: userEmail,
         },
       });
-      console.log(
-        '%csrcappinterceptor\request.interceptor.ts:29 request',
-        'color: #007acc;',
-        request
-      );
     }
     return next.handle(request);
   }

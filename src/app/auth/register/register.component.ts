@@ -14,7 +14,6 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    // private toastr: ToastrService,
     private route: Router
   ) {}
 
@@ -58,18 +57,19 @@ export class RegisterComponent {
   public onSubmit(): void {
     this.authService.registerUser(this.registrationForm.value).subscribe({
       next: (response) => {
-        console.log(
-          '%csrcappauth\register\register.component.ts:61 response',
-          'color: #007acc;',
-          response
-        );
+        if (response.status === 200) {
+          alert(response.message);
+          this.route.navigate(['/login']);
+        } else if (response.status === 409) {
+          alert(response.message);
+        } else {
+          alert(response.message);
+        }
       },
       error: (err) => {
-        console.log(
-          '%csrcappauth\register\register.component.ts:64 err',
-          'color: #007acc;',
-          err
-        );
+        if (err.status === 0) {
+          alert('Network error');
+        }
       },
     });
   }
