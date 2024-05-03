@@ -14,4 +14,6 @@ export class ErrorService {
     console.log('this come from the emit error');
     this.errorSubject.next(errorMsg);
   }
+
+  
 }

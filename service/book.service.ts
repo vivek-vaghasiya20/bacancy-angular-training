@@ -45,27 +45,4 @@ export class BookService {
       );
   }
 
-  // searchBooks(searchQuery: string): Observable<Book[]> {
-  //   // const encodedSearchQuery = encodeURIComponent(searchQuery);
-  //   return this.httpClient.get<Book[]>(
-  //     `${this.connectionURL}?&orderBy="title"&equalTo=${searchQuery}`
-  //     // `${this.connectionURL}/books.json?&orderBy="title"&equalTo="${encodedSearchQuery}`
-  //   );
-  // }
-
-  // filterBooksByCategory(category: string): Observable<Book[]> {
-  //   console.log(category + ' from service');
-  //   return this.httpClient.get<Book[]>(
-  //     `${this.connectionURL}?orderBy="category"&equalTo="${category}"`
-  //   );
-  // }
-
-  // filterBooksByPriceRange(
-  //   minPrice: number,
-  //   maxPrice: number
-  // ): Observable<Book[]> {
-  //   return this.httpClient.get<Book[]>(
-  //     `${this.connectionURL}?orderBy="price"&startAt=${minPrice}&endAt=${maxPrice}`
-  //   );
-  // }
 }

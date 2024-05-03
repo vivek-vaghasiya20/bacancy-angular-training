@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Book } from 'interface/book.interface';
+import { Subscription } from 'rxjs';
 import { BookService } from 'service/book.service';
 
 @Component({
@@ -7,103 +9,56 @@ import { BookService } from 'service/book.service';
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.scss'],
 })
-export class BooksComponent {
-  constructor(private bookService: BookService) {}
+export class BooksComponent implements OnInit, OnDestroy {
   public bookList: Book[] = [];
-  public filteredBooks: Book[] = [];
-  
-  // public searchQuery: string = '';
-  // public priceRange: string = '0';
-  // public selectedCategory: string = '';
-  // public minPrice: number = 0;
-  // public maxPrice: number = Infinity;
-  // constructor(
-  //   private bookService: BookService,
-  //   private errorService: ErrorService
-  // ) {}
+  public filterForm!: FormGroup;
+  public categories: string[] = [
+    'All Category',
+    'Friction',
+    'Non-Friction',
+    'Sci-fi',
+  ];
+  public priceRanges: { label: string }[] = [
+    { label: 'All Price' },
+    { label: '99-199' },
+    { label: '199-299' },
+    { label: '299-399' },
+    { label: '399-more' },
+  ];
+  public subscriptions: Subscription[] = [];
+
+  constructor(private bookService: BookService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.bookService.getBooks().subscribe(
-      (books) => {
-        this.bookList = books;
-        // this.filteredBooks = books;
-      },
-      (error) => {
-        console.log(error + 'Error from Catch error');
-      }
-    );
+    this.initForm();
+    this.loadBooks();
   }
 
-  // public onSearch(searchQuery: string): void {
-  //   console.log('entered in onsearch');
-  //   if (searchQuery.trim() !== '') {
-  //     console.log(searchQuery + 'hii');
-  //     this.bookService.searchBooks(searchQuery).subscribe(
-  //       (books) => {
-  //         this.filteredBooks = books;
-  //       },
-  //       (error) => {
-  //         console.log(error + 'Error from Interceptor');
-  //       }
-  //     );
-  //   } else {
-  //     this.resetFilters();
-  //   }
+  public initForm(): void {
+    this.filterForm = this.fb.group({
+      title: [''],
+      category: ['All'],
+      priceRange: ['All price'],
+    });
+  }
+
+  public loadBooks() {
+    const loadBookSubscription = this.bookService.getBooks().subscribe({
+      next: (books) => {
+        this.bookList = books;
+      },
+      error: (err) => {
+        alert(err);
+      },
+    });
+    this.subscriptions.push(loadBookSubscription);
+  }
+
+  // public fetchOnFilter(){
+  //   const filterSubscription = this.bookService.
   // }
 
-  // public filterByPriceRange(): void {
-  //   switch (this.priceRange) {
-  //     case '1':
-  //       this.minPrice = 0;
-  //       this.maxPrice = 10;
-  //       break;
-  //     case '2':
-  //       this.minPrice = 10;
-  //       this.maxPrice = 50;
-  //       break;
-  //     case '3':
-  //       this.minPrice = 50;
-  //       this.maxPrice = Infinity;
-  //       break;
-  //     default:
-  //       this.resetFilters();
-  //       return;
-  //   }
-  //   this.bookService
-  //     .filterBooksByPriceRange(this.minPrice, this.maxPrice)
-  //     .subscribe(
-  //       (books) => {
-  //         this.filteredBooks = books;
-  //       },
-  //       (error) => {
-  //         this.errorService.handleError(
-  //           error.message + 'An error occurred from subject'
-  //         );
-  //       }
-  //     );
-  // }
-  // filterByCategory(): void {
-  //   if (this.selectedCategory !== '') {
-  //     console.log(this.selectedCategory + ' from component');
-  //     this.bookService
-  //       .filterBooksByCategory(this.selectedCategory)
-  //       .subscribe((books) => {
-  //         this.filteredBooks = books;
-  //         console.log(books);
-  //       });
-  //   } else {
-  //     this.resetFilters();
-  //   }
-  // }
-
-  // resetFilters(): void {
-  //   this.searchQuery = '';
-  //   this.selectedCategory = '';
-  //   this.minPrice = 0;
-  //   this.maxPrice = Infinity;
-  //   this.bookService.getBooks().subscribe((books) => {
-  //     this.books = books;
-  //     this.filteredBooks = books;
-  //   });
-  // }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 }
