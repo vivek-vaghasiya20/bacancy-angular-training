@@ -1,0 +1,98 @@
+.stock-alert {
+  position: absolute;
+  top: -12px;
+  left: 120px;
+}
+
+.card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  .card-img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .card-body {
+    padding: 20px;
+
+    .card-title {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      margin-bottom: 15px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .btn-primary {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+          border-color: #0056b3;
+        }
+
+        &.btn-color {
+          background-color: #28a745;
+          border-color: #28a745;
+        }
+      }
+
+      .view-more-btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    .alert-success {
+      margin-top: 10px;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+  }
+
+  .accordion {
+    margin-top: 15px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+
+    .accordion-item {
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      margin-bottom: 10px;
+
+      .accordion-header {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .accordion-content {
+        padding: 10px;
+        display: none;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      &.active {
+        .accordion-content {
+          display: block;
+        }
+      }
+    }
+  }
+}

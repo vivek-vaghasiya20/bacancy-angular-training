@@ -1,1 +1,21 @@
-<p>book-detail works!</p>
+<table>
+  <tr>
+    <th>Stock:</th>
+    <td>{{ book.stock }}</td>
+  </tr>
+  <tr>
+    <th>Review:</th>
+    <td>{{ book.review }}</td>
+  </tr>
+  <tr>
+    <th>Book Rating:</th>
+    <td>
+      <span
+        *ngFor="let color of getStarColors(book.rating)"
+        class="star"
+        [style.color]="color"
+        >&#9733;</span
+      >
+    </td>
+  </tr>
+</table>

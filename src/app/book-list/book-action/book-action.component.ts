@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { book } from 'src/app/book-interface';
 
 @Component({
@@ -7,6 +7,7 @@ import { book } from 'src/app/book-interface';
   styleUrls: ['./book-action.component.scss'],
 })
 export class BookActionComponent {
+  @Input() book: book | undefined;
   public newBook: book = {
     bookId: 0,
     imgUrl: '',
@@ -17,16 +18,40 @@ export class BookActionComponent {
     rating: 0,
     stock: 0,
   };
-
+  @Input() isEditMode: boolean | undefined;
   @Output() bookAdded = new EventEmitter<book>();
-  //@Output() deleteBook = new EventEmitter<book>();
+  @Output() bookEdited = new EventEmitter<book>();
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.book) {
+      this.newBook = { ...this.book };
+    }
+  }
+  
   public addBook(): void {
-    this.bookAdded.emit(this.newBook);
+    if (this.validForm()) {
+      this.bookAdded.emit(this.newBook);
+      this.resetForm();
+    } else {
+      alert('Please fill up all field ');
+    }
+  }
+
+  public updateBook(): void {
+    this.bookEdited.emit(this.newBook);
     this.resetForm();
   }
-  public deleteBook(): void {
-    // this.deleteBook.emit(this.deleteBook);
+
+  private validForm(): boolean {
+    return (
+      this.newBook.title.trim() !== '' &&
+      this.newBook.description.trim() !== '' &&
+      this.newBook.imgUrl.trim() !== '' &&
+      this.newBook.price !== null &&
+      this.newBook.review.trim() !== '' &&
+      this.newBook.rating !== null &&
+      this.newBook.stock !== null
+    );
   }
 
   public resetForm(): void {
@@ -40,5 +65,6 @@ export class BookActionComponent {
       rating: 0,
       stock: 0,
     };
+    this.isEditMode = false;
   }
 }

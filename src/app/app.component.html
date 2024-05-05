@@ -1,1 +1,45 @@
 <app-book-list></app-book-list>
+
+<!-- List out which lifecycle hooks are called when actions occur.
+1. ngOnChanges: Called every time the input properties of a component or directive are changed. It's called before ngOnInit and whenever one or more data-bound input properties change.
+2. ngOnInit: Called once, after the first ngOnChanges. It's used for initializing the component, such as retrieving data from a service.
+3. ngDoCheck: Called during every change detection run, immediately after ngOnChanges and ngOnInit. It's used for custom change detection.
+4. ngAfterContentInit: Called after the component's content has been initialized, which includes any projected content (content children). It's used for initialization that relies on content initialization.
+5. ngAfterContentChecked: Called after every check of the component's content (including content children). It's used for additional checks after the content has been initialized.
+6. ngAfterViewInit: Called after the component's view (and child views) has been initialized. It's used for initialization that relies on the component's view.
+7. ngAfterViewChecked: Called after every check of the component's view (and child views). It's used for additional checks after the view has been initialized.
+8. ngOnDestroy: Called just before the directive or component is destroyed. It's used for cleanup, such as unsubscribing from observables or detaching event handlers. 
+
+R&D question:
+When multiple ng-content tags are present in a single template file, each ng-content tag can be associated with a specific slot in the component. Here's how you could handle content projection with multiple ng-content tags:
+
+Define Slots: In the component's template, define multiple <ng-content> tags, each with a different select attribute to define a slot. For example:
+html
+ code
+<ng-content select=".header"></ng-content>
+<ng-content select=".body"></ng-content>
+<ng-content select=".footer"></ng-content>
+Use Slots: In the parent component where you use the component with multiple slots, provide content for each slot by using structural directives like ng-content with select attribute or by wrapping content in elements with matching classes.
+html code
+<app-multi-slot-component>
+  <div class="header">
+  </div>
+  <div class="body">
+  </div>
+  <div class="footer">
+  </div>
+</app-multi-slot-component>
+Accessing Projected Content: Inside the component's template where you define the ng-content tags, you can access the projected content using the slot selectors provided in the select attribute.
+html
+Copy code
+<div class="container">
+  <div class="header">
+    <ng-content select=".header"></ng-content>
+  </div>
+  <div class="body">
+    <ng-content select=".body"></ng-content>
+  </div>
+  <div class="footer">
+    <ng-content select=".footer"></ng-content>
+  </div>
+</div> -->

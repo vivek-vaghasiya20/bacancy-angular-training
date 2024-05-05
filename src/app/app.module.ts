@@ -6,6 +6,7 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookComponent } from './book-list/book/book.component';
 import { BookActionComponent } from './book-list/book-action/book-action.component';
 import { BookDetailComponent } from './book-list/book-detail/book-detail.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { BookDetailComponent } from './book-list/book-detail/book-detail.compone
     BookActionComponent,
     BookDetailComponent,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, CoreModule],
   providers: [],
   bootstrap: [AppComponent],
 })
