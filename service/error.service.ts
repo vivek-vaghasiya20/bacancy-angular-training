@@ -1,19 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorService {
-
   private errorSubject: Subject<HttpErrorResponse> =
     new Subject<HttpErrorResponse>();
 
-  public emitErrors(errorMsg: HttpErrorResponse): void {
-    console.log('this come from the emit error');
+  public emitErrorsInSubject(errorMsg: HttpErrorResponse): void {
     this.errorSubject.next(errorMsg);
   }
 
-  
+  public getErrorFromSubject(): Observable<HttpErrorResponse> {
+    return this.errorSubject.asObservable();
+  }
 }

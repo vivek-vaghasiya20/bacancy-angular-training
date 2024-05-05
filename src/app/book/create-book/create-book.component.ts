@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 import { BookService } from 'service/book.service';
+import { __addDisposableResource } from 'tslib';
 
 @Component({
   selector: 'app-create-book',
@@ -8,11 +10,9 @@ import { BookService } from 'service/book.service';
   styleUrls: ['./create-book.component.scss'],
 })
 export class CreateBookComponent {
-  //public onAddBookEvent() {}
-  public url!: string;
-  bookForm!: FormGroup;
-  // fileToUpload!: File | null;
-  // public emptyField: boolean = false;
+  public imageUrl!: string;
+  public bookForm!: FormGroup;
+
   constructor(
     private bookService: BookService,
     private formBuilder: FormBuilder
@@ -25,38 +25,42 @@ export class CreateBookComponent {
       price: ['', Validators.required],
       author: ['', Validators.required],
       description: ['', Validators.required],
-      file: ['', Validators.required],
     });
   }
 
-  // handleFileInput(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  // }
-
-  handleFileInput(event: any) {
+  public handleFileInput(event: any): void {
     const files: FileList = event.target.files;
     if (files.length === 0) {
-      this.url = '';
+      this.imageUrl = '';
       return;
     }
-
     const file: File = files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.url = reader.result as string;
+      this.imageUrl = reader.result as string;
     };
   }
 
-  onSubmit() {
-    this.bookService.addBook({
-      title: this.bookForm.get('title')?.value,
-      author: this.bookForm.get('author')?.value,
-      description: this.bookForm.get('description')?.value,
-      price: this.bookForm.get('price')?.value,
-      category: this.bookForm.get('category')?.value,
-      imageURL: this.url,
-    });
+  public onSubmit(): void {
+    this.bookService
+      .addBook({
+        title: this.bookForm.get('title')?.value,
+        author: this.bookForm.get('author')?.value,
+        description: this.bookForm.get('description')?.value,
+        price: this.bookForm.get('price')?.value,
+        category: this.bookForm.get('category')?.value,
+        imageURL: this.imageUrl,
+      })
+      .pipe(take(1))
+      .subscribe({
+        next: () => alert('Book Successfully added'),
+        error: () => alert('Sorry! Something went wrong. Book can not added.'),
+      });
     this.bookForm.reset();
+    const fileInput = document.getElementById('file') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 }

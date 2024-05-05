@@ -24,36 +24,6 @@
       <label for="file">Add Book Image</label>
       <input type="file" (change)="handleFileInput($event)" id="file" />
     </div>
-    <button type="submit">Add Book</button>
+    <button type="submit" [disabled]="!bookForm.valid">Add Book</button>
   </form>
 </div>
-
-<!-- <div class="row">
-    <div class="col-xs-12">
-      <p>Add Book</p>
-      <div class="form-container">
-        <label>Book Name</label>
-        <input type="text" class="form-control"  />
-        <label>Book Author Name</label>
-        <input type="text" class="form-control"  />
-        <label>Book Price</label>
-        <input type="text" class="form-control"  />
-        <label>Book Description</label>
-        <textarea
-          name="textareaName"
-          id="textareaId"
-          rows="4"
-          cols="50"
-          class="form-control"
-          #bookDescriptionRef
-        ></textarea>
-        <br />
-        <button
-          class="btn btn-primary"
-          (click)="onAddBookEvent()"
-        >
-          Add Book
-        </button>
-      </div>
-    </div>
-  </div> -->

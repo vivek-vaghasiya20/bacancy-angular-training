@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Book } from 'interface/book.interface';
 import { Subscription } from 'rxjs';
 import { BookService } from 'service/book.service';
+import { ErrorService } from 'service/error.service';
 
 @Component({
   selector: 'app-books',
@@ -14,9 +15,10 @@ export class BooksComponent implements OnInit, OnDestroy {
   public filterForm!: FormGroup;
   public categories: string[] = [
     'All Category',
+    'SelfHelp',
     'Friction',
-    'Non-Friction',
-    'Sci-fi',
+    'Mystery',
+    'Horror',
   ];
   public priceRanges: { label: string }[] = [
     { label: 'All Price' },
@@ -27,22 +29,37 @@ export class BooksComponent implements OnInit, OnDestroy {
   ];
   public subscriptions: Subscription[] = [];
 
-  constructor(private bookService: BookService, private fb: FormBuilder) {}
+  constructor(
+    private bookService: BookService,
+    private fb: FormBuilder,
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit() {
     this.initForm();
     this.loadBooks();
+    this.showError();
   }
 
   public initForm(): void {
     this.filterForm = this.fb.group({
       title: [''],
-      category: ['All'],
+      category: ['All category'],
       priceRange: ['All price'],
     });
   }
 
-  public loadBooks() {
+  public showError(): void {
+    const errorSubscription = this.errorService
+      .getErrorFromSubject()
+      .subscribe({
+        next: (error) => alert(error),
+        error: (error) => alert(error),
+      });
+    this.subscriptions.push(errorSubscription);
+  }
+
+  public loadBooks(): void {
     const loadBookSubscription = this.bookService.getBooks().subscribe({
       next: (books) => {
         this.bookList = books;
@@ -54,9 +71,19 @@ export class BooksComponent implements OnInit, OnDestroy {
     this.subscriptions.push(loadBookSubscription);
   }
 
-  // public fetchOnFilter(){
-  //   const filterSubscription = this.bookService.
-  // }
+  public onSubmitFilter(): void {
+    const filterSubscription = this.bookService
+      .getFilteredBooks(this.filterForm.value)
+      .subscribe({
+        next: (books) => {
+          this.bookList = books;
+        },
+        error: (err) => {
+          alert(err);
+        },
+      });
+    this.subscriptions.push(filterSubscription);
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
