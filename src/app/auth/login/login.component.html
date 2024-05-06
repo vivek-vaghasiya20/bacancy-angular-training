@@ -14,15 +14,17 @@
           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
           #emailField="ngModel"
         />
-        <div
+        <span
           *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)"
           class="text-danger"
         >
-          <div *ngIf="emailField.hasError('required')">Email is required.</div>
-          <div *ngIf="emailField.hasError('pattern')">
+          <span *ngIf="emailField.hasError('required')"
+            >Email is required.</span
+          >
+          <span *ngIf="emailField.hasError('pattern')">
             Please enter a valid email address.
-          </div>
-        </div>
+          </span>
+        </span>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword">Password</label>
@@ -35,17 +37,17 @@
           required
           #passwordField="ngModel"
         />
-        <div
+        <span
           *ngIf="
             passwordField.invalid &&
             (passwordField.dirty || passwordField.touched)
           "
           class="text-danger"
         >
-          <div *ngIf="passwordField.hasError('required')">
+          <span *ngIf="passwordField.hasError('required')">
             Password is required.
-          </div>
-        </div>
+          </span>
+        </span>
       </div>
       <button
         type="submit"

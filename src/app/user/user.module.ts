@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { UserHeaderComponent } from './user-header/user-header.component';
+import { UserFooterComponent } from './user-footer/user-footer.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
     AddMemberComponent,
     UserDashboardComponent,
+    UserHeaderComponent,
+    UserFooterComponent,
   ],
   imports: [CommonModule],
   exports: [
-    HeaderComponent,
-    FooterComponent,
+    UserHeaderComponent,
+    UserFooterComponent,
     UserDashboardComponent,
     AddMemberComponent,
   ],

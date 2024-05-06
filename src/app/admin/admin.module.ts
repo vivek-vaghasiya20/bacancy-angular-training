@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { AdminFooterComponent } from './admin-footer/admin-footer.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
     AddUserComponent,
     AdminDashboardComponent,
+    AdminHeaderComponent,
+    AdminFooterComponent,
   ],
   imports: [CommonModule, AdminRoutingModule],
   exports: [
     AdminDashboardComponent,
-    HeaderComponent,
-    FooterComponent,
+    AdminHeaderComponent,
+    AdminFooterComponent,
     AddUserComponent,
   ],
 })
