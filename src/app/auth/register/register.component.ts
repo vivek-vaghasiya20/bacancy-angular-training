@@ -8,7 +8,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { pipe, take } from 'rxjs';
+import { admin } from 'src/app/interface/admin.interface';
+import { user } from 'src/app/interface/user.interface';
 
 @Component({
   selector: 'app-register',
@@ -25,9 +26,92 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.checkAndCreateAdminData();
   }
 
-  public initializeForm(): void {
+  public onSubmit(): void {
+    if (this.registrationForm.get('role')?.value === 'Admin') {
+      this.addNewAdmin();
+    } else {
+      this.addNewUser();
+    }
+  }
+
+  private addNewAdmin(): void {
+    let newAdmin: admin = {
+      firstName: this.registrationForm.get('firstName')?.value,
+      lastName: this.registrationForm.get('lastName')?.value,
+      email: this.registrationForm.get('email')?.value,
+      password: this.registrationForm.get('password')?.value,
+      confirmPassword: this.registrationForm.get('confirmPassword')?.value,
+      gender: this.registrationForm.get('gender')?.value,
+      hobbies: this.registrationForm.get('hobbies')?.value,
+      role: 'admin',
+      isActive: true,
+      users: [],
+    };
+
+    let adminData: admin[] = [];
+
+    const localStorageData = localStorage.getItem('users');
+    if (localStorageData !== null) {
+      adminData = JSON.parse(localStorageData);
+    }
+    adminData.push(newAdmin);
+    localStorage.setItem('users', JSON.stringify(adminData));
+  }
+
+  private addNewUser(): void {
+    let newUser: user = {
+      firstName: this.registrationForm.get('firstName')?.value,
+      lastName: this.registrationForm.get('lastName')?.value,
+      email: this.registrationForm.get('email')?.value,
+      password: this.registrationForm.get('password')?.value,
+      confirmPassword: this.registrationForm.get('confirmPassword')?.value,
+      gender: this.registrationForm.get('gender')?.value,
+      hobbies: this.registrationForm.get('hobbies')?.value,
+      role: 'user',
+      isActive: true,
+    };
+
+    const selectedAdmin = this.registrationForm.get('adminList')?.value;
+
+    let adminData: admin[] = [];
+
+    const localStorageData = localStorage.getItem('users');
+    if (localStorageData !== null) {
+      adminData = JSON.parse(localStorageData);
+    }
+
+    const adminIndex = adminData.findIndex(
+      (admin) => admin.firstName === selectedAdmin
+    );
+    if (adminIndex !== -1) {
+      adminData[adminIndex].users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(adminData));
+    }
+  }
+
+  private checkAndCreateAdminData(): void {
+    const localStorageData = localStorage.getItem('users');
+    if (!localStorageData || localStorageData.trim() === '') {
+      const newAdmin: admin = {
+        firstName: 'Admin',
+        lastName: 'Admin',
+        email: 'admin@example.com',
+        password: 'admin123',
+        confirmPassword: 'admin123',
+        gender: 'Male',
+        hobbies: 'Coding',
+        role: 'admin',
+        isActive: true,
+        users: [],
+      };
+      localStorage.setItem('users', JSON.stringify([newAdmin]));
+    }
+  }
+
+  private initializeForm(): void {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -56,8 +140,6 @@ export class RegisterComponent {
     });
   }
 
-  public onSubmit(): void {}
-
   private passwordMatchValidator: ValidatorFn = (
     control: AbstractControl
   ): { [key: string]: boolean } | null => {
@@ -67,7 +149,6 @@ export class RegisterComponent {
     this.registrationForm
       ?.get('password')
       ?.valueChanges.subscribe((newValue) => {
-        console.log('called');
         if (newValue !== confirmPassword) {
           control.setErrors({ passwordMismatch: true });
         } else {
@@ -88,7 +169,15 @@ export class RegisterComponent {
         'adminList',
         new FormControl('', [Validators.required])
       );
-      this.adminList = ['Admin 1', 'Admin 2'];
+
+      // Retrieve admin data from localStorage
+      const localStorageData = localStorage.getItem('users');
+      if (localStorageData) {
+        const adminData: admin[] = JSON.parse(localStorageData);
+        this.adminList = adminData.map((admin) => admin.firstName);
+      } else {
+        console.error('Admin data not found in localStorage');
+      }
     } else {
       if (this.registrationForm.get('adminList')) {
         this.registrationForm.removeControl('adminList');
