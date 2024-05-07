@@ -45,31 +45,6 @@
             </span>
           </div>
           <div class="form-group">
-            <label for="contactNumber">Phone Number</label>
-            <input
-              type="tel"
-              class="form-control"
-              id="contactNumber"
-              placeholder="Enter Phone Number"
-              formControlName="contactNumber"
-            />
-            <span
-              *ngIf="
-                registrationForm.get('contactNumber')?.hasError('required') &&
-                (registrationForm.get('contactNumber')?.dirty ||
-                  registrationForm.get('contactNumber')?.touched)
-              "
-              class="text-danger"
-            >
-              Phone number is required.
-            </span>
-            <span
-              *ngIf="registrationForm.get('contactNumber')?.errors?.['pattern']"
-              class="text-danger"
-              >Please Enter valid phone number format</span
-            >
-          </div>
-          <div class="form-group">
             <label for="email">Email Address</label>
             <input
               type="email"
@@ -117,60 +92,113 @@
               *ngIf="registrationForm.get('password')?.errors?.['pattern']"
               class="text-danger"
             >
-              Password must be 8 Character that contains At least one Capital
-              Alphabets.one small Alphabets,one digit and one special character
+              Password must be at least 6 characters long and max 12 characters
+              allow, contain at least one capital letter, one small letter, one
+              @ symbol, and one digit.
             </span>
           </div>
           <div class="form-group">
-            <label for="dateOfBirth">Date of Birth</label>
+            <label for="confirm password">Confirm Password</label>
             <input
-              type="date"
+              type="text"
               class="form-control"
-              id="dateOfBirth"
-              placeholder="Enter Date of Birth"
-              formControlName="dateOfBirth"
+              id="confirm password"
+              placeholder="Confirm Password"
+              formControlName="confirmPassword"
             />
             <span
               *ngIf="
-                registrationForm.get('dateOfBirth')?.hasError('required') &&
-                (registrationForm.get('dateOfBirth')?.dirty ||
-                  registrationForm.get('dateOfBirth')?.touched)
+                registrationForm.get('confirmPassword')?.hasError('required') &&
+                (registrationForm.get('confirmPassword')?.dirty ||
+                  registrationForm.get('confirmPassword')?.touched)
               "
               class="text-danger"
             >
-              Date of birth is required.
+              Please confirm the password.
+            </span>
+            <span
+              *ngIf="
+                registrationForm
+                  .get('confirmPassword')
+                  ?.hasError('passwordMismatch') &&
+                (registrationForm.get('confirmPassword')?.dirty ||
+                  registrationForm.get('confirmPassword')?.touched)
+              "
+              class="text-danger"
+            >
+              Passwords do not match.
             </span>
           </div>
           <div class="form-group">
-            <label for="totalMatchesPlayed">Total Match Played</label>
-            <input
-              type="number"
-              class="form-control"
-              id="totalMatchesPlayed"
-              placeholder="Enter Total Match Played"
-              formControlName="totalMatchesPlayed"
-            />
+            <label for="gender">Gender</label>
+            <div class="radio-buttons">
+              <div *ngFor="let gender of genders" class="radio-button">
+                <input type="radio" formControlName="gender" [value]="gender" />
+                {{ gender }}
+              </div>
+            </div>
+            <span
+              *ngIf="registrationForm.get('gender')?.errors?.['required'] && (registrationForm.get('gender')?.dirty || registrationForm.get('gender')?.touched)"
+              class="text-danger"
+            >
+              Gender is required.
+            </span>
           </div>
           <div class="form-group">
-            <label for="height">Height (in cm)</label>
-            <input
-              type="number"
-              class="form-control"
-              id="height"
-              placeholder="Enter Height"
-              formControlName="height"
-            />
+            <label for="hobbies">Hobbies</label>
+            <select id="hobbies" formControlName="hobbies" class="form-control">
+              <option value="" selected>Select your hobby</option>
+              <option *ngFor="let hobby of hobbies" [value]="hobby">
+                {{ hobby }}
+              </option>
+            </select>
+            <span
+              *ngIf="registrationForm.get('hobbies')?.errors?.['required'] && (registrationForm.get('hobbies')?.dirty || registrationForm.get('hobbies')?.touched)"
+              class="text-danger"
+              >Hobbies are required.
+            </span>
           </div>
           <div class="form-group">
-            <label for="weight">Weight (in kg)</label>
-            <input
-              type="number"
+            <label for="role">Roles</label>
+            <select
+              id="role"
+              formControlName="role"
               class="form-control"
-              id="weight"
-              placeholder="Enter Weight"
-              formControlName="weight"
-            />
+              (change)="onRoleChange()"
+            >
+              <option value="" selected>Select your Role</option>
+              <option *ngFor="let role of roles" [value]="role">
+                {{ role }}
+              </option>
+            </select>
+            <span
+              *ngIf="registrationForm.get('role')?.errors?.['required'] && (registrationForm.get('role')?.dirty || registrationForm.get('role')?.touched)"
+              class="text-danger"
+              >Role is required.
+            </span>
           </div>
+          <div
+            class="form-group"
+            *ngIf="registrationForm.get('role')?.value === 'User'"
+          >
+            <label for="adminList">Select Admin</label>
+            <select
+              id="adminList"
+              formControlName="adminList"
+              class="form-control"
+            >
+              <option value="" selected>Select Admin</option>
+              <option *ngFor="let admin of adminList" [value]="admin">
+                {{ admin }}
+              </option>
+            </select>
+            <span
+              *ngIf="registrationForm.get('adminList')?.errors?.['required'] && (registrationForm.get('adminList')?.dirty || registrationForm.get('adminList')?.touched)"
+              class="text-danger"
+              >Admin selection is required.
+            </span>
+          </div>
+
           <button
             type="submit"
             class="btn btn-primary mt-3"

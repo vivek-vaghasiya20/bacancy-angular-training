@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { pipe, take } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -8,6 +17,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
   public registrationForm!: FormGroup;
+  public genders: string[] = ['Male', 'Female', 'Other'];
+  public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
+  public roles: string[] = ['Admin', 'User'];
+  public adminList: string[] = [];
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -18,10 +31,6 @@ export class RegisterComponent {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      contactNumber: [
-        '',
-        [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
-      ],
       email: [
         '',
         [
@@ -36,16 +45,54 @@ export class RegisterComponent {
         [
           Validators.required,
           Validators.pattern(
-            '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[@])(?=.*\\d)[A-Za-z@0-9]{6,12}$'
           ),
         ],
       ],
-      dateOfBirth: ['', Validators.required],
-      totalMatchesPlayed: [null],
-      height: [null],
-      weight: [null],
+      confirmPassword: ['', [Validators.required, this.passwordMatchValidator]],
+      gender: ['', Validators.required],
+      hobbies: ['', Validators.required],
+      role: ['', Validators.required],
     });
   }
 
   public onSubmit(): void {}
+
+  private passwordMatchValidator: ValidatorFn = (
+    control: AbstractControl
+  ): { [key: string]: boolean } | null => {
+    const password = control.parent?.get('password')?.value;
+    const confirmPassword = control.value;
+
+    this.registrationForm
+      ?.get('password')
+      ?.valueChanges.subscribe((newValue) => {
+        console.log('called');
+        if (newValue !== confirmPassword) {
+          control.setErrors({ passwordMismatch: true });
+        } else {
+          control.setErrors(null);
+        }
+      });
+
+    if (password !== confirmPassword) {
+      return { passwordMismatch: true };
+    }
+    return null;
+  };
+
+  public onRoleChange(): void {
+    const selectedRole: string = this.registrationForm.get('role')?.value;
+    if (selectedRole === 'User') {
+      this.registrationForm.addControl(
+        'adminList',
+        new FormControl('', [Validators.required])
+      );
+      this.adminList = ['Admin 1', 'Admin 2'];
+    } else {
+      if (this.registrationForm.get('adminList')) {
+        this.registrationForm.removeControl('adminList');
+      }
+    }
+  }
 }
