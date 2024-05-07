@@ -5,6 +5,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AdminFooterComponent } from './admin-footer/admin-footer.component';
+import { AdminComponent } from './admin.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { AdminFooterComponent } from './admin-footer/admin-footer.component';
     AdminDashboardComponent,
     AdminHeaderComponent,
     AdminFooterComponent,
+    AdminComponent,
   ],
   imports: [CommonModule, AdminRoutingModule],
   exports: [
@@ -19,6 +21,7 @@ import { AdminFooterComponent } from './admin-footer/admin-footer.component';
     AdminHeaderComponent,
     AdminFooterComponent,
     AddUserComponent,
+    AdminComponent,
   ],
 })
 export class AdminModule {}

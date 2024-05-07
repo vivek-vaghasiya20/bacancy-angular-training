@@ -4,6 +4,8 @@ import { AddMemberComponent } from './add-member/add-member.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
 import { UserFooterComponent } from './user-footer/user-footer.component';
+import { UserComponent } from './user.component';
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [
@@ -11,13 +13,15 @@ import { UserFooterComponent } from './user-footer/user-footer.component';
     UserDashboardComponent,
     UserHeaderComponent,
     UserFooterComponent,
+    UserComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, UserRoutingModule],
   exports: [
     UserHeaderComponent,
     UserFooterComponent,
     UserDashboardComponent,
     AddMemberComponent,
+    UserComponent,
   ],
 })
 export class UserModule {}
