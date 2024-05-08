@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
 import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +17,8 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private useService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -37,19 +39,13 @@ export class AdminDashboardComponent implements OnInit {
 
   public editUser(user: user): void {
     user.isActive = !user.isActive;
-    this.localStorageService.updateUserStatus(
-      this.loggedInAdminEmail,
-      this.usersList
-    );
+    this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
     this.persons = this.localStorageService.getUserData();
   }
 
   public deleteUser(index: number): void {
     this.usersList.splice(index, 1);
-    this.localStorageService.updateUserStatus(
-      this.loggedInAdminEmail,
-      this.usersList
-    );
+    this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
     this.persons = this.localStorageService.getUserData();
   }
 }

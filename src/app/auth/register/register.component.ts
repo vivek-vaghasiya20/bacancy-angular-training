@@ -8,6 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
 import { user } from 'src/app/interface/user.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
 
 @Component({
@@ -21,7 +23,12 @@ export class RegisterComponent implements OnInit {
   public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
   public roles: string[] = ['Admin', 'User'];
   public adminList: string[] = [];
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -30,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
   public onSubmit(): void {
     const email = this.registrationForm.get('email')?.value;
-    if (this.checkEmailExistence(email)) {
+    if (this.localStorageService.checkEmailExistence(email)) {
       alert('This email already exists in the database.');
     } else {
       if (this.registrationForm.get('role')?.value === 'Admin') {
@@ -39,26 +46,6 @@ export class RegisterComponent implements OnInit {
         this.addNewUser();
       }
     }
-  }
-
-  private checkEmailExistence(email: string): boolean {
-    const localStorageData = localStorage.getItem('users');
-    if (localStorageData) {
-      const adminData: admin[] = JSON.parse(localStorageData);
-
-      const adminWithEmail = adminData.some((admin) => admin.email === email);
-      if (adminWithEmail) {
-        return true;
-      }
-
-      for (const admin of adminData) {
-        const userWithEmail = admin.users.some((user) => user.email === email);
-        if (userWithEmail) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   private addNewAdmin(): void {
@@ -100,26 +87,11 @@ export class RegisterComponent implements OnInit {
       role: 'user',
       isActive: true,
     };
-
-    const selectedAdmin = this.registrationForm.get('adminList')?.value;
-
-    let adminData: admin[] = [];
-
-    const localStorageData = localStorage.getItem('users');
-    if (localStorageData !== null) {
-      adminData = JSON.parse(localStorageData);
-    }
-
-    const adminIndex = adminData.findIndex(
-      (admin) => admin.email === selectedAdmin
-    );
-    if (adminIndex !== -1) {
-      adminData[adminIndex].users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(adminData));
-      alert('Successfully registered as user.');
-      this.registrationForm.reset();
-      this.router.navigate(['/login']);
-    }
+    const adminEmail = this.registrationForm.get('adminList')?.value;
+    this.userService.addNewUser(newUser, adminEmail);
+    alert('Successfully registered as user.');
+    this.registrationForm.reset();
+    this.router.navigate(['/login']);
   }
 
   private checkAndCreateAdminData(): void {

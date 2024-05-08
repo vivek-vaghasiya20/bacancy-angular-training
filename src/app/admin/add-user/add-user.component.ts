@@ -6,6 +6,10 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { user } from 'src/app/interface/user.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
 
 @Component({
@@ -18,13 +22,43 @@ export class AddUserComponent implements OnInit {
   public genders: string[] = ['Male', 'Female', 'Other'];
   public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
-  public onSubmit() {}
+  public onSubmit() {
+    let newUser: user = {
+      firstName: this.userForm.get('firstName')?.value,
+      lastName: this.userForm.get('lastName')?.value,
+      email: this.userForm.get('email')?.value,
+      password: this.userForm.get('password')?.value,
+      confirmPassword: this.userForm.get('confirmPassword')?.value,
+      gender: this.userForm.get('gender')?.value,
+      hobbies: this.userForm.get('hobbies')?.value,
+      role: 'user',
+      isActive: true,
+    };
+    const adminEmail = this.localStorageService.getLogInEmail();
+    if (adminEmail) {
+      const email = this.userForm.get('email')?.value;
+      if (this.localStorageService.checkEmailExistence(email)) {
+        alert('This email already exists in the database.');
+      } else {
+        this.userService.addNewUser(newUser, adminEmail);
+        alert('Successfully registered user.');
+        this.userForm.reset();
+      }
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 
   private initializeForm(): void {
     this.userForm = this.fb.group({
@@ -51,7 +85,7 @@ export class AddUserComponent implements OnInit {
       confirmPassword: ['', [Validators.required, passwordMatchValidator]],
       gender: ['', Validators.required],
       hobbies: ['', Validators.required],
-      role: ['', Validators.required],
+      role: ['user', Validators.required],
     });
   }
 }

@@ -24,18 +24,6 @@ export class LocalStorageService {
     return localStorage.getItem(this.loggedInKey) || null;
   }
 
-  public updateUserStatus(adminEmail: string, updatedUsers: user[]): void {
-    let userData = this.getUserData();
-    const adminIndex = userData.findIndex(
-      (admin) => admin.email === adminEmail
-    );
-
-    if (adminIndex !== -1) {
-      userData[adminIndex].users = updatedUsers;
-      this.setUserData(userData);
-    }
-  }
-
   public getUserByEmail(email: string): admin | user | null {
     const adminData: admin[] = this.getUserData();
     if (adminData) {
@@ -54,5 +42,23 @@ export class LocalStorageService {
       return foundUser;
     }
     return null;
+  }
+
+  public checkEmailExistence(email: string): boolean {
+    const adminData: admin[] = this.getUserData();
+    if (adminData) {
+      const adminWithEmail = adminData.some((admin) => admin.email === email);
+      if (adminWithEmail) {
+        return true;
+      }
+
+      for (const admin of adminData) {
+        const userWithEmail = admin.users.some((user) => user.email === email);
+        if (userWithEmail) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
