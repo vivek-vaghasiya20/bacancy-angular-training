@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { admin } from 'src/app/interface/admin.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class LoginComponent {
     this.email = this.formData.value.emailField;
     this.password = this.formData.value.passwordField;
 
-    if (this.checkEmailExistence(this.email)) {
+    if (this.localStorageService.checkEmailExistence(this.email)) {
       if (this.authenticate(this.email, this.password)) {
         const loggedInPersonData = this.localStorageService.getUserByEmail(
           this.email
@@ -35,29 +34,11 @@ export class LoginComponent {
           this.router.navigate(['/user/user-dashboard']);
         }
       } else {
-        alert('Invalid credentials');
+        alert('Invalid credentials or status is inactive.');
       }
     } else {
       alert('Email not found.');
     }
-  }
-
-  private checkEmailExistence(email: string): boolean {
-    const adminData = this.localStorageService.getUserData();
-    if (adminData) {
-      const adminWithEmail = adminData.some((admin) => admin.email === email);
-      if (adminWithEmail) {
-        return true;
-      }
-
-      for (const admin of adminData) {
-        const userWithEmail = admin.users.some((user) => user.email === email);
-        if (userWithEmail) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   private authenticate(email: string, password: string): boolean {
@@ -74,10 +55,11 @@ export class LoginComponent {
 
       for (const admin of adminData) {
         const userMatch = admin.users.find(
-          (user) => user.email === email && user.password === password
+          (user) =>
+            user.email === email && user.password === password && user.isActive
         );
         if (userMatch) {
-          localStorage.setItem('loggedInEmail', userMatch.email);
+          this.localStorageService.setLogInEmail(userMatch.email);
           return true;
         }
       }

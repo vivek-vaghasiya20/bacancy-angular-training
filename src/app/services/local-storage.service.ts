@@ -20,6 +20,10 @@ export class LocalStorageService {
     localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
   }
 
+  public setLogInEmail(email: string): void {
+    localStorage.setItem(this.loggedInKey, email);
+  }
+
   public getLogInEmail(): string | null {
     return localStorage.getItem(this.loggedInKey) || null;
   }
