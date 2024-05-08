@@ -27,7 +27,7 @@ export class LoginComponent {
         const loggedInPerson = JSON.parse(
           localStorage.getItem('loggedInPerson') || '{}'
         );
-        if (loggedInPerson && loggedInPerson.role === 'Admin') {
+        if (loggedInPerson.role === 'admin') {
           this.router.navigate(['/admin/admin-dashboard']);
         } else {
           this.router.navigate(['/user/user-dashboard']);
@@ -44,7 +44,6 @@ export class LoginComponent {
     const localStorageData = localStorage.getItem('users');
     if (localStorageData) {
       const adminData: admin[] = JSON.parse(localStorageData);
-
       const adminWithEmail = adminData.some((admin) => admin.email === email);
       if (adminWithEmail) {
         return true;

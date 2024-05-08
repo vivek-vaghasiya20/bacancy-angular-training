@@ -1,10 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { admin } from 'src/app/interface/admin.interface';
+import { user } from 'src/app/interface/user.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  styleUrls: ['./admin-dashboard.component.scss'],
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnInit {
+  persons: admin[] = [];
+  usersList: user[] = [];
+  loggedInAdmin!: admin;
 
+  constructor(private localStorageService: LocalStorageService) {}
+
+  ngOnInit(): void {
+    this.persons = this.localStorageService.getUserData();
+    this.loggedInAdmin = this.localStorageService.getLogInData();
+
+    const adminWithEmail = this.persons.find(
+      (admin) => admin.email === this.loggedInAdmin.email
+    );
+    if (adminWithEmail) {
+      this.usersList = adminWithEmail.users;
+    }
+  }
+
+  public editUser(): void {
+    //pass updated userList
+    this.localStorageService.updateUserStatus(
+      this.loggedInAdmin.email,
+      this.usersList
+    );
+  }
+
+  public deleteUser(): void {
+    //pass updated userList
+    this.localStorageService.updateUserStatus(
+      this.loggedInAdmin.email,
+      this.usersList
+    );
+  }
 }

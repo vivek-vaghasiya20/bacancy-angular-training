@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () =>
-      import('../app/admin/admin.module').then((mod) => mod.AdminModule),
+      import('./admin/admin.module').then((mod) => mod.AdminModule),
   },
   {
     path: 'user',
     loadChildren: () =>
-      import('../app/user/user.module').then((mod) => mod.UserModule),
+      import('./user/user.module').then((mod) => mod.UserModule),
   },
   { path: '**', redirectTo: 'login' },
 ];

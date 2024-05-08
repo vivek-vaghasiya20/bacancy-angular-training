@@ -8,9 +8,13 @@ const adminRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    pathMatch: 'prefix',
     children: [
       { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
-      { path: 'admin-dashboard', component: AdminDashboardComponent },
+      {
+        path: 'admin-dashboard',
+        component: AdminDashboardComponent,
+      },
       { path: 'add-user', component: AddUserComponent },
     ],
   },

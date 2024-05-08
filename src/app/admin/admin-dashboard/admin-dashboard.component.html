@@ -1,1 +1,17 @@
-<p>admin-dashboard works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let user of usersList">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Name: {{ user.firstName }} {{ user.lastName }}
+          </h5>
+          <p class="card-text">Email: {{ user.email }}</p>
+          <p class="card-text">Gender: {{ user.gender }}</p>
+          <p class="card-text">Hobbies: {{ user.hobbies }}</p>
+          <div>Active: {{ user.isActive ? "Yes" : "No" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

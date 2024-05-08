@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,7 +17,7 @@ import { user } from 'src/app/interface/user.interface';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   public registrationForm!: FormGroup;
   public genders: string[] = ['Male', 'Female', 'Other'];
   public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
@@ -113,7 +113,7 @@ export class RegisterComponent {
     }
 
     const adminIndex = adminData.findIndex(
-      (admin) => admin.firstName === selectedAdmin
+      (admin) => admin.email === selectedAdmin
     );
     if (adminIndex !== -1) {
       adminData[adminIndex].users.push(newUser);
