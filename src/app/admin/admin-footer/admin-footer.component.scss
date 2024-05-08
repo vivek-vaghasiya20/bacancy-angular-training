@@ -1,0 +1,16 @@
+footer {
+  background-color: #7a85cc;
+}
+
+$text-color: white;
+.social-icons {
+  display: flex;
+  flex-direction: row;
+  li {
+    padding: 3%;
+  }
+  a {
+    text-decoration: none;
+    color: $text-color;
+  }
+}
