@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -14,22 +15,23 @@ export class LoginComponent {
   public email: string = '';
   public password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {}
 
   public onSubmit(): void {
     this.email = this.formData.value.emailField;
     this.password = this.formData.value.passwordField;
 
     if (this.checkEmailExistence(this.email)) {
-      const isAuthenticated = this.authenticate(this.email, this.password);
-
-      if (isAuthenticated) {
-        const loggedInPerson = JSON.parse(
-          localStorage.getItem('loggedInPerson') || '{}'
+      if (this.authenticate(this.email, this.password)) {
+        const loggedInPersonData = this.localStorageService.getUserByEmail(
+          this.email
         );
-        if (loggedInPerson.role === 'admin') {
+        if (loggedInPersonData && loggedInPersonData.role === 'admin') {
           this.router.navigate(['/admin/admin-dashboard']);
-        } else {
+        } else if (loggedInPersonData && loggedInPersonData.role === 'user') {
           this.router.navigate(['/user/user-dashboard']);
         }
       } else {
@@ -41,9 +43,8 @@ export class LoginComponent {
   }
 
   private checkEmailExistence(email: string): boolean {
-    const localStorageData = localStorage.getItem('users');
-    if (localStorageData) {
-      const adminData: admin[] = JSON.parse(localStorageData);
+    const adminData = this.localStorageService.getUserData();
+    if (adminData) {
       const adminWithEmail = adminData.some((admin) => admin.email === email);
       if (adminWithEmail) {
         return true;
@@ -60,16 +61,14 @@ export class LoginComponent {
   }
 
   private authenticate(email: string, password: string): boolean {
-    const localStorageData = localStorage.getItem('users');
-    if (localStorageData) {
-      const adminData: admin[] = JSON.parse(localStorageData);
-
+    const adminData = this.localStorageService.getUserData();
+    if (adminData) {
       const adminMatch = adminData.find(
         (admin) => admin.email === email && admin.password === password
       );
 
       if (adminMatch) {
-        localStorage.setItem('loggedInPerson', JSON.stringify(adminMatch));
+        localStorage.setItem('loggedInEmail', adminMatch.email);
         return true;
       }
 
@@ -78,7 +77,7 @@ export class LoginComponent {
           (user) => user.email === email && user.password === password
         );
         if (userMatch) {
-          localStorage.setItem('loggedInPerson', JSON.stringify(userMatch));
+          localStorage.setItem('loggedInEmail', userMatch.email);
           return true;
         }
       }

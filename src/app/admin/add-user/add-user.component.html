@@ -1,1 +1,169 @@
-<p>add-user works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="registration-form">
+        <h2 class="text-center mb-4">Add User</h2>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              placeholder="Enter First Name"
+              formControlName="firstName"
+            />
+            <span
+              *ngIf="
+                userForm.get('firstName')?.hasError('required') &&
+                (userForm.get('firstName')?.dirty ||
+                  userForm.get('firstName')?.touched)
+              "
+              class="text-danger"
+            >
+              First name is required.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              placeholder="Enter Last Name"
+              formControlName="lastName"
+            />
+            <span
+              *ngIf="
+                userForm.get('lastName')?.hasError('required') &&
+                (userForm.get('lastName')?.dirty ||
+                  userForm.get('lastName')?.touched)
+              "
+              class="text-danger"
+            >
+              Last name is required.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter Email Address"
+              formControlName="email"
+            />
+            <span
+              *ngIf="
+                userForm.get('email')?.hasError('required') &&
+                (userForm.get('email')?.dirty || userForm.get('email')?.touched)
+              "
+              class="text-danger"
+            >
+              Email is required.
+            </span>
+            <span
+              *ngIf="userForm.get('email')?.errors?.['pattern']"
+              class="text-danger"
+              >Please Enter valid email format</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter Password"
+              formControlName="password"
+            />
+            <span
+              *ngIf="
+                userForm.get('password')?.hasError('required') &&
+                (userForm.get('password')?.dirty ||
+                  userForm.get('password')?.touched)
+              "
+              class="text-danger"
+            >
+              Password is required.
+            </span>
+            <span
+              *ngIf="userForm.get('password')?.errors?.['pattern']"
+              class="text-danger"
+            >
+              Password must be at least 6 characters long and max 12 characters
+              allow, contain at least one capital letter, one small letter, one
+              @ symbol, and one digit.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="confirm password">Confirm Password</label>
+            <input
+              type="text"
+              class="form-control"
+              id="confirm password"
+              placeholder="Confirm Password"
+              formControlName="confirmPassword"
+            />
+            <span
+              *ngIf="
+                userForm.get('confirmPassword')?.hasError('required') &&
+                (userForm.get('confirmPassword')?.dirty ||
+                  userForm.get('confirmPassword')?.touched)
+              "
+              class="text-danger"
+            >
+              Please confirm the password.
+            </span>
+            <span
+              *ngIf="
+                userForm.get('confirmPassword')?.hasError('passwordMismatch') &&
+                (userForm.get('confirmPassword')?.dirty ||
+                  userForm.get('confirmPassword')?.touched)
+              "
+              class="text-danger"
+            >
+              Passwords do not match.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <div class="radio-buttons">
+              <div *ngFor="let gender of genders" class="radio-button">
+                <input type="radio" formControlName="gender" [value]="gender" />
+                {{ gender }}
+              </div>
+            </div>
+            <span
+              *ngIf="userForm.get('gender')?.errors?.['required'] && (userForm.get('gender')?.dirty || userForm.get('gender')?.touched)"
+              class="text-danger"
+            >
+              Gender is required.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="hobbies">Hobbies</label>
+            <select id="hobbies" formControlName="hobbies" class="form-control">
+              <option value="" selected>Select your hobby</option>
+              <option *ngFor="let hobby of hobbies" [value]="hobby">
+                {{ hobby }}
+              </option>
+            </select>
+            <span
+              *ngIf="userForm.get('hobbies')?.errors?.['required'] && (userForm.get('hobbies')?.dirty || userForm.get('hobbies')?.touched)"
+              class="text-danger"
+              >Hobbies are required.
+            </span>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            [disabled]="userForm.invalid"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

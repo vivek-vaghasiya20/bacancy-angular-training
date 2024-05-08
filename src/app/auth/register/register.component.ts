@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
 import { user } from 'src/app/interface/user.interface';
+import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -165,34 +163,12 @@ export class RegisterComponent implements OnInit {
           ),
         ],
       ],
-      confirmPassword: ['', [Validators.required, this.passwordMatchValidator]],
+      confirmPassword: ['', [Validators.required, passwordMatchValidator]],
       gender: ['', Validators.required],
       hobbies: ['', Validators.required],
       role: ['', Validators.required],
     });
   }
-
-  private passwordMatchValidator: ValidatorFn = (
-    control: AbstractControl
-  ): { [key: string]: boolean } | null => {
-    const password = control.parent?.get('password')?.value;
-    const confirmPassword = control.value;
-
-    this.registrationForm
-      ?.get('password')
-      ?.valueChanges.subscribe((newValue) => {
-        if (newValue !== confirmPassword) {
-          control.setErrors({ passwordMismatch: true });
-        } else {
-          control.setErrors(null);
-        }
-      });
-
-    if (password !== confirmPassword) {
-      return { passwordMismatch: true };
-    }
-    return null;
-  };
 
   public onRoleChange(): void {
     const selectedRole: string = this.registrationForm.get('role')?.value;

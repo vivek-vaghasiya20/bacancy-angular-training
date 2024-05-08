@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
 import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -11,26 +12,33 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class AdminDashboardComponent implements OnInit {
   persons: admin[] = [];
   usersList: user[] = [];
-  loggedInAdmin!: admin;
+  loggedInAdminEmail!: string;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.persons = this.localStorageService.getUserData();
-    this.loggedInAdmin = this.localStorageService.getLogInData();
-
-    const adminWithEmail = this.persons.find(
-      (admin) => admin.email === this.loggedInAdmin.email
-    );
-    if (adminWithEmail) {
-      this.usersList = adminWithEmail.users;
+    const email = this.localStorageService.getLogInEmail();
+    if (email !== null) {
+      this.loggedInAdminEmail = email;
+      const adminWithEmail = this.persons.find(
+        (admin) => admin.email === this.loggedInAdminEmail
+      );
+      if (adminWithEmail) {
+        this.usersList = adminWithEmail.users;
+      }
+    } else {
+      this.router.navigate(['/login']);
     }
   }
 
   public editUser(user: user): void {
     user.isActive = !user.isActive;
     this.localStorageService.updateUserStatus(
-      this.loggedInAdmin.email,
+      this.loggedInAdminEmail,
       this.usersList
     );
     this.persons = this.localStorageService.getUserData();
@@ -39,7 +47,7 @@ export class AdminDashboardComponent implements OnInit {
   public deleteUser(index: number): void {
     this.usersList.splice(index, 1);
     this.localStorageService.updateUserStatus(
-      this.loggedInAdmin.email,
+      this.loggedInAdminEmail,
       this.usersList
     );
     this.persons = this.localStorageService.getUserData();

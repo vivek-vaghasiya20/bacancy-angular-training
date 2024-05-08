@@ -7,7 +7,7 @@ import { user } from '../interface/user.interface';
 })
 export class LocalStorageService {
   private localStorageKey = 'users';
-  private loggedInKey = 'loggedInPerson';
+  private loggedInKey = 'loggedInEmail';
 
   constructor() {}
 
@@ -20,9 +20,8 @@ export class LocalStorageService {
     localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
   }
 
-  public getLogInData(): admin {
-    const loggedInData = localStorage.getItem(this.loggedInKey);
-    return loggedInData ? JSON.parse(loggedInData) : {};
+  public getLogInEmail(): string | null {
+    return localStorage.getItem(this.loggedInKey) || null;
   }
 
   public updateUserStatus(adminEmail: string, updatedUsers: user[]): void {
@@ -35,5 +34,25 @@ export class LocalStorageService {
       userData[adminIndex].users = updatedUsers;
       this.setUserData(userData);
     }
+  }
+
+  public getUserByEmail(email: string): admin | user | null {
+    const adminData: admin[] = this.getUserData();
+    if (adminData) {
+      let foundUser: admin | user | null = null;
+
+      adminData.forEach((admin) => {
+        if (admin.email === email) {
+          foundUser = admin;
+        } else {
+          const user = admin.users.find((user) => user.email === email);
+          if (user) {
+            foundUser = user;
+          }
+        }
+      });
+      return foundUser;
+    }
+    return null;
   }
 }
