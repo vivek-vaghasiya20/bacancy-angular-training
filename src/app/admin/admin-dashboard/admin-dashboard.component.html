@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4" *ngFor="let user of usersList">
+    <div class="col-md-4" *ngFor="let user of usersList; let i = index">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
@@ -9,7 +9,11 @@
           <p class="card-text">Email: {{ user.email }}</p>
           <p class="card-text">Gender: {{ user.gender }}</p>
           <p class="card-text">Hobbies: {{ user.hobbies }}</p>
-          <div>Active: {{ user.isActive ? "Yes" : "No" }}</div>
+          <div>Active: {{ user.isActive ? "True" : "False" }}</div>
+          <button class="btn btn-danger" (click)="deleteUser(i)">Delete</button>
+          <button class="btn btn-primary" (click)="editUser(user)">
+            Toggle Active
+          </button>
         </div>
       </div>
     </div>

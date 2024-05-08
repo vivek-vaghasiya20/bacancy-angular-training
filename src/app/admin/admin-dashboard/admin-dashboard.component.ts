@@ -27,19 +27,21 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  public editUser(): void {
-    //pass updated userList
+  public editUser(user: user): void {
+    user.isActive = !user.isActive;
     this.localStorageService.updateUserStatus(
       this.loggedInAdmin.email,
       this.usersList
     );
+    this.persons = this.localStorageService.getUserData();
   }
 
-  public deleteUser(): void {
-    //pass updated userList
+  public deleteUser(index: number): void {
+    this.usersList.splice(index, 1);
     this.localStorageService.updateUserStatus(
       this.loggedInAdmin.email,
       this.usersList
     );
+    this.persons = this.localStorageService.getUserData();
   }
 }
