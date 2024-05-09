@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { admin } from 'src/app/interface/admin.interface';
 import { member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
@@ -33,7 +32,6 @@ export class UserDashboardComponent {
         );
         if (user) {
           this.memberList = user.members;
-          console.log(this.memberList);
           break;
         }
       }

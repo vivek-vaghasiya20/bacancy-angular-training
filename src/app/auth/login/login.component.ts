@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -34,10 +35,10 @@ export class LoginComponent {
           this.router.navigate(['/user/user-dashboard']);
         }
       } else {
-        alert('Invalid credentials or status is inactive.');
+        Swal.fire('Invalid credentials or status is inactive.');
       }
     } else {
-      alert('Email not found.');
+      Swal.fire('Email not found.');
     }
   }
 

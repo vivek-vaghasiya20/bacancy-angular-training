@@ -11,6 +11,7 @@ import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
   public onSubmit(): void {
     const email = this.registrationForm.get('email')?.value;
     if (this.localStorageService.checkEmailExistence(email)) {
-      alert('This email already exists in the database.');
+      Swal.fire('This email already exists in the database.');
     } else {
       if (this.registrationForm.get('role')?.value === 'Admin') {
         this.addNewAdmin();
@@ -70,7 +71,7 @@ export class RegisterComponent implements OnInit {
     }
     adminData.push(newAdmin);
     localStorage.setItem('users', JSON.stringify(adminData));
-    alert('Successfully registered as admin.');
+    Swal.fire('Successfully registered as admin.');
     this.registrationForm.reset();
     this.router.navigate(['/login']);
   }
@@ -90,7 +91,7 @@ export class RegisterComponent implements OnInit {
     };
     const adminEmail = this.registrationForm.get('adminList')?.value;
     this.userService.addNewUser(newUser, adminEmail);
-    alert('Successfully registered as user.');
+    Swal.fire('Successfully registered as user.');
     this.registrationForm.reset();
     this.router.navigate(['/login']);
   }

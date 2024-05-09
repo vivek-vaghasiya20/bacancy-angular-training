@@ -5,6 +5,7 @@ import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-user',
@@ -44,10 +45,10 @@ export class AddUserComponent implements OnInit {
     if (adminEmail) {
       const email = this.userForm.get('email')?.value;
       if (this.localStorageService.checkEmailExistence(email)) {
-        alert('This email already exists in the database.');
+        Swal.fire('This email already exists in the database.');
       } else {
         this.userService.addNewUser(newUser, adminEmail);
-        alert('Successfully registered user.');
+        Swal.fire('Successfully registered user.');
         this.userForm.reset();
       }
     } else {
