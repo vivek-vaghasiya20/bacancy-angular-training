@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserComponent } from './user.component';
+import { HttpComponent } from './http/http.component';
 
 const adminRoutes: Routes = [
   {
@@ -16,6 +17,7 @@ const adminRoutes: Routes = [
         component: UserDashboardComponent,
       },
       { path: 'add-member', component: AddMemberComponent },
+      { path: 'http', component: HttpComponent },
     ],
   },
 ];

@@ -130,14 +130,12 @@ export class AddMemberComponent {
   private emailExistenceValidator(
     control: FormControl
   ): { [key: string]: boolean } | null {
-    debugger;
     const members = this.getMemberControl();
     const memberEmailExist = members.some((memberControl) => {
       if (control !== memberControl.get('email')) {
         return memberControl.get('email')?.value === control.value;
       } else return false;
     });
-
     if (
       this.localStorageService.checkEmailExistence(control.value) ||
       memberEmailExist
