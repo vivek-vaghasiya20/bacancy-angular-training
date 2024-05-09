@@ -4,6 +4,7 @@ import { admin } from 'src/app/interface/admin.interface';
 import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -37,15 +38,18 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  public editUser(user: user): void {
+  public changeStatus(user: user): void {
     user.isActive = !user.isActive;
     this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
     this.persons = this.localStorageService.getUserData();
   }
 
   public deleteUser(index: number): void {
-    this.usersList.splice(index, 1);
-    this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
-    this.persons = this.localStorageService.getUserData();
+    const isConfirmed = confirm('Are you sure you want to delete?');
+    if (isConfirmed) {
+      this.usersList.splice(index, 1);
+      this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
+      this.persons = this.localStorageService.getUserData();
+    }
   }
 }

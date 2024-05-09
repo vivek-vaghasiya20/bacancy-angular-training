@@ -28,7 +28,7 @@ export class AddUserComponent implements OnInit {
     this.initializeForm();
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     let newUser: user = {
       firstName: this.userForm.get('firstName')?.value,
       lastName: this.userForm.get('lastName')?.value,

@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { admin } from 'src/app/interface/admin.interface';
 import { member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -33,7 +34,8 @@ export class AddMemberComponent {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -107,6 +109,7 @@ export class AddMemberComponent {
     this.addMemberToUser(this.userEmail, members);
     this.memberForm.reset();
     (this.memberForm.get('members') as FormArray).clear();
+    this.router.navigate(['/user/user-dashboard']);
   }
 
   private whiteSpaceValidator(

@@ -20,7 +20,7 @@
                 'btn-primary': user.isActive,
                 'btn-danger': !user.isActive
               }"
-              (click)="editUser(user)"
+              (click)="changeStatus(user)"
             >
               {{ user.isActive ? "Activated" : "Deactivated" }}
             </button>
