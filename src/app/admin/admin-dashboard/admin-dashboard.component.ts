@@ -11,9 +11,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  persons: admin[] = [];
-  usersList: user[] = [];
-  loggedInAdminEmail!: string;
+  public persons: admin[] = [];
+  public usersList: user[] = [];
+  public loggedInAdminEmail!: string;
 
   constructor(
     private localStorageService: LocalStorageService,
