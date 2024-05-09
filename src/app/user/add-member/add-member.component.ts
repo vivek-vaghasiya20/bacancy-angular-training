@@ -17,7 +17,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 })
 export class AddMemberComponent {
   public memberForm!: FormGroup;
-  public genders: string[] = ['Male', 'Female', 'Other'];
+  public genders: string[] = ['Male', 'Female', 'Third gender'];
   public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
   public roleOfMember: string[] = [
     'Production Worker',
@@ -130,7 +130,18 @@ export class AddMemberComponent {
   private emailExistenceValidator(
     control: FormControl
   ): { [key: string]: boolean } | null {
-    if (this.localStorageService.checkEmailExistence(control.value)) {
+    debugger;
+    const members = this.getMemberControl();
+    const memberEmailExist = members.some((memberControl) => {
+      if (control !== memberControl.get('email')) {
+        return memberControl.get('email')?.value === control.value;
+      } else return false;
+    });
+
+    if (
+      this.localStorageService.checkEmailExistence(control.value) ||
+      memberEmailExist
+    ) {
       return { isEmailExist: true };
     } else {
       return null;
@@ -148,12 +159,11 @@ export class AddMemberComponent {
     for (const admin of adminData) {
       for (const user of admin.users) {
         if (user.email === userEmail) {
-          user.members = user.members.concat(members); // Concatenate the members array to user.members
+          user.members = user.members.concat(members);
           break;
         }
       }
     }
-
-    this.localStorageService.setUserData(adminData); // Update the user data in localStorage
+    this.localStorageService.setUserData(adminData);
   }
 }

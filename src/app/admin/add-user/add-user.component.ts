@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { user } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -19,7 +13,7 @@ import { passwordMatchValidator } from 'src/app/validations/password-match.valid
 })
 export class AddUserComponent implements OnInit {
   public userForm!: FormGroup;
-  public genders: string[] = ['Male', 'Female', 'Other'];
+  public genders: string[] = ['Male', 'Female', 'Third gender'];
   public hobbies: string[] = ['Cricket', 'Chess', 'Badminton', 'Coding'];
 
   constructor(

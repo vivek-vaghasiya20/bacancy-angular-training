@@ -1,21 +1,42 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4" *ngFor="let user of usersList; let i = index">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            Name: {{ user.firstName }} {{ user.lastName }}
-          </h5>
-          <p class="card-text">Email: {{ user.email }}</p>
-          <p class="card-text">Gender: {{ user.gender }}</p>
-          <p class="card-text">Hobbies: {{ user.hobbies }}</p>
-          <div>Active: {{ user.isActive ? "True" : "False" }}</div>
-          <button class="btn btn-danger" (click)="deleteUser(i)">Delete</button>
-          <button class="btn btn-primary" (click)="editUser(user)">
-            Toggle Active
-          </button>
+<ng-container *ngIf="usersList && usersList.length > 0; else noData">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let user of usersList; let i = index">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              Name: {{ user.firstName }} {{ user.lastName }}
+            </h5>
+            <p class="card-text">Email: {{ user.email }}</p>
+            <p class="card-text">Gender: {{ user.gender }}</p>
+            <p class="card-text">Hobbies: {{ user.hobbies }}</p>
+            <div>Active: {{ user.isActive ? "True" : "False" }}</div>
+            <button class="btn btn-danger" (click)="deleteUser(i)">
+              Delete
+            </button>
+            <button
+              class="btn"
+              [ngClass]="{
+                'btn-primary': user.isActive,
+                'btn-danger': !user.isActive
+              }"
+              (click)="editUser(user)"
+            >
+              {{ user.isActive ? "Activated" : "Deactivated" }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #noData>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p>No users available. You can enter the new user by add user form.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
