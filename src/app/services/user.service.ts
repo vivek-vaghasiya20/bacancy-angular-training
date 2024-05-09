@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { user } from '../interface/user.interface';
 import { admin } from '../interface/admin.interface';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    public router: Router
+  ) {}
 
   public updateUsers(adminEmail: string, updatedUsers: user[]): void {
     let userData = this.localStorageService.getUserData();
@@ -51,5 +56,11 @@ export class UserService {
       }
     }
     return false;
+  }
+
+  public logout(): void {
+    this.localStorageService.removeLogInEmail();
+    Swal.fire('Logout Successfully');
+    this.router.navigate(['/login']);
   }
 }
