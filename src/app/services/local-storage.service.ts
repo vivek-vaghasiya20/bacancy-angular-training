@@ -50,16 +50,21 @@ export class LocalStorageService {
 
   public checkEmailExistence(email: string): boolean {
     const adminData: admin[] = this.getUserData();
-    if (adminData) {
-      const adminWithEmail = adminData.some((admin) => admin.email === email);
-      if (adminWithEmail) {
+    for (const admin of adminData) {
+      if (admin.email === email) {
         return true;
       }
-
-      for (const admin of adminData) {
-        const userWithEmail = admin.users.some((user) => user.email === email);
-        if (userWithEmail) {
-          return true;
+      if (admin.users) {
+        for (const user of admin.users) {
+          if (user.email === email) {
+            return true;
+          }
+          if (
+            user.members &&
+            user.members.some((member) => member.email === email)
+          ) {
+            return true;
+          }
         }
       }
     }

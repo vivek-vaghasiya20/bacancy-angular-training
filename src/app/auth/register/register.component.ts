@@ -86,6 +86,7 @@ export class RegisterComponent implements OnInit {
       hobbies: this.registrationForm.get('hobbies')?.value,
       role: 'user',
       isActive: true,
+      members: [],
     };
     const adminEmail = this.registrationForm.get('adminList')?.value;
     this.userService.addNewUser(newUser, adminEmail);

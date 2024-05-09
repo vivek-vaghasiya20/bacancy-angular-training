@@ -1,3 +1,5 @@
+import { member } from './member.interface';
+
 export interface user {
   firstName: string;
   lastName: string;
@@ -8,4 +10,5 @@ export interface user {
   hobbies: string;
   role: 'user';
   isActive: boolean;
+  members: member[];
 }

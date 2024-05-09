@@ -44,6 +44,7 @@ export class AddUserComponent implements OnInit {
       hobbies: this.userForm.get('hobbies')?.value,
       role: 'user',
       isActive: true,
+      members: [],
     };
     const adminEmail = this.localStorageService.getLogInEmail();
     if (adminEmail) {

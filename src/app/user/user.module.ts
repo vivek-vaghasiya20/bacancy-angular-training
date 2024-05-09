@@ -6,6 +6,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 import { UserFooterComponent } from './user-footer/user-footer.component';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { UserRoutingModule } from './user-routing.module';
     UserFooterComponent,
     UserComponent,
   ],
-  imports: [CommonModule, UserRoutingModule],
+  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule],
   exports: [
     UserHeaderComponent,
     UserFooterComponent,
