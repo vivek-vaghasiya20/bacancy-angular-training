@@ -6,7 +6,7 @@ import { UserHeaderComponent } from './user-header/user-header.component';
 import { UserFooterComponent } from './user-footer/user-footer.component';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpComponent } from './http/http.component';
 
 @NgModule({
@@ -18,7 +18,7 @@ import { HttpComponent } from './http/http.component';
     UserComponent,
     HttpComponent,
   ],
-  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule, FormsModule],
   exports: [
     UserHeaderComponent,
     UserFooterComponent,

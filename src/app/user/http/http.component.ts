@@ -11,12 +11,14 @@ import Swal from 'sweetalert2';
 })
 export class HttpComponent {
   public posts: post[] = [];
-  public searchId: number = 20;
+  public postId!: number;
+  public postIdToDelete!: number;
+  public postIdToUpdate!: number;
   public newPost: post = {
-    userId: 0,
-    id: 0,
-    title: '',
-    body: '',
+    userId: 11,
+    id: 101,
+    title: 'New Post',
+    body: 'New post created',
   };
 
   private subscription: Subscription[] = [];
@@ -29,10 +31,86 @@ export class HttpComponent {
         this.posts = res;
       },
       error: () => {
-        Swal.fire('Error while fetching post ');
+        Swal.fire('Error while fetching post.');
       },
     });
     this.subscription.push(postSubscription);
+  }
+
+  public onGetPostsById(id: number): void {
+    const getPostSubscription = this.httpService.getPostsById(id).subscribe({
+      next: () => {
+        Swal.fire('Post fetched Successfully');
+      },
+      error: (err) => {
+        let errorMessage = 'An error occurred while fetching the post';
+        if (err.status === 500) {
+          errorMessage = 'Internal server Error';
+        } else if (err.status === 404) {
+          errorMessage = 'Post not found';
+        } else if (err.status === 400) {
+          errorMessage = 'Bad Request';
+        }
+        Swal.fire(errorMessage);
+      },
+    });
+    this.subscription.push(getPostSubscription);
+  }
+
+  public onDeletePost(id: number): void {
+    const deletePostSubscription = this.httpService.deletePost(id).subscribe({
+      next: () => {
+        Swal.fire('Post deleted Successfully');
+      },
+      error: () => {
+        Swal.fire('Error while deleting the post ');
+      },
+    });
+    this.subscription.push(deletePostSubscription);
+  }
+
+  public onCreatePost(): void {
+    const createPostSubscription = this.httpService
+      .createPost(this.newPost)
+      .subscribe({
+        next: () => {
+          Swal.fire('New Post created Successfully');
+        },
+        error: (err) => {
+          let errorMessage = 'An error occurred while creating the post';
+          if (err.status === 500) {
+            errorMessage = 'Internal server Error';
+          } else if (err.status === 404) {
+            errorMessage = 'Post not found';
+          } else if (err.status === 400) {
+            errorMessage = 'Bad Request';
+          }
+          Swal.fire(errorMessage);
+        },
+      });
+    this.subscription.push(createPostSubscription);
+  }
+
+  public onUpdatePost(id: number): void {
+    const updatePostSubscription = this.httpService
+      .updatePost(id, this.newPost)
+      .subscribe({
+        next: () => {
+          Swal.fire('Post edited Successfully');
+        },
+        error: (err) => {
+          let errorMessage = 'An error occurred while editing the post';
+          if (err.status === 500) {
+            errorMessage = 'Internal server Error';
+          } else if (err.status === 404) {
+            errorMessage = 'Post not found';
+          } else if (err.status === 400) {
+            errorMessage = 'Bad Request';
+          }
+          Swal.fire(errorMessage);
+        },
+      });
+    this.subscription.push(updatePostSubscription);
   }
 
   ngOnDestroy(): void {

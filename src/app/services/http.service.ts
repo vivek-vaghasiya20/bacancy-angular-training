@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { post } from '../interface/post.inteface';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
   private apiURL: string = 'https://jsonplaceholder.typicode.com';
+
   constructor(private http: HttpClient) {}
 
   public getPosts(): Observable<post[]> {
@@ -27,6 +28,6 @@ export class HttpService {
   }
 
   public updatePost(id: number, post: post): Observable<post> {
-    return this.http.put<post>(`${this.apiURL}}/posts/${id}`, post);
+    return this.http.put<post>(`${this.apiURL}/posts/${id}`, post);
   }
 }
