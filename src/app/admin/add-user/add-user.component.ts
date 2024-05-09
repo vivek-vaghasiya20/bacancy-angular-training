@@ -44,7 +44,7 @@ export class AddUserComponent implements OnInit {
     const adminEmail = this.localStorageService.getLogInEmail();
     if (adminEmail) {
       const email = this.userForm.get('email')?.value;
-      if (this.localStorageService.checkEmailExistence(email)) {
+      if (this.userService.checkEmailExistence(email)) {
         Swal.fire('This email already exists in the database.');
       } else {
         this.userService.addNewUser(newUser, adminEmail);

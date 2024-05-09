@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,14 +18,15 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private userService: UserService
   ) {}
 
   public onSubmit(): void {
     this.email = this.formData.value.emailField;
     this.password = this.formData.value.passwordField;
 
-    if (this.localStorageService.checkEmailExistence(this.email)) {
+    if (this.userService.checkEmailExistence(this.email)) {
       if (this.authenticate(this.email, this.password)) {
         const loggedInPersonData = this.localStorageService.getUserByEmail(
           this.email

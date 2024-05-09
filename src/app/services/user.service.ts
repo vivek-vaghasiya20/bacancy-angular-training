@@ -29,4 +29,27 @@ export class UserService {
       this.localStorageService.setUserData(adminData);
     }
   }
+
+  public checkEmailExistence(email: string): boolean {
+    const adminData: admin[] = this.localStorageService.getUserData();
+    for (const admin of adminData) {
+      if (admin.email === email) {
+        return true;
+      }
+      if (admin.users) {
+        for (const user of admin.users) {
+          if (user.email === email) {
+            return true;
+          }
+          if (
+            user.members &&
+            user.members.some((member) => member.email === email)
+          ) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 }

@@ -27,8 +27,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
   public onSubmit(): void {
     const email = this.registrationForm.get('email')?.value;
-    if (this.localStorageService.checkEmailExistence(email)) {
+    if (this.userService.checkEmailExistence(email)) {
       Swal.fire('This email already exists in the database.');
     } else {
       if (this.registrationForm.get('role')?.value === 'Admin') {

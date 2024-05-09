@@ -9,6 +9,7 @@ import {
 import { admin } from 'src/app/interface/admin.interface';
 import { member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-member',
@@ -30,7 +31,10 @@ export class AddMemberComponent {
 
   private userEmail: string | null = '';
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private userService: UserService
+  ) {}
 
   public ngOnInit(): void {
     this.userEmail = this.localStorageService.getLogInEmail();
@@ -137,7 +141,7 @@ export class AddMemberComponent {
       } else return false;
     });
     if (
-      this.localStorageService.checkEmailExistence(control.value) ||
+      this.userService.checkEmailExistence(control.value) ||
       memberEmailExist
     ) {
       return { isEmailExist: true };
