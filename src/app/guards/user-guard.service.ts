@@ -1,26 +1,23 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../services/local-storage.service';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  CanLoad,
+  Route,
   Router,
-  RouterStateSnapshot,
+  UrlSegment
 } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuardService implements CanActivate {
+export class UserGuardService implements CanLoad {
   constructor(
     private localStorageService: LocalStorageService,
     private route: Router
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canLoad(route: Route, segments: UrlSegment[]): boolean {
     const email = this.localStorageService.getLogInEmail();
     if (email) {
       const loggedInUser = this.localStorageService.getUserByEmail(email);

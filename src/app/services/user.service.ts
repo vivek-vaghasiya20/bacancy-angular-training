@@ -59,8 +59,25 @@ export class UserService {
   }
 
   public logout(): void {
-    this.localStorageService.removeLogInEmail();
-    Swal.fire('Logout Successfully');
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Logout Confirmation',
+      text: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'No, cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.localStorageService.removeLogInEmail();
+        this.router.navigate(['/login']);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'You are logout successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   }
 }

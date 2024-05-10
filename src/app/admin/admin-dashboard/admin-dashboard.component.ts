@@ -45,11 +45,26 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   public deleteUser(index: number): void {
-    const isConfirmed = confirm('Are you sure you want to delete?');
-    if (isConfirmed) {
-      this.usersList.splice(index, 1);
-      this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
-      this.persons = this.localStorageService.getUserData();
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Are you sure you want to delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usersList.splice(index, 1);
+        this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
+        this.persons = this.localStorageService.getUserData();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your item has been deleted.',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   }
 }
