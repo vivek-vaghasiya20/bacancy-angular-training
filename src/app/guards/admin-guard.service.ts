@@ -29,7 +29,6 @@ export class AdminGuardService implements CanActivate {
       } else {
         Swal.fire('Unauthorized role');
         this.route.navigate(['/login']);
-        this.localStorageService.removeLogInEmail();
         return false;
       }
     } else {
