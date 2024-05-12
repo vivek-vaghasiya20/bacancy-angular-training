@@ -1,7 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from 'interface/book.interface';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, catchError, map, observable, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { ErrorService } from './error.service';
 
 @Injectable({
@@ -42,31 +42,40 @@ export class BookService {
         }),
         catchError((error) => {
           this.errorService.emitErrorsInSubject(error);
-          return throwError(() => new Error(error.message));
+          return of([]);
         })
       );
   }
 
   public getFilteredBooks(value: any): Observable<Book[]> {
+    const isTitleMatch = (book: Book) =>
+      value.title
+        ? book.title.toLowerCase().includes(value.title.toLowerCase())
+        : true;
+
+    const isCategoryMatch = (book: Book) =>
+      value.category !== 'All Category'
+        ? book.category === value.category
+        : true;
+
+    const isPriceRangeMatch = (book: Book) =>
+      value.priceRange !== 'All Price'
+        ? this.checkPriceRange(book.price, value.priceRange)
+        : true;
+
     return this.getBooks().pipe(
       map((books: Book[]) => {
         return books.filter((book: Book) => {
-          return (
-            (value.title
-              ? book.title.toLowerCase().includes(value.title.toLowerCase())
-              : true) &&
-            (value.categories != 'All category'
-              ? book.category === value.category
-              : true) &&
-            (value.priceRange !== 'All price'
-              ? this.checkPriceRange(book.price, value.priceRange)
-              : true)
-          );
+          const titleMatch = isTitleMatch(book);
+          const categoryMatch = isCategoryMatch(book);
+          const priceRangeMatch = isPriceRangeMatch(book);
+
+          return titleMatch && categoryMatch && priceRangeMatch;
         });
       }),
       catchError((error) => {
         this.errorService.emitErrorsInSubject(error);
-        return throwError(() => new Error(error.message));
+        return of([]);
       })
     );
   }

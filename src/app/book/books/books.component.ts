@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Book } from 'interface/book.interface';
@@ -44,8 +45,8 @@ export class BooksComponent implements OnInit, OnDestroy {
   public initForm(): void {
     this.filterForm = this.fb.group({
       title: [''],
-      category: ['All category'],
-      priceRange: ['All price'],
+      category: ['All Category'],
+      priceRange: ['All Price'],
     });
   }
 
@@ -53,8 +54,28 @@ export class BooksComponent implements OnInit, OnDestroy {
     const errorSubscription = this.errorService
       .getErrorFromSubject()
       .subscribe({
-        next: (error) => alert(error),
-        error: (error) => alert(error),
+        next: (error: HttpErrorResponse) => {
+          let errorMessage = '';
+          switch (error.status) {
+            case 400:
+              errorMessage = 'Bad Request';
+              break;
+            case 401:
+              errorMessage = 'Unauthorize';
+              break;
+            case 404:
+              errorMessage = 'Resource not found';
+              break;
+            case 500:
+              errorMessage = 'Internal server error';
+              break;
+            default:
+              errorMessage = 'Something went wrong. Please try latter';
+              break;
+          }
+          alert(errorMessage);
+        },
+        error: (error) => alert(error.message),
       });
     this.subscriptions.push(errorSubscription);
   }
@@ -64,8 +85,26 @@ export class BooksComponent implements OnInit, OnDestroy {
       next: (books) => {
         this.bookList = books;
       },
-      error: (err) => {
-        alert(err);
+      error: (error) => {
+        let errorMessage = '';
+        switch (error.status) {
+          case 400:
+            errorMessage = 'Bad Request';
+            break;
+          case 401:
+            errorMessage = 'Unauthorize';
+            break;
+          case 404:
+            errorMessage = 'Resource not found';
+            break;
+          case 500:
+            errorMessage = 'Internal server error';
+            break;
+          default:
+            errorMessage = 'Something went wrong. Please try latter';
+            break;
+        }
+        alert(errorMessage);
       },
     });
     this.subscriptions.push(loadBookSubscription);
@@ -76,10 +115,33 @@ export class BooksComponent implements OnInit, OnDestroy {
       .getFilteredBooks(this.filterForm.value)
       .subscribe({
         next: (books) => {
+          console.log(
+            '%csrcapp\book\books\books.component.ts:118 books',
+            'color: #007acc;',
+            books
+          );
           this.bookList = books;
         },
-        error: (err) => {
-          alert(err);
+        error: (error) => {
+          let errorMessage = '';
+          switch (error.status) {
+            case 400:
+              errorMessage = 'Bad Request';
+              break;
+            case 401:
+              errorMessage = 'Unauthorize';
+              break;
+            case 404:
+              errorMessage = 'Resource not found';
+              break;
+            case 500:
+              errorMessage = 'Internal server error';
+              break;
+            default:
+              errorMessage = 'Something went wrong. Please try latter';
+              break;
+          }
+          alert(errorMessage);
         },
       });
     this.subscriptions.push(filterSubscription);
