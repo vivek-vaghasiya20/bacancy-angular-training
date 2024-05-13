@@ -6,8 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { admin } from 'src/app/interface/admin.interface';
-import { user } from 'src/app/interface/user.interface';
+import { Admin } from 'src/app/interface/admin.interface';
+import { User } from 'src/app/interface/user.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
 import Swal from 'sweetalert2';
@@ -26,7 +27,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -48,20 +50,20 @@ export class RegisterComponent implements OnInit {
   }
 
   private addNewAdmin(): void {
-    let newAdmin: admin = {
-      firstName: this.registrationForm.get('firstName')?.value,
-      lastName: this.registrationForm.get('lastName')?.value,
-      email: this.registrationForm.get('email')?.value,
-      password: this.registrationForm.get('password')?.value,
-      confirmPassword: this.registrationForm.get('confirmPassword')?.value,
-      gender: this.registrationForm.get('gender')?.value,
-      hobbies: this.registrationForm.get('hobbies')?.value,
+    let newAdmin: Admin = {
+      ...this.registrationForm.getRawValue(),
+      password: this.localStorageService.encryptPassword(
+        this.registrationForm.get('password')?.value
+      ),
+      confirmPassword: this.localStorageService.encryptPassword(
+        this.registrationForm.get('confirmPassword')?.value
+      ),
       role: 'admin',
       isActive: true,
       users: [],
     };
 
-    let adminData: admin[] = [];
+    let adminData: Admin[] = [];
 
     const localStorageData = localStorage.getItem('users');
     if (localStorageData !== null) {
@@ -75,14 +77,14 @@ export class RegisterComponent implements OnInit {
   }
 
   private addNewUser(): void {
-    let newUser: user = {
-      firstName: this.registrationForm.get('firstName')?.value,
-      lastName: this.registrationForm.get('lastName')?.value,
-      email: this.registrationForm.get('email')?.value,
-      password: this.registrationForm.get('password')?.value,
-      confirmPassword: this.registrationForm.get('confirmPassword')?.value,
-      gender: this.registrationForm.get('gender')?.value,
-      hobbies: this.registrationForm.get('hobbies')?.value,
+    let newUser: User = {
+      ...this.registrationForm.getRawValue(),
+      password: this.localStorageService.encryptPassword(
+        this.registrationForm.get('password')?.value
+      ),
+      confirmPassword: this.localStorageService.encryptPassword(
+        this.registrationForm.get('confirmPassword')?.value
+      ),
       role: 'user',
       isActive: true,
       members: [],
@@ -97,12 +99,12 @@ export class RegisterComponent implements OnInit {
   private checkAndCreateAdminData(): void {
     const localStorageData = localStorage.getItem('users');
     if (!localStorageData || localStorageData.trim() === '') {
-      const newAdmin: admin = {
+      const newAdmin: Admin = {
         firstName: 'Admin',
         lastName: 'Admin',
         email: 'admin@example.com',
-        password: 'Admin@123',
-        confirmPassword: 'Admin@123',
+        password: this.localStorageService.encryptPassword('Admin@123'),
+        confirmPassword: this.localStorageService.encryptPassword('Admin@123'),
         gender: 'Male',
         hobbies: 'Coding',
         role: 'admin',
@@ -148,10 +150,9 @@ export class RegisterComponent implements OnInit {
         new FormControl('', [Validators.required])
       );
 
-      // Retrieve admin data from localStorage
       const localStorageData = localStorage.getItem('users');
       if (localStorageData) {
-        const adminData: admin[] = JSON.parse(localStorageData);
+        const adminData: Admin[] = JSON.parse(localStorageData);
         this.adminList = adminData.map((admin) => admin.email);
       } else {
         console.error('Admin data not found in localStorage');

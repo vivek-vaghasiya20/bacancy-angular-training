@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
-import { user } from '../interface/user.interface';
-import { admin } from '../interface/admin.interface';
+import { User } from '../interface/user.interface';
+import { Admin } from '../interface/admin.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Member } from '../interface/member.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class UserService {
     public router: Router
   ) {}
 
-  public updateUsers(adminEmail: string, updatedUsers: user[]): void {
+  public updateUsers(adminEmail: string, updatedUsers: User[]): void {
     let userData = this.localStorageService.getUserData();
     const adminIndex = userData.findIndex(
       (admin) => admin.email === adminEmail
@@ -26,8 +27,8 @@ export class UserService {
     }
   }
 
-  public addNewUser(newUser: user, email: string): void {
-    let adminData: admin[] = this.localStorageService.getUserData();
+  public addNewUser(newUser: User, email: string): void {
+    let adminData: Admin[] = this.localStorageService.getUserData();
     const adminIndex = adminData.findIndex((admin) => admin.email === email);
     if (adminIndex !== -1) {
       adminData[adminIndex].users.push(newUser);
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   public checkEmailExistence(email: string): boolean {
-    const adminData: admin[] = this.localStorageService.getUserData();
+    const adminData: Admin[] = this.localStorageService.getUserData();
     for (const admin of adminData) {
       if (admin.email === email) {
         return true;
@@ -48,7 +49,7 @@ export class UserService {
           }
           if (
             user.members &&
-            user.members.some((member) => member.email === email)
+            user.members.some((member: Member) => member.email === email)
           ) {
             return true;
           }

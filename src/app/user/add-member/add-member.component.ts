@@ -7,8 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { admin } from 'src/app/interface/admin.interface';
-import { member } from 'src/app/interface/member.interface';
+import { Admin } from 'src/app/interface/admin.interface';
+import { Member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -89,21 +89,12 @@ export class AddMemberComponent {
   }
 
   public onSubmit(): void {
-    const members: member[] = [];
+    const members: Member[] = [];
 
     this.getMemberControl().forEach((memberControl) => {
-      const memberData: member = {
-        firstName: memberControl.get('firstName')?.value,
-        lastName: memberControl.get('lastName')?.value,
-        email: memberControl.get('email')?.value,
-        gender: memberControl.get('gender')?.value,
-        hobbies: memberControl.get('hobbies')?.value,
-        role: memberControl.get('role')?.value,
-        salary: memberControl.get('salary')?.value,
-        contactNumber: memberControl.get('contactNumber')?.value,
-      };
-
-      members.push(memberData);
+      members.push({
+        ...memberControl.getRawValue(),
+      });
     });
 
     this.addMemberToUser(this.userEmail, members);
@@ -158,8 +149,8 @@ export class AddMemberComponent {
     return membersArray.length === 0 || this.memberForm.invalid;
   }
 
-  public addMemberToUser(userEmail: string | null, members: member[]): void {
-    let adminData: admin[] = this.localStorageService.getUserData();
+  public addMemberToUser(userEmail: string | null, members: Member[]): void {
+    let adminData: Admin[] = this.localStorageService.getUserData();
 
     for (const admin of adminData) {
       for (const user of admin.users) {

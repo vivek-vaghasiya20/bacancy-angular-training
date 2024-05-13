@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { post } from 'src/app/interface/post.inteface';
+import { Post } from 'src/app/interface/post.inteface';
 import { HttpService } from 'src/app/services/http.service';
 import Swal from 'sweetalert2';
 
@@ -10,11 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./http.component.scss'],
 })
 export class HttpComponent {
-  public posts: post[] = [];
+  public posts: Post[] = [];
   public postId!: number;
   public postIdToDelete!: number;
   public postIdToUpdate!: number;
-  public newPost: post = {
+  public newPost: Post = {
     userId: 11,
     id: 101,
     title: 'New Post',

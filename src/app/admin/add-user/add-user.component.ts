@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { user } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';
@@ -29,19 +29,20 @@ export class AddUserComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    let newUser: user = {
-      firstName: this.userForm.get('firstName')?.value,
-      lastName: this.userForm.get('lastName')?.value,
-      email: this.userForm.get('email')?.value,
-      password: this.userForm.get('password')?.value,
-      confirmPassword: this.userForm.get('confirmPassword')?.value,
-      gender: this.userForm.get('gender')?.value,
-      hobbies: this.userForm.get('hobbies')?.value,
+    let newUser: User = {
+      ...this.userForm.getRawValue(),
+      password: this.localStorageService.encryptPassword(
+        this.userForm.get('password')?.value
+      ),
+      confirmPassword: this.localStorageService.encryptPassword(
+        this.userForm.get('confirmPassword')?.value
+      ),
       role: 'user',
       isActive: true,
       members: [],
     };
     const adminEmail = this.localStorageService.getLogInEmail();
+
     if (adminEmail) {
       const email = this.userForm.get('email')?.value;
       if (this.userService.checkEmailExistence(email)) {

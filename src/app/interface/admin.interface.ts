@@ -1,6 +1,6 @@
-import { user } from './user.interface';
+import { User } from './user.interface';
 
-export interface admin {
+export interface Admin {
   firstName: string;
   lastName: string;
   email: string;
@@ -10,5 +10,5 @@ export interface admin {
   hobbies: string;
   role: 'admin';
   isActive: boolean;
-  users: user[];
+  users: User[];
 }

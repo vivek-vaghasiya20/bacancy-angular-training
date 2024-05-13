@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Admin } from 'src/app/interface/admin.interface';
+import { User } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -47,19 +49,25 @@ export class LoginComponent {
   private authenticate(email: string, password: string): boolean {
     const adminData = this.localStorageService.getUserData();
     if (adminData) {
+      const encryptedPassword =
+        this.localStorageService.encryptPassword(password);
+
       const adminMatch = adminData.find(
-        (admin) => admin.email === email && admin.password === password
+        (admin: Admin) =>
+          admin.email === email && admin.password === encryptedPassword
       );
 
       if (adminMatch) {
-        localStorage.setItem('loggedInEmail', adminMatch.email);
+        this.localStorageService.setLogInEmail(adminMatch.email);
         return true;
       }
 
       for (const admin of adminData) {
         const userMatch = admin.users.find(
-          (user) =>
-            user.email === email && user.password === password && user.isActive
+          (user: User) =>
+            user.email === email &&
+            user.password === encryptedPassword &&
+            user.isActive
         );
         if (userMatch) {
           this.localStorageService.setLogInEmail(userMatch.email);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { admin } from '../interface/admin.interface';
-import { user } from '../interface/user.interface';
+import { Admin } from '../interface/admin.interface';
+import { User } from '../interface/user.interface';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,12 @@ export class LocalStorageService {
 
   constructor() {}
 
-  public getUserData(): admin[] {
+  public getUserData(): Admin[] {
     const userDataStr = localStorage.getItem(this.localStorageKey);
     return userDataStr ? JSON.parse(userDataStr) : [];
   }
 
-  public setUserData(userData: admin[]): void {
+  public setUserData(userData: Admin[]): void {
     localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
   }
 
@@ -28,16 +29,16 @@ export class LocalStorageService {
     return localStorage.getItem(this.loggedInKey) || null;
   }
 
-  public getUserByEmail(email: string): admin | user | null {
-    const adminData: admin[] = this.getUserData();
+  public getUserByEmail(email: string): Admin | User | null {
+    const adminData: Admin[] = this.getUserData();
     if (adminData) {
-      let foundUser: admin | user | null = null;
+      let foundUser: Admin | User | null = null;
 
       adminData.forEach((admin) => {
         if (admin.email === email) {
           foundUser = admin;
         } else {
-          const user = admin.users.find((user) => user.email === email);
+          const user = admin.users.find((user: User) => user.email === email);
           if (user) {
             foundUser = user;
           }
@@ -50,5 +51,21 @@ export class LocalStorageService {
 
   public removeLogInEmail(): void {
     localStorage.removeItem(this.loggedInKey);
+  }
+
+  public encryptPassword(password: string): string {
+    const key = CryptoJS.enc.Utf8.parse('nothingIsImpossible');
+    const iv = CryptoJS.enc.Utf8.parse('yourIV');
+    const encrypted = CryptoJS.AES.encrypt(
+      CryptoJS.enc.Utf8.parse(password),
+      key,
+      {
+        keySize: 128 / 8,
+        iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+      }
+    );
+    return encrypted.toString();
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { member } from 'src/app/interface/member.interface';
+import { Member } from 'src/app/interface/member.interface';
+import { User } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
   styleUrls: ['./user-dashboard.component.scss'],
 })
 export class UserDashboardComponent {
-  public memberList: member[] = [];
+  public memberList: Member[] = [];
   public loggedInUserEmail!: string;
 
   constructor(
@@ -28,7 +29,7 @@ export class UserDashboardComponent {
       this.loggedInUserEmail = email;
       for (const admin of adminData) {
         const user = admin.users.find(
-          (user) => user.email === this.loggedInUserEmail
+          (user: User) => user.email === this.loggedInUserEmail
         );
         if (user) {
           this.memberList = user.members;

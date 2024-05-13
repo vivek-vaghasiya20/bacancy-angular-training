@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { admin } from 'src/app/interface/admin.interface';
-import { user } from 'src/app/interface/user.interface';
+import { Admin } from 'src/app/interface/admin.interface';
+import { User } from 'src/app/interface/user.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -12,8 +12,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  public persons: admin[] = [];
-  public usersList: user[] = [];
+  public persons: Admin[] = [];
+  public usersList: User[] = [];
   public loggedInAdminEmail!: string;
 
   constructor(
@@ -38,7 +38,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  public changeStatus(user: user): void {
+  public changeStatus(user: User): void {
     user.isActive = !user.isActive;
     this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
     this.persons = this.localStorageService.getUserData();

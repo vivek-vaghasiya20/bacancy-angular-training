@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { post } from '../interface/post.inteface';
+import { Post } from '../interface/post.inteface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +11,23 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
-  public getPosts(): Observable<post[]> {
-    return this.http.get<post[]>(`${this.apiURL}/posts`);
+  public getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiURL}/posts`);
   }
 
-  public getPostsById(id: number): Observable<post[]> {
-    return this.http.get<post[]>(`${this.apiURL}/posts/${id}`);
+  public getPostsById(id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiURL}/posts/${id}`);
   }
 
   public deletePost(id: number): Observable<{}> {
     return this.http.delete(`${this.apiURL}/posts/${id}`);
   }
 
-  public createPost(post: post): Observable<post> {
-    return this.http.post<post>(`${this.apiURL}/posts`, post);
+  public createPost(post: Post): Observable<Post> {
+    return this.http.post<Post>(`${this.apiURL}/posts`, post);
   }
 
-  public updatePost(id: number, post: post): Observable<post> {
-    return this.http.put<post>(`${this.apiURL}/posts/${id}`, post);
+  public updatePost(id: number, post: Post): Observable<Post> {
+    return this.http.put<Post>(`${this.apiURL}/posts/${id}`, post);
   }
 }
