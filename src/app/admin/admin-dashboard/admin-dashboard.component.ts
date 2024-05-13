@@ -58,7 +58,7 @@ export class AdminDashboardComponent implements OnInit {
         this.useService.updateUsers(this.loggedInAdminEmail, this.usersList);
         this.persons = this.localStorageService.getUserData();
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: 'Your item has been deleted.',
           showConfirmButton: false,

@@ -72,7 +72,7 @@ export class UserService {
         this.localStorageService.removeLogInEmail();
         this.router.navigate(['/login']);
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: 'You are logout successfully',
           showConfirmButton: false,
