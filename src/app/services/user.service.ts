@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
-import { User } from '../interface/user.interface';
+import { User } from '../interface/User.interface';
 import { Admin } from '../interface/admin.interface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';

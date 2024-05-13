@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/User.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { passwordMatchValidator } from 'src/app/validations/password-match.validator';

@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanLoad,
-  Route,
-  Router,
-  UrlSegment
-} from '@angular/router';
+import { CanLoad, Route, Router, UrlSegment } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LocalStorageService } from '../services/local-storage.service';
 

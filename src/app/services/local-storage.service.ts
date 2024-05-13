@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Admin } from '../interface/admin.interface';
-import { User } from '../interface/user.interface';
+import { User } from '../interface/User.interface';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({

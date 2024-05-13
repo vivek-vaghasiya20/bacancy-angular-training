@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Member } from 'src/app/interface/member.interface';
-import { User } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/User.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({

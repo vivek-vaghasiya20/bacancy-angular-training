@@ -13,6 +13,7 @@ export class AuthGuardService implements CanLoad {
 
   canLoad(route: Route, segments: UrlSegment[]): boolean {
     const email = this.localStorageService.getLogInEmail();
+
     if (email) {
       const loggedInUser = this.localStorageService.getUserByEmail(email);
       if (loggedInUser && loggedInUser.role === 'admin') {

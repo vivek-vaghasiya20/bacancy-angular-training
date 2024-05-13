@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Admin } from 'src/app/interface/admin.interface';
-import { User } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/User.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
