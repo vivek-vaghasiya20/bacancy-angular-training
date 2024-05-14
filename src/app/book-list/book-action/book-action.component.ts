@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { book } from 'src/app/book-interface';
 
 @Component({
@@ -10,7 +16,7 @@ export class BookActionComponent {
   @Input() book: book | undefined;
   public newBook: book = {
     bookId: 0,
-    imgUrl: '',
+    imgUrl: 'assets/book-image.jpeg',
     title: '',
     description: '',
     price: 0,
@@ -27,19 +33,24 @@ export class BookActionComponent {
       this.newBook = { ...this.book };
     }
   }
-  
+
   public addBook(): void {
-    if (this.validForm()) {
+    if (this.validForm() && this.validatePrice()) {
       this.bookAdded.emit(this.newBook);
       this.resetForm();
     } else {
-      alert('Please fill up all field ');
+      alert('Please fill up all field or enter valid values.');
+      this.resetForm();
     }
   }
 
   public updateBook(): void {
-    this.bookEdited.emit(this.newBook);
-    this.resetForm();
+    if (this.validForm() && this.validatePrice()) {
+      this.bookEdited.emit(this.newBook);
+      this.resetForm();
+    } else {
+      alert('Please fill up all field or enter valid values.');
+    }
   }
 
   private validForm(): boolean {
@@ -53,11 +64,14 @@ export class BookActionComponent {
       this.newBook.stock !== null
     );
   }
+  public validatePrice(): boolean {
+    return this.newBook.price >= 0;
+  }
 
   public resetForm(): void {
     this.newBook = {
       bookId: 0,
-      imgUrl: '',
+      imgUrl: 'assets/book-image.jpeg',
       title: '',
       description: '',
       price: 0,
