@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddMemberComponent } from './add-member/add-member.component';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserComponent } from './user.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { AddMemberComponent } from './add-member/add-member.component';
 import { HttpComponent } from './http/http.component';
 
 const adminRoutes: Routes = [

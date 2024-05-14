@@ -10,19 +10,19 @@ const routes: Routes = [
     path: 'admin',
     canLoad: [AdminGuardService],
     loadChildren: () =>
-      import('./admin/admin.module').then((mod) => mod.AdminModule),
+      import('./modules/admin/admin.module').then((mod) => mod.AdminModule),
   },
   {
     path: 'user',
     canLoad: [UserGuardService],
     loadChildren: () =>
-      import('./user/user.module').then((mod) => mod.UserModule),
+      import('./modules/user/user.module').then((mod) => mod.UserModule),
   },
   {
     path: '',
     canLoad: [AuthGuardService],
     loadChildren: () =>
-      import('./auth/auth.module').then((mod) => mod.AuthModule),
+      import('./modules/auth/auth.module').then((mod) => mod.AuthModule),
   },
   { path: '**', redirectTo: 'login' },
 ];
