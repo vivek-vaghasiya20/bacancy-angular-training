@@ -129,12 +129,19 @@
                   id="salary"
                   formControlName="salary"
                   class="form-control"
+                  min="0"
                 />
                 <span
                   *ngIf="member.get('salary')?.errors?.['required'] && (member.get('salary')?.dirty || member.get('salary')?.touched)"
                   class="text-danger"
                 >
                   Salary is required.
+                </span>
+                <span
+                  *ngIf="member.get('salary')?.errors?.['min'] && (member.get('salary')?.dirty || member.get('salary')?.touched)"
+                  class="text-danger"
+                >
+                  Salary cannot be negative.
                 </span>
               </div>
               <div class="form-group m-2">

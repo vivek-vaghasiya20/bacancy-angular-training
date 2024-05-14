@@ -10,8 +10,6 @@ export class LocalStorageService {
   private localStorageKey = 'users';
   private loggedInKey = 'loggedInEmail';
 
-  constructor() {}
-
   public getUserData(): Admin[] {
     const userDataStr = localStorage.getItem(this.localStorageKey);
     return userDataStr ? JSON.parse(userDataStr) : [];

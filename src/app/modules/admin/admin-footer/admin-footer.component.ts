@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-admin-footer',
   templateUrl: './admin-footer.component.html',
-  styleUrls: ['./admin-footer.component.scss']
+  styleUrls: ['./admin-footer.component.scss'],
 })
 export class AdminFooterComponent {
-
+  public currentYear: number = new Date().getFullYear();
 }

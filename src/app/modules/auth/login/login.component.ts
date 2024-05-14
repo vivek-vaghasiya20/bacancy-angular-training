@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { emailRegex } from 'src/app/const/const';
 import { Admin } from 'src/app/interface/admin.interface';
 import { User } from 'src/app/interface/User.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -17,6 +18,7 @@ export class LoginComponent {
 
   public email: string = '';
   public password: string = '';
+  public emailPattern: string = emailRegex;
 
   constructor(
     private router: Router,

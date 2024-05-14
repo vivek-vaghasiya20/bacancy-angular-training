@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { emailRegex } from 'src/app/const/const';
 import { Admin } from 'src/app/interface/admin.interface';
 import { Member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -30,7 +31,7 @@ export class AddMemberComponent {
     'Supply Chain Manager',
   ];
 
-  private userEmail: string | null = '';
+  private userEmail: string = '';
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -39,7 +40,7 @@ export class AddMemberComponent {
   ) {}
 
   public ngOnInit(): void {
-    this.userEmail = this.localStorageService.getLogInEmail();
+    this.userEmail = this.localStorageService.getLogInEmail() || '';
     this.initializeForm();
   }
 
@@ -67,7 +68,7 @@ export class AddMemberComponent {
       email: new FormControl('', [
         Validators.required,
         this.emailExistenceValidator.bind(this),
-        Validators.pattern('^[a-z]{1}[a-z0-9.]+@[a-z0-9]+.[a-z]{2,6}$'),
+        Validators.pattern(emailRegex),
       ]),
       gender: new FormControl('', [Validators.required]),
       hobbies: new FormControl(''),

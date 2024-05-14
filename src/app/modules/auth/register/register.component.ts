@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { emailRegex, passwordRegex } from 'src/app/const/const';
 import { Admin } from 'src/app/interface/admin.interface';
 import { User } from 'src/app/interface/User.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
@@ -119,22 +120,8 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[a-z]{1}[a-z0-9.]+@[a-z0-9]+.[a-z]{2,6}$'),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[@])(?=.*\\d)[A-Za-z@0-9]{6,12}$'
-          ),
-        ],
-      ],
+      email: ['', [Validators.required, Validators.pattern(emailRegex)]],
+      password: ['', [Validators.required, Validators.pattern(passwordRegex)]],
       confirmPassword: ['', [Validators.required, passwordMatchValidator]],
       gender: ['', Validators.required],
       hobbies: ['', Validators.required],
