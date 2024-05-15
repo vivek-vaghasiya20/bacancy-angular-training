@@ -30,31 +30,35 @@ export class AddUserComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    let newUser: User = {
-      ...this.userForm.getRawValue(),
-      password: this.localStorageService.encryptPassword(
-        this.userForm.get('password')?.value
-      ),
-      confirmPassword: this.localStorageService.encryptPassword(
-        this.userForm.get('confirmPassword')?.value
-      ),
-      role: 'user',
-      isActive: true,
-      members: [],
-    };
-    const adminEmail = this.localStorageService.getLogInEmail();
+    if (this.userForm.valid) {
+      let newUser: User = {
+        ...this.userForm.getRawValue(),
+        password: this.localStorageService.encryptPassword(
+          this.userForm.get('password')?.value
+        ),
+        confirmPassword: this.localStorageService.encryptPassword(
+          this.userForm.get('confirmPassword')?.value
+        ),
+        role: 'user',
+        isActive: true,
+        members: [],
+      };
+      const adminEmail = this.localStorageService.getLogInEmail();
 
-    if (adminEmail) {
-      const email = this.userForm.get('email')?.value;
-      if (this.userService.checkEmailExistence(email)) {
-        Swal.fire('This email already exists in the database.');
+      if (adminEmail) {
+        const email = this.userForm.get('email')?.value;
+        if (this.userService.checkEmailExistence(email)) {
+          Swal.fire('This email already exists in the database.');
+        } else {
+          this.userService.addNewUser(newUser, adminEmail);
+          Swal.fire('Successfully registered user.');
+          this.userForm.reset();
+        }
       } else {
-        this.userService.addNewUser(newUser, adminEmail);
-        Swal.fire('Successfully registered user.');
-        this.userForm.reset();
+        this.router.navigate(['/login']);
       }
     } else {
-      this.router.navigate(['/login']);
+      Swal.fire('Invalid form value.');
     }
   }
 

@@ -38,15 +38,19 @@ export class RegisterComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const email = this.registrationForm.get('email')?.value;
-    if (this.userService.checkEmailExistence(email)) {
-      Swal.fire('This email already exists in the database.');
-    } else {
-      if (this.registrationForm.get('role')?.value === 'Admin') {
-        this.addNewAdmin();
+    if (this.registrationForm.valid) {
+      const email = this.registrationForm.get('email')?.value;
+      if (this.userService.checkEmailExistence(email)) {
+        Swal.fire('This email already exists in the database.');
       } else {
-        this.addNewUser();
+        if (this.registrationForm.get('role')?.value === 'Admin') {
+          this.addNewAdmin();
+        } else {
+          this.addNewUser();
+        }
       }
+    } else {
+      Swal.fire('Invalid form value.');
     }
   }
 

@@ -12,6 +12,7 @@ import { Admin } from 'src/app/interface/admin.interface';
 import { Member } from 'src/app/interface/member.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-member',
@@ -90,18 +91,22 @@ export class AddMemberComponent {
   }
 
   public onSubmit(): void {
-    const members: Member[] = [];
+    if (this.memberForm.valid) {
+      const members: Member[] = [];
 
-    this.getMemberControl().forEach((memberControl) => {
-      members.push({
-        ...memberControl.getRawValue(),
+      this.getMemberControl().forEach((memberControl) => {
+        members.push({
+          ...memberControl.getRawValue(),
+        });
       });
-    });
 
-    this.addMemberToUser(this.userEmail, members);
-    this.memberForm.reset();
-    (this.memberForm.get('members') as FormArray).clear();
-    this.router.navigate(['/user/user-dashboard']);
+      this.addMemberToUser(this.userEmail, members);
+      this.memberForm.reset();
+      (this.memberForm.get('members') as FormArray).clear();
+      this.router.navigate(['/user/user-dashboard']);
+    } else {
+      Swal.fire('Invalid Form Value');
+    }
   }
 
   private whiteSpaceValidator(

@@ -30,21 +30,25 @@ export class LoginComponent {
     this.email = this.formData.value.emailField;
     this.password = this.formData.value.passwordField;
 
-    if (this.userService.checkEmailExistence(this.email)) {
-      if (this.authenticate(this.email, this.password)) {
-        const loggedInPersonData = this.localStorageService.getUserByEmail(
-          this.email
-        );
-        if (loggedInPersonData && loggedInPersonData.role === 'admin') {
-          this.router.navigate(['/admin/admin-dashboard']);
-        } else if (loggedInPersonData && loggedInPersonData.role === 'user') {
-          this.router.navigate(['/user/user-dashboard']);
+    if (this.formData.valid) {
+      if (this.userService.checkEmailExistence(this.email)) {
+        if (this.authenticate(this.email, this.password)) {
+          const loggedInPersonData = this.localStorageService.getUserByEmail(
+            this.email
+          );
+          if (loggedInPersonData && loggedInPersonData.role === 'admin') {
+            this.router.navigate(['/admin/admin-dashboard']);
+          } else if (loggedInPersonData && loggedInPersonData.role === 'user') {
+            this.router.navigate(['/user/user-dashboard']);
+          }
+        } else {
+          Swal.fire('Invalid credentials or status is inactive.');
         }
       } else {
-        Swal.fire('Invalid credentials or status is inactive.');
+        Swal.fire('Email not found.');
       }
     } else {
-      Swal.fire('Email not found.');
+      Swal.fire('Invalid form value.');
     }
   }
 
