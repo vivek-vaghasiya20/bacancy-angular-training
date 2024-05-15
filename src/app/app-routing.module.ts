@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuardService } from './guards/admin-guard.service';
-import { UserGuardService } from './guards/user-guard.service';
-import { AuthGuardService } from './guards/auth-guard.service';
+import { canMatchAdmin } from './guards/adminGuards';
+import { canMatchAuth } from './guards/authGuards';
+import { canMatchUser } from './guards/userGuards';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'admin',
-    canLoad: [AdminGuardService],
+    canMatch: [canMatchAdmin],
     loadChildren: () =>
       import('./modules/admin/admin.module').then((mod) => mod.AdminModule),
   },
   {
     path: 'user',
-    canLoad: [UserGuardService],
+    canMatch: [canMatchUser],
     loadChildren: () =>
       import('./modules/user/user.module').then((mod) => mod.UserModule),
   },
   {
     path: '',
-    canLoad: [AuthGuardService],
+    canMatch: [canMatchAuth],
     loadChildren: () =>
       import('./modules/auth/auth.module').then((mod) => mod.AuthModule),
   },
