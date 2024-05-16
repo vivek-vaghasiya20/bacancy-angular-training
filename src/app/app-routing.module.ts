@@ -5,24 +5,23 @@ import { canMatchAuth } from './guards/authGuards';
 import { canMatchUser } from './guards/userGuards';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'admin',
-    canMatch: [canMatchAdmin],
+    path: '',
     loadChildren: () =>
       import('./modules/admin/admin.module').then((mod) => mod.AdminModule),
-  },
-  {
-    path: 'user',
-    canMatch: [canMatchUser],
-    loadChildren: () =>
-      import('./modules/user/user.module').then((mod) => mod.UserModule),
+    canMatch: [canMatchAdmin],
   },
   {
     path: '',
-    canMatch: [canMatchAuth],
+    loadChildren: () =>
+      import('./modules/user/user.module').then((mod) => mod.UserModule),
+    canMatch: [canMatchUser],
+  },
+  {
+    path: '',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((mod) => mod.AuthModule),
+    canMatch: [canMatchAuth],
   },
   { path: '**', redirectTo: 'login' },
 ];

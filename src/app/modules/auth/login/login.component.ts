@@ -37,9 +37,9 @@ export class LoginComponent {
             this.email
           );
           if (loggedInPersonData && loggedInPersonData.role === 'admin') {
-            this.router.navigate(['/admin/admin-dashboard']);
+            this.router.navigate(['/dashboard']);
           } else if (loggedInPersonData && loggedInPersonData.role === 'user') {
-            this.router.navigate(['/user/user-dashboard']);
+            this.router.navigate(['/dashboard']);
           }
         } else {
           Swal.fire('Invalid credentials or status is inactive.');

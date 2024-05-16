@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddUserComponent } from './add-user/add-user.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminComponent } from './admin.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 const adminRoutes: Routes = [
   {
@@ -10,12 +10,13 @@ const adminRoutes: Routes = [
     component: AdminComponent,
     pathMatch: 'prefix',
     children: [
-      { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'admin-dashboard',
+        path: 'dashboard',
         component: AdminDashboardComponent,
       },
       { path: 'add-user', component: AddUserComponent },
+      { path: '**', redirectTo: 'dashboard' },
     ],
   },
 ];

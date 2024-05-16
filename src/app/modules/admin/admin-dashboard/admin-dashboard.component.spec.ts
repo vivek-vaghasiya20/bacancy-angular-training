@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminDashboardComponent } from './admin-dashboard.component';
+import { AdminDashboardComponent } from './dashboard.component';
 
 describe('AdminDashboardComponent', () => {
   let component: AdminDashboardComponent;
@@ -8,7 +8,7 @@ describe('AdminDashboardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AdminDashboardComponent]
+      declarations: [AdminDashboardComponent],
     });
     fixture = TestBed.createComponent(AdminDashboardComponent);
     component = fixture.componentInstance;

@@ -103,7 +103,7 @@ export class AddMemberComponent {
       this.addMemberToUser(this.userEmail, members);
       this.memberForm.reset();
       (this.memberForm.get('members') as FormArray).clear();
-      this.router.navigate(['/user/user-dashboard']);
+      this.router.navigate(['/dashboard']);
     } else {
       Swal.fire('Invalid Form Value');
     }
