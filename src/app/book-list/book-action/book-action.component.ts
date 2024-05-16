@@ -1,9 +1,11 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { book } from 'src/app/book-interface';
 
@@ -27,6 +29,7 @@ export class BookActionComponent {
   @Input() isEditMode: boolean | undefined;
   @Output() bookAdded = new EventEmitter<book>();
   @Output() bookEdited = new EventEmitter<book>();
+  @ViewChild('btnClose') btnClose!: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.book) {
@@ -35,37 +38,47 @@ export class BookActionComponent {
   }
 
   public addBook(): void {
-    if (this.validForm() && this.validatePrice()) {
+    if (this.validations()) {
       this.bookAdded.emit(this.newBook);
-      this.resetForm();
-    } else {
-      alert('Please fill up all field or enter valid values.');
+      this.btnClose.nativeElement.click();
+      alert('Book added successfully');
       this.resetForm();
     }
+  }
+
+  public validations() {
+    if (
+      !this.newBook.title ||
+      !this.newBook.description ||
+      !this.newBook.imgUrl ||
+      !this.newBook.price ||
+      !this.newBook.review ||
+      !this.newBook.stock ||
+      !this.newBook.price
+    ) {
+      alert('please fill all the fields');
+      return false;
+    }
+
+    if (+this.newBook.rating < 0 || this.newBook.rating > 5) {
+      alert('Enter valid rating');
+      this.newBook.rating = 0;
+      return false;
+    }
+    if (+this.newBook.price < 0 || this.newBook.stock < 0) {
+      alert('Price and stock should not be negative');
+      return false;
+    }
+    return true;
   }
 
   public updateBook(): void {
-    if (this.validForm() && this.validatePrice()) {
+    if (this.validations()) {
       this.bookEdited.emit(this.newBook);
+      this.btnClose.nativeElement.click();
+      alert('Book edited successfully');
       this.resetForm();
-    } else {
-      alert('Please fill up all field or enter valid values.');
     }
-  }
-
-  private validForm(): boolean {
-    return (
-      this.newBook.title.trim() !== '' &&
-      this.newBook.description.trim() !== '' &&
-      this.newBook.imgUrl.trim() !== '' &&
-      this.newBook.price !== null &&
-      this.newBook.review.trim() !== '' &&
-      this.newBook.rating !== null &&
-      this.newBook.stock !== null
-    );
-  }
-  public validatePrice(): boolean {
-    return this.newBook.price >= 0;
   }
 
   public resetForm(): void {
