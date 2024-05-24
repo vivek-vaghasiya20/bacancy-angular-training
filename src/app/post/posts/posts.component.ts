@@ -75,22 +75,20 @@ export class PostsComponent implements OnInit {
   }
 
   public showConfirmDelete(id: number): void {
-    if (this.viewContainerHost.viewContainerRef.length === 0) {
-      const confirmComponent =
-        this.viewContainerHost.viewContainerRef.createComponent(
-          ConfirmBoxComponent
-        );
+    const confirmComponent =
+      this.viewContainerHost.viewContainerRef.createComponent(
+        ConfirmBoxComponent
+      );
 
-      const successSub = confirmComponent.instance.succeeded.subscribe(() => {
-        this.onDeletePost(id);
-        successSub.unsubscribe();
-        this.viewContainerHost.viewContainerRef.clear();
-      });
+    const successSub = confirmComponent.instance.succeeded.subscribe(() => {
+      this.onDeletePost(id);
+      successSub.unsubscribe();
+      this.viewContainerHost.viewContainerRef.clear();
+    });
 
-      const cancelSub = confirmComponent.instance.cancelled.subscribe(() => {
-        cancelSub.unsubscribe();
-        this.viewContainerHost.viewContainerRef.clear();
-      });
-    }
+    const cancelSub = confirmComponent.instance.cancelled.subscribe(() => {
+      cancelSub.unsubscribe();
+      this.viewContainerHost.viewContainerRef.clear();
+    });
   }
 }
