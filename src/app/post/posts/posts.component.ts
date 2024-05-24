@@ -74,7 +74,7 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  public showConfirmDelete(id: number) {
+  public showConfirmDelete(id: number): void {
     if (this.viewContainerHost.viewContainerRef.length === 0) {
       const confirmComponent =
         this.viewContainerHost.viewContainerRef.createComponent(

@@ -9,11 +9,11 @@ export class ConfirmBoxComponent {
   @Output() succeeded = new EventEmitter<void>();
   @Output() cancelled = new EventEmitter<void>();
 
-  onSuccess() {
+  public onSuccess(): void {
     this.succeeded.emit();
   }
 
-  onCancel() {
+  public onCancel(): void {
     this.cancelled.emit();
   }
 }
