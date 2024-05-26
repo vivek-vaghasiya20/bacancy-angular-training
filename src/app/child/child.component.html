@@ -1,0 +1,6 @@
+Pass value from Child:<input
+  type="text"
+  [ngModel]="signalInChild()"
+  (ngModelChange)="signalInChild.set($event)"
+/>
+<h3>Signal Value from Child component => {{ signalInChild() }}</h3>
