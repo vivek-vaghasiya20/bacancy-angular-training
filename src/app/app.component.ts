@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(public fb: FormBuilder) {
     //show alert on value change
-    effect(() => this.teamName());
+    effect(() => alert(this.teamName()));
   }
 
   ngOnInit(): void {
