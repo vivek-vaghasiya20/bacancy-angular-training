@@ -62,7 +62,19 @@ export class AppComponent implements OnInit {
 
   // Function to set object signal (signalFour)
   public setObjectSignal(): void {
-    this.signalFour.set({ firstTeam: 'RCB', secondTeam: 'MI' });
+    this.signalFour.set({
+      firstTeam: this.objectFormGroup.controls['firstTeam'].value,
+      secondTeam: this.objectFormGroup.controls['secondTeam'].value,
+    });
+  }
+
+  // Function to update object signal (signalFour)
+  public updateObjectSignal(): void {
+    this.signalFour.update((currentValue) => ({
+      ...currentValue,
+      firstTeam: this.objectFormGroup.controls['firstTeam'].value,
+      secondTeam: this.objectFormGroup.controls['secondTeam'].value,
+    }));
   }
 
   // Function to mutate object signal (signalFour)
