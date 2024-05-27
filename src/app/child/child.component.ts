@@ -20,8 +20,9 @@ export class ChildComponent implements OnInit {
   }
 
   private onValueChanges(): void {
-    this.FormGroup.valueChanges.subscribe((value) =>
-      this.signalInChild.set(value.newValue)
-    );
+    //this.FormGroup.valueChanges.subscribe((value) => this.signalInChild.set(value.newValue));
+    this.FormGroup.get('newValue')?.valueChanges.forEach((value) => {
+      this.signalInChild.set(value);
+    });
   }
 }
