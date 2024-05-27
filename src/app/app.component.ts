@@ -1,4 +1,4 @@
-import { Component, OnInit, effect, signal } from '@angular/core';
+import { Component, OnInit, Signal, effect, signal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 interface TeamSignal {
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(public fb: FormBuilder) {
     //show alert on value change
-    effect(() => alert(this.teamName()));
+    effect(() => this.teamName());
   }
 
   ngOnInit(): void {
