@@ -5,7 +5,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 const routes: Routes = [
   { path: '', component: ProductListComponent },
   {
-    path: 'product-detail',
+    path: 'product-detail/:id',
     loadChildren: () =>
       import('./product-detail/product-detail.module').then(
         (mod) => mod.ProductDetailModule

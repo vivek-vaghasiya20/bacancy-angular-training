@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
-
+import { CardComponent } from './card/card.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    SharedRoutingModule
-  ]
+  declarations: [CardComponent],
+  imports: [CommonModule, SharedRoutingModule],
+  exports: [CardComponent],
 })
-export class SharedModule { }
+export class SharedModule {}
