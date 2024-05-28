@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import {
-  NoPreloading,
-  PreloadAllModules,
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { PreLoadingStrategyService } from './services/pre-loading-strategy.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,6 +13,8 @@ const routes: Routes = [
     path: 'products',
     loadChildren: () =>
       import('./product/product.module').then((mod) => mod.ProductModule),
+    data: { preload: true },
+    providers:
   },
   {
     path: 'cart',
@@ -31,7 +29,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreLoadingStrategyService,
+    }),
   ],
   exports: [RouterModule],
 })
