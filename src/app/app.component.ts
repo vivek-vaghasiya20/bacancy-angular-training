@@ -1,10 +1,12 @@
-import { Component, OnInit, Signal, effect, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  effect,
+  signal,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-interface TeamSignal {
-  firstTeam: string;
-  secondTeam: string;
-}
+import { TeamSignal } from './interface/team.model';
 
 @Component({
   selector: 'app-root',
@@ -15,44 +17,30 @@ export class AppComponent implements OnInit {
   public newSignalOne: string = '';
   public newSignalTwo: number = 0;
   public newSignalThree: boolean = false;
-  public objectFormGroup!: FormGroup;
-  public arrayFormGroup!: FormGroup;
+  public objectFormGroup: FormGroup;
+  public arrayFormGroup: FormGroup;
+  public teamName = signal('');
 
   constructor(public fb: FormBuilder) {
     //show alert on value change
-    effect(() => alert(this.teamName()));
-  }
 
-  ngOnInit(): void {
-    this.initializeForms();
-  }
+    effect(() => {
+      if (this.teamName()) {
+        alert(this.teamName());
+      }
+    });
 
-  private initializeForms(): void {
     this.objectFormGroup = this.fb.group({
-      firstTeam: [''],
-      secondTeam: [''],
+      firstTeam: [null],
+      secondTeam: [null],
     });
 
     this.arrayFormGroup = this.fb.group({
-      newTeam: [''],
+      newTeam: [null],
     });
   }
 
-  //string signal
-  public signalOne = signal<string>('vivek');
-
-  //number signal
-  public signalTwo = signal<number>(1);
-
-  //boolean signal
-  public signalThree = signal<boolean>(true);
-
-  //Function to Update signal
-  public updateValues(): void {
-    this.signalOne.update((value) => value + ' ' + this.newSignalOne);
-    this.signalTwo.update((value) => value + this.newSignalTwo);
-    this.signalThree.update(() => this.newSignalThree);
-  }
+  ngOnInit(): void {}
 
   //object signal
   public signalFour = signal<TeamSignal>({
@@ -101,5 +89,4 @@ export class AppComponent implements OnInit {
   }
 
   // Pass Signal to Child Component
-  public teamName = signal('');
 }

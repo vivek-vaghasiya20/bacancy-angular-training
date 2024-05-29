@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./child.component.scss'],
 })
 export class ChildComponent implements OnInit {
-  @Input() signalInChild = signal('');
+  @Input() signalInChild = signal('vivek');
   public FormGroup!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
@@ -20,9 +20,9 @@ export class ChildComponent implements OnInit {
   }
 
   private onValueChanges(): void {
-    //this.FormGroup.valueChanges.subscribe((value) => this.signalInChild.set(value.newValue));
-    this.FormGroup.get('newValue')?.valueChanges.forEach((value) => {
-      this.signalInChild.set(value);
-    });
+    this.FormGroup.valueChanges.subscribe((value) => this.signalInChild.set(value.newValue));
+    // this.FormGroup.get('newValue')?.valueChanges.forEach((value) => {
+    //   this.signalInChild.set(value);
+    // });
   }
 }

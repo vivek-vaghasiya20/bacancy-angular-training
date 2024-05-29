@@ -1,0 +1,22 @@
+<h2>#String signal</h2>
+<h4>Value of signalOne: {{ signalOne() }}</h4>
+
+<h2>#Number signal</h2>
+<h4>Value of signalTwo from Parent component: {{ signalTwo() }}</h4>
+
+<app-task-one-child [signalTwoChild]="signalTwo"></app-task-one-child>
+
+<h2>#Boolean signal</h2>
+<h4>Value of signalThree: {{ signalThree() }}</h4>
+<div>
+  <label for="signalOne">Append in String Signal:</label>
+  <input
+    type="text"
+    id="signalOne"
+    [ngModel]="signalOne()"
+    name="signalOne"
+    (ngModelChange)="signalOne.set($event)"
+  />
+</div>
+
+<hr />
