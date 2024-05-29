@@ -1,0 +1,40 @@
+<h2>#Reactive Form</h2>
+<div>
+  <form [formGroup]="userForm" class="form-container">
+    <div>
+      <label class="form-label" for="personName"> Person first Name:</label>
+
+      <input
+        class="form-control"
+        type="text"
+        id="personName"
+        name="personName"
+        formControlName="personName"
+      />
+    </div>
+    <div>
+      <label class="form-label" for="collegeName"> Person college Name:</label>
+      <input
+        class="form-control"
+        type="text"
+        id="collegeName"
+        name="collegeName"
+        formControlName="collegeName"
+      />
+    </div>
+    <div>
+      <label class="form-label" for="companyName"> Person company Name:</label>
+      <input
+        class="form-control"
+        type="email"
+        id="companyName"
+        name="companyName"
+        formControlName="companyName"
+      />
+    </div>
+  </form>
+</div>
+
+<div>
+  <pre>{{ formValueChanges() | json }}</pre>
+</div>

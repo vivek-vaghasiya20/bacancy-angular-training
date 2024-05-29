@@ -1,13 +1,7 @@
+<!-- Two way binding of signal -->
+
 <h2>#String signal</h2>
 <h4>Value of signalOne: {{ signalOne() }}</h4>
-
-<h2>#Number signal</h2>
-<h4>Value of signalTwo from Parent component: {{ signalTwo() }}</h4>
-
-<app-task-one-child [signalTwoChild]="signalTwo"></app-task-one-child>
-
-<h2>#Boolean signal</h2>
-<h4>Value of signalThree: {{ signalThree() }}</h4>
 <div>
   <label for="signalOne">Append in String Signal:</label>
   <input
@@ -18,5 +12,22 @@
     (ngModelChange)="signalOne.set($event)"
   />
 </div>
+
+<hr />
+
+<!-- pass signal from parent to child and send alert from child to parent -->
+
+<h2>#Number signal</h2>
+<h4>Value of signalTwo from Parent component: {{ signalTwo() }}</h4>
+
+<app-task-one-child [signalTwoChild]="signalTwo"></app-task-one-child>
+
+<hr />
+
+<!-- use of update method of signal -->
+
+<h2>#Boolean signal</h2>
+<h4>Value of signalThree: {{ signalThree() }}</h4>
+<button (click)="updateValue()" type="submit">Update Values</button>
 
 <hr />

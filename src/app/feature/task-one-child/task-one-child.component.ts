@@ -1,5 +1,4 @@
 import { Component, Input, WritableSignal, signal } from '@angular/core';
-import { single } from 'rxjs';
 
 @Component({
   selector: 'app-task-one-child',

@@ -24,10 +24,7 @@ export class TaskOneParentComponent {
   }
 
   //Function to Update signal
-  // public updateValue(newValue: any): void {
-  //   // this.signalOne.set()
-  //   this.signalOne.update((value) => value + ' ' + newValue);
-  //   // this.signalTwo.update((value) => value + this.newSignalTwo);
-  //   // this.signalThree.update(() => this.newSignalThree);
-  // }
+  public updateValue(): void {
+    this.signalThree.update((value) => !value);
+  }
 }

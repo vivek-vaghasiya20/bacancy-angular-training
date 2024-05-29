@@ -2,41 +2,8 @@
 
 <hr />
 
-<h2>#Object signal</h2>
-<h4>Value of signalFour: {{ signalFour() | json }}</h4>
-
-<form [formGroup]="objectFormGroup">
-  <h3>##Set and Mutate Object Signal:</h3>
-  <div>
-    <label for="signalFourFirstTeam">First Team:</label>
-    <input type="text" id="signalFourFirstTeam" formControlName="firstTeam" />
-  </div>
-  <div>
-    <label for="signalFourSecondTeam">Second Team:</label>
-    <input type="text" id="signalFourSecondTeam" formControlName="secondTeam" />
-  </div>
-  <button (click)="setObjectSignal()">Set Object Signal</button>
-  <button (click)="updateObjectSignal()">Update Object Signal</button>
-  <button (click)="mutateObjectSignal()">Mutate Object Signal</button>
-</form>
+<app-task-two></app-task-two>
 
 <hr />
 
-<h2>#Object[] signal</h2>
-<h4>Value of signalOne: {{ signalFive() | json }}</h4>
-
-<form [formGroup]="arrayFormGroup">
-  <h3>##Mutate Array of Objects Signal:</h3>
-  <div>
-    <label for="signalFiveFirstTeam">Add newTeam:</label>
-    <input type="text" id="signalFiveFirstTeam" formControlName="newTeam" />
-  </div>
-  <button (click)="mutateArraySignal()">Mutate Array Signal</button>
-</form>
-
-<hr />
-
-<h2>Passing Signal to Child component</h2>
-
-<h3>Signal Value from app component => {{ teamName() }}</h3>
-<app-child [signalInChild]="teamName"></app-child>
+<app-task-three></app-task-three>
