@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
 import { Product } from '../interface/product.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ProductService {
-  public cartList: Product[] = [];
+  public cartList: Product[] = [
+    {
+      id: 3,
+      name: 'book',
+      price: 200,
+      description: 'A4 size book',
+      review: 'good quality of pages',
+    },
+  ];
   public productList: Product[] = [
     {
       id: 1,
