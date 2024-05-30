@@ -1,8 +1,7 @@
-import { compileNgModule } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from 'src/app/interface/product-Interface';
-import { ProductService } from 'src/app/product.service';
+import { Product } from 'src/app/interfaces/product-Interface';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-detail',

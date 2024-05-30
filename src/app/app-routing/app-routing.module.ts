@@ -5,7 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
-import { ProductDetailComponent } from '../product-list/product-detail/product-detail.component';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductNotFoundComponent } from '../product-not-found/product-not-found.component';
 
 const appRoute: Routes = [
@@ -25,9 +25,12 @@ const appRoute: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(appRoute, {
-    initialNavigation: 'enabledBlocking'
-})],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(appRoute, {
+      initialNavigation: 'enabledBlocking',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
