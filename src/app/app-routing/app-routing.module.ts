@@ -25,7 +25,9 @@ const appRoute: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(appRoute)],
+  imports: [CommonModule, RouterModule.forRoot(appRoute, {
+    initialNavigation: 'enabledBlocking'
+})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
