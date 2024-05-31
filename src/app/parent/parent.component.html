@@ -1,0 +1,5 @@
+<p>from parent change value:</p>
+<input type="text" [(ngModel)]="newTeam.team" />
+{{ newTeam | json }}
+
+<app-child [newTeam]="newTeam"></app-child>
