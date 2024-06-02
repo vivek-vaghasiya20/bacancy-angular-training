@@ -1,3 +1,26 @@
-<p>from child change value:</p>
-<input type="text" [(ngModel)]="newTeam.team" />
-{{ newTeam | json }}
+<p>Child Component:</p>
+<p>Object:</p>
+<div class="object-section" *ngIf="newTeam; else noObject">
+  {{ newTeam | json }}
+  <button (click)="increasePlayer()">Increase Player</button>
+  <button (click)="decreasePlayer()">Decrease Player</button>
+  <button (click)="deleteObject()">Delete Object</button>
+</div>
+<ng-template #noObject
+  ><p class="empty-message">The team object has been deleted.</p></ng-template
+>
+
+<p>Array of Object:</p>
+<ng-container *ngIf="teamArray.length > 0; else emptyArray">
+  <div class="array-section">
+    <div class="team-item" *ngFor="let team of teamArray; let i = index">
+      {{ team | json }}
+      <button (click)="increasePlayerOfArray(i)">Increase Player</button>
+      <button (click)="decreasePlayerOfArray(i)">Decrease Player</button>
+      <button (click)="deleteObjectOfArray(i)">Delete Object</button>
+    </div>
+  </div>
+</ng-container>
+<ng-template #emptyArray>
+  <p class="empty-message">The Array of Object is empty.</p>
+</ng-template>

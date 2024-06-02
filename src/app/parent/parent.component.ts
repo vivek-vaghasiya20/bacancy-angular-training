@@ -6,14 +6,44 @@ import { Team } from '../interfaces/team.interface';
   templateUrl: './parent.component.html',
   styleUrls: ['./parent.component.scss'],
 })
-export class ParentComponent implements DoCheck {
-  public newTeam: Team = { team: 'USA' };
-  ngDoCheck(): void {
-    console.log(
-      '%csrcappparentparent.component.ts:12 this.newTeam',
-      'color: #007acc;',
-      this.newTeam
-    );
-    console.log('parent called');
+export class ParentComponent {
+  public teamArray: Team[] = [
+    { teamName: 'IND', teamPlayer: 11 },
+    { teamName: 'USA', teamPlayer: 11 },
+    { teamName: 'CAN', teamPlayer: 11 },
+    { teamName: 'IRE', teamPlayer: 11 },
+    { teamName: 'PAK', teamPlayer: 11 },
+  ];
+  public newTeam: Team | null = { teamName: 'USA', teamPlayer: 11 };
+
+  public increasePlayer(): void {
+    if (this.newTeam) {
+      this.newTeam.teamPlayer++;
+    }
+  }
+
+  public decreasePlayer(): void {
+    if (this.newTeam && this.newTeam.teamPlayer > 0) {
+      this.newTeam.teamPlayer--;
+    }
+  }
+
+  public deleteObject(): void {
+    //if i deleteObject from the parent then it will reflect to child because null data type is not reference type.
+    this.newTeam = null;
+  }
+
+  public increasePlayerOfArray(index: number): void {
+    this.teamArray[index].teamPlayer++;
+  }
+
+  public decreasePlayerOfArray(index: number): void {
+    if (this.teamArray[index].teamPlayer > 0) {
+      this.teamArray[index].teamPlayer--;
+    }
+  }
+
+  public deleteObjectOfArray(index: number): void {
+    this.teamArray.splice(index, 1);
   }
 }
