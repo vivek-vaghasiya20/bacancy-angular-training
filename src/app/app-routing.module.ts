@@ -15,14 +15,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./product/product.module').then((mod) => mod.ProductModule),
     data: { preload: true },
-    providers: [ProductService],
   },
   {
     path: 'cart',
     loadChildren: () =>
       import('./cart/cart.module').then((mod) => mod.CartModule),
-    providers: [ProductService],
-    //here i give ProductService as two different instance for cart and product module. so when i add product into the cart from the it will not show in the cart. because of in cart module the there is different instance for cart module.
   },
   {
     path: '**',
