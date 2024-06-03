@@ -126,9 +126,7 @@
         "prerender": {
           "builder": "@angular-devkit/build-angular:prerender",
           "options": {
-            "routes": [
-              "/"
-            ]
+            "routes": ["/", "/products/product-detail/1","/products/product-detail/2"]
           },
           "configurations": {
             "production": {
