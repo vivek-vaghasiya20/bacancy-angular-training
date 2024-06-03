@@ -1,10 +1,11 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Team } from '../interfaces/team.interface';
 
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
   styleUrls: ['./parent.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ParentComponent {
   public teamArray: Team[] = [

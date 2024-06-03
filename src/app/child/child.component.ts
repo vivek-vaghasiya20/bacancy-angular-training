@@ -1,8 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  Input,
+  Input
 } from '@angular/core';
 import { Team } from '../interfaces/team.interface';
 
