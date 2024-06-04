@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
       next: (res: Product[]) => {
         this.products = res;
       },
-      error: (err) => {
-        console.log(err);
+      error: () => {
+        alert('Error while fetching the Product data.');
       },
     });
   }

@@ -1,7 +1,13 @@
 <div class="row">
-  @for (product of products; track product.id) { @defer () {
+  @defer (on viewport) { @for (product of products; track product.id) {
   <div class="col-md-3">
     <app-product-detail [product]="product"></app-product-detail>
   </div>
-  } }
+  }@empty {
+  <p>No Product found.</p>
+  }}@placeholder {
+  <p></p>
+  } @loading(minimum 1s) {
+  <p>loading...</p>
+  }
 </div>
