@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <img [src]="product.image" class="image" />
+    <h5 class="card-title">{{ product.title }}</h5>
+    <button class="btn btn-primary" #button>View description</button>
+
+    @defer (on interaction(button)) {
+    <app-product-description
+      [productDescription]="product.description"
+    ></app-product-description>
+    }@placeholder(minimum 10s) {
+    <p>placeholder works</p>
+    } @loading() {
+    <p>Loading... Please Wait</p>
+    } @error() {
+    <p>failed to load content</p>
+    }
+  </div>
+</div>
