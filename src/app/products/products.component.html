@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <h2 class="text-center text-primary mt-4 fw-bold">Feature Products</h2>
+  <div class="row">
+    @for (product of products; track product.id) {
+    <div class="col-md-3">
+      <div class="card mt-4">
+        <div class="card-body text-center">
+          <div class="div-image">
+            <img [src]="product.image" class="image" />
+          </div>
+          <div class="title mt-2">
+            <h6 class="card-title fw-bold text-primary">{{ product.title }}</h6>
+          </div>
+          <h6 class="card-text">Price: {{ product.price }}</h6>
+        </div>
+      </div>
+    </div>
+    }@empty {
+    <p>No Products Found.</p>
+    }
+  </div>
+</div>
