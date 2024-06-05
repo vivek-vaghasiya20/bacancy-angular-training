@@ -1,20 +1,24 @@
-<div class="card">
-  <div class="card-body">
-    <img [src]="product.image" class="image" />
-    <h5 class="card-title">{{ product.title }}</h5>
+<div class="card mt-4">
+  <div class="card-body text-center">
+    <div class="div-image"><img [src]="product.image" class="image" /></div>
+    <div class="title mt-2">
+      <h6 class="card-title fw-bold text-primary">{{ product.title }}</h6>
+    </div>
     <h6 class="card-text">Price: {{ product.price }}</h6>
-    <button class="btn btn-primary" #button>View description</button>
+    <p class="text-muted fw-bold">
+      @if(product.rating){ Rating: {{ product.rating.rate }} ({{
+        product.rating.count
+      }}) }
+      @else {<p>No ratings Available.</p>}
+    </p>
+  </div>
 
+  <div class="card-footer text-center">
+    <button class="btn btn-primary my-3" #button>View description</button>
     @defer (on interaction(button)) {
     <app-product-description
       [productDescription]="product.description"
     ></app-product-description>
-    } @placeholder() {
-    <p>Click on view description</p>
-    } @loading() {
-    <p>Loading... Please Wait</p>
-    } @error() {
-    <p>failed to load content</p>
     }
   </div>
 </div>

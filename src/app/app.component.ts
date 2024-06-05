@@ -9,7 +9,7 @@ import { ProductService } from './services/product.service';
 })
 export class AppComponent implements OnInit {
   title = 'bacancy-angular-training';
-  public products: Product[] = [];
+  public products!: Product[];
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
