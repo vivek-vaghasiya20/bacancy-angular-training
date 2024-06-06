@@ -14,11 +14,13 @@
   </div>
 
   <div class="card-footer text-center">
-    <button class="btn btn-primary my-3" #button>View description</button>
+    
     @defer (on interaction(button)) {
     <app-product-description
       [productDescription]="product.description"
     ></app-product-description>
+    }@placeholder{
+      <button class="btn btn-primary my-3" #button>View description</button>
     }
   </div>
 </div>
