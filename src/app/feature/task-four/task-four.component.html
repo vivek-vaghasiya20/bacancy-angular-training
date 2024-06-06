@@ -1,0 +1,25 @@
+<h2>#Template driven form</h2>
+<form>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter FirstName here"
+      name="firstName"
+      [value]="firstName()"
+      (input)="changeName($event)"
+    />
+    <p class="fs-5">{{ firstName() }}</p>
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter LastName here"
+      name="lastName"
+      (ngModelChange)="lastName.set($event)"
+      [ngModel]="lastName()"
+    />
+    <p class="fs-5">{{ lastName() }}</p>
+  </div>
+</form>
