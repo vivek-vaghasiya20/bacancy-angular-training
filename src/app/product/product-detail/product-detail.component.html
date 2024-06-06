@@ -4,7 +4,7 @@
     <div class="title mt-2">
       <h6 class="card-title fw-bold text-primary">{{ product.title }}</h6>
     </div>
-    <h6 class="card-text">Price: {{ product.price }}</h6>
+    <h6 class="card-text">Price: {{ product.price | currency: 'INR' }}</h6>
     <p class="text-muted fw-bold">
       @if(product.rating){ Rating: {{ product.rating.rate }} ({{
         product.rating.count
