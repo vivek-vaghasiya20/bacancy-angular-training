@@ -9,11 +9,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { ToDoComponent } from './to-do/to-do.component';
 import { TodoEffects } from './store/todo.effects';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, ToDoComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     StoreModule.forRoot({ toDos: TodoReducer }),
     StoreDevtoolsModule.instrument({

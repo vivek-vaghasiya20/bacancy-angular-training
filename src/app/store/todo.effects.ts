@@ -1,10 +1,18 @@
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ToDoService } from '../services/to-do.service';
-import { getTodoSuccess } from './todo.actions';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { Todo } from '../modal/todo.modal';
-import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { Todo } from '../modal/todo.modal';
+import { ToDoService } from '../services/to-do.service';
+import {
+  deleteTodo,
+  deleteTodoFailure,
+  deleteTodoSuccess,
+  getTodoList,
+  getTodoListFailure,
+  getTodoListSuccess,
+} from './todo.actions';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TodoEffects {
@@ -12,7 +20,7 @@ export class TodoEffects {
 
   loadToDos$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(getTodoSuccess),
+      ofType(getTodoList),
       switchMap(() =>
         this.todoService.getAllTodo().pipe(
           map((response: Todo[]) =>
@@ -24,12 +32,26 @@ export class TodoEffects {
             }))
           ),
           map((toDos: Todo[]) => {
-            console.log(toDos);
-            return getTodoSuccess({ toDos });
+            return getTodoListSuccess({ toDos });
           }),
-          catchError(() => of({ type: '[Todo] Get Data Failure' }))
+          catchError(() => of(getTodoListFailure()))
         )
       )
     )
   );
+
+  // deleteToDo$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(deleteTodo),
+  //     switchMap((action) =>
+  //       this._http.delete<Todo>(`${this.apiURL}/${action.id}`).pipe(
+  //         tap((res) => console.log(res, 'delete effect')),
+  //         map((res: any) => {
+  //           console.log(res);
+  //           return deleteTodoFailure();
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
 }

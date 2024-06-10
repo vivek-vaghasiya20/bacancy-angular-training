@@ -1,1 +1,30 @@
-<p>to-do works!</p>
+<div class="container-fluid">
+  <h2 class="text-center text-primary mt-4 fw-bold">To-Do List</h2>
+  <div class="col-4">
+    <label><b>Todo</b></label>
+    <input type="text" class="form-control" [(ngModel)]="newToDo.todo" />
+  </div>
+  <div class="mb-3">
+    <button class="btn btn-primary" (click)="addToDo()">Add ToDo</button>
+  </div>
+
+  <div class="row">
+    <div *ngFor="let toDo of toDoList">
+      <div class="col-md-4">
+        <div class="card mt-4">
+          <input
+            type="checkbox"
+            [ngModel]="toDo.completed"
+            (change)="updateToDo(toDo)"
+          />
+          <div class="card-title" [ngClass]="{ completed: toDo.completed }">
+            {{ toDo.todo }}
+          </div>
+          <button class="btn btn-danger" (click)="deleteToDo(toDo.id)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../store/app.state';
 import { Todo } from '../modal/todo.modal';
-import { getTodoSuccess } from '../store/todo.actions';
+import { AppState } from '../store/app.state';
+import {
+  addTodo,
+  deleteTodo,
+  getTodoList,
+  updateTodo,
+} from '../store/todo.actions';
 
 @Component({
   selector: 'app-to-do',
@@ -10,19 +15,44 @@ import { getTodoSuccess } from '../store/todo.actions';
   styleUrls: ['./to-do.component.scss'],
 })
 export class ToDoComponent implements OnInit {
-  public toDoArray!: Todo[];
+  public toDoList: Todo[] = [];
+  public newToDo: Todo = {
+    id: 0,
+    todo: '',
+    completed: false,
+    userId: 1,
+  };
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    debugger;
     this.getData();
     this.store.select('toDos').subscribe((event: any) => {
-      this.toDoArray = event;
+      this.toDoList = event.toDos;
     });
-    console.log(this.toDoArray);
   }
 
-  getData() {
-    this.store.dispatch(getTodoSuccess({ toDos: [] }));
+  public getData(): void {
+    this.store.dispatch(getTodoList());
+  }
+
+  public addToDo(): void {
+    if (this.newToDo.todo !== '') {
+      this.store.dispatch(addTodo({ toDo: this.newToDo }));
+      this.newToDo = { ...this.newToDo, todo: '' };
+    } else {
+      alert('Can not add with empty Description');
+    }
+  }
+
+  public deleteToDo(index: number): void {
+    if (confirm('Are you sure you want to delete this todo?')) {
+      this.store.dispatch(deleteTodo({ id: index }));
+    }
+  }
+
+  public updateToDo(todo: Todo): void {
+    const updatedTodo = { ...todo, completed: !todo.completed };
+    this.store.dispatch(updateTodo({ toDo: updatedTodo }));
   }
 }
